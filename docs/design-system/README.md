@@ -29,6 +29,8 @@ Os SVGs foram exportados do conjunto [AlloCar/Logo](https://www.figma.com/design
 
 ## Tokens e estilos
 
+O [frontend React](../../frontend/README.md#design-system-em-código) usa o export visual em [`figma.tokens.json`](../../frontend/src/styles/figma.tokens.json). O gerador converte variáveis, aliases, tipografia e sombras em [`tokens.css`](../../frontend/src/styles/tokens.css), compartilhado pelos componentes. Ícones, fotografias e assinaturas mantêm os ativos originais do Figma.
+
 | Coleção / estilo                 | Quantidade | Observação                                                                              |
 | -------------------------------- | ---------- | --------------------------------------------------------------------------------------- |
 | Primitivos                       | 57         | Cores, espaços e raios; modo Base.                                                      |

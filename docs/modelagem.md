@@ -135,4 +135,4 @@ O [guia dos protótipos](prototipos/README.md) relaciona as interfaces às hist�
 
 ## Classes do backend
 
-O [guia das classes e regras](backend.md) relaciona os atributos e métodos de `com.allocar.backend.model`. `PropostaAluguel` reúne os dados da proposta; `DadosCliente` preserva os dados financeiros avaliados. Mudanças no cadastro exigem nova análise antes da execução, e contratos executados mantêm o parecer e as condições registradas.
+O [guia das classes e regras](../backend/README.md) relaciona os atributos e métodos de `com.allocar.backend.model`. `PropostaAluguel` reúne os dados da proposta; `DadosCliente` preserva os dados financeiros avaliados. Mudanças no cadastro exigem nova análise antes da execução, e contratos executados mantêm o parecer e as condições registradas.

@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Figma references and browser reports
+.figma/
+scripts/
+test*/
+playwright-report/
+manifest.json

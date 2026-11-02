@@ -26,8 +26,9 @@ Sistema web de aluguel de carros que conecta clientes, empresas e bancos na soli
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | Requisitos, regras, estados e arquitetura | [Modelagem detalhada](docs/modelagem.md)                                                                                         |
 | Histórias e critérios de aceitação        | [Histórias de usuário](docs/historias-de-usuario.md)                                                                             |
-| Classes e regras do backend               | [Modelo e operações](docs/backend.md) |
+| Backend, execução e regras de negócio     | [Organização, modelo, operações e testes](backend/README.md) |
 | API REST e integração com o frontend      | [Rotas, autenticação e exemplos JSON](docs/api.md) |
+| Interface React e execução local          | [Componentes, tokens, rotas e comandos](frontend/README.md) |
 | Banco de dados e conexão                  | [Configuração, tabelas e dados fictícios](docs/database.md) |
 | Diagramas editáveis                       | [Fontes draw.io e prévias](docs/diagramas/)                                                                                      |
 | Protótipos editáveis                      | [Arquivo Figma](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK)                                                             |
@@ -140,7 +141,17 @@ Para consultar os artefatos:
 ```text
 allocar/
 ├── README.md
+├── frontend/
+│   ├── src/
+│   │   ├── assets/        # logo, ícones e fotografias do Figma
+│   │   ├── components/    # elementos de interface, layout e aluguel
+│   │   ├── pages/         # composição das telas
+│   │   ├── state/         # estado local dos fluxos demonstrativos
+│   │   └── styles/        # tokens exportados e estilos reutilizáveis
+│   ├── scripts/           # geração dos tokens CSS
+│   └── tests/             # navegação e interfaces no navegador
 ├── backend/
+│   ├── README.md
 │   ├── pom.xml
 │   └── src/
 │       ├── main/java/com/allocar/backend/
@@ -155,7 +166,6 @@ allocar/
     ├── allocar-logo-claro.svg
     ├── allocar-logo-monocromatica.svg
     ├── modelagem.md
-    ├── backend.md
     ├── api.md
     ├── database.md
     ├── historias-de-usuario.md
@@ -166,6 +176,16 @@ allocar/
 ```
 
 ## 🎨 Demonstração
+
+### Interface no navegador
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+A interface React usa os componentes, tokens e ativos do Figma. A landing se adapta aos layouts desktop e móvel; as rotas permitem percorrer cadastro, pedidos, análise, contratos e crédito com dados locais em memória. Os controles de acesso selecionam o perfil demonstrativo. O [guia do frontend](frontend/README.md) reúne os comandos, a relação entre telas e rotas, a geração de tokens e os testes de navegador.
 
 ### Landing page
 

@@ -1,0 +1,2515 @@
+{
+  "fileKey": "BhQ1Hh0Rofd4t0k7EVWZgK",
+  "collections": [
+    {
+      "id": "VariableCollectionId:4:1004",
+      "name": "AlloCar / Interface",
+      "modes": [
+        {
+          "name": "Mode 1",
+          "modeId": "4:1"
+        }
+      ],
+      "variableIds": [
+        "VariableID:4:1005",
+        "VariableID:4:1006",
+        "VariableID:4:1007",
+        "VariableID:4:1008",
+        "VariableID:4:1009",
+        "VariableID:4:1010",
+        "VariableID:4:1011"
+      ]
+    },
+    {
+      "id": "VariableCollectionId:14:25835",
+      "name": "AlloCar v1 · Primitivos",
+      "modes": [
+        {
+          "name": "Base",
+          "modeId": "14:0"
+        }
+      ],
+      "variableIds": [
+        "VariableID:14:25837",
+        "VariableID:14:25839",
+        "VariableID:14:25841",
+        "VariableID:14:25843",
+        "VariableID:14:25845",
+        "VariableID:14:25847",
+        "VariableID:14:25849",
+        "VariableID:14:25851",
+        "VariableID:14:25853",
+        "VariableID:14:25855",
+        "VariableID:14:25857",
+        "VariableID:14:25859",
+        "VariableID:14:25861",
+        "VariableID:14:25863",
+        "VariableID:14:25865",
+        "VariableID:14:25867",
+        "VariableID:14:25869",
+        "VariableID:14:25871",
+        "VariableID:14:25873",
+        "VariableID:14:25875",
+        "VariableID:14:25877",
+        "VariableID:14:25879",
+        "VariableID:14:25881",
+        "VariableID:14:25883",
+        "VariableID:14:25885",
+        "VariableID:14:25887",
+        "VariableID:14:25889",
+        "VariableID:14:25891",
+        "VariableID:14:25892",
+        "VariableID:14:25893",
+        "VariableID:14:25894",
+        "VariableID:14:25895",
+        "VariableID:14:25896",
+        "VariableID:14:25898",
+        "VariableID:14:25903",
+        "VariableID:14:25904",
+        "VariableID:14:25905",
+        "VariableID:14:25909",
+        "VariableID:14:25913",
+        "VariableID:14:25914",
+        "VariableID:14:25916",
+        "VariableID:14:25917",
+        "VariableID:14:25919",
+        "VariableID:14:25923",
+        "VariableID:14:25924",
+        "VariableID:14:25936",
+        "VariableID:14:25937",
+        "VariableID:14:25941",
+        "VariableID:14:25942",
+        "VariableID:14:25945",
+        "VariableID:14:25948",
+        "VariableID:14:25950",
+        "VariableID:14:25953",
+        "VariableID:14:25956",
+        "VariableID:14:25971",
+        "VariableID:14:25972",
+        "VariableID:14:25976"
+      ]
+    },
+    {
+      "id": "VariableCollectionId:14:25836",
+      "name": "AlloCar v1 · Semanticos",
+      "modes": [
+        {
+          "name": "Claro",
+          "modeId": "14:1"
+        }
+      ],
+      "variableIds": [
+        "VariableID:14:25838",
+        "VariableID:14:25840",
+        "VariableID:14:25842",
+        "VariableID:14:25844",
+        "VariableID:14:25846",
+        "VariableID:14:25848",
+        "VariableID:14:25850",
+        "VariableID:14:25852",
+        "VariableID:14:25854",
+        "VariableID:14:25856",
+        "VariableID:14:25858",
+        "VariableID:14:25860",
+        "VariableID:14:25862",
+        "VariableID:14:25864",
+        "VariableID:14:25866",
+        "VariableID:14:25868",
+        "VariableID:14:25870",
+        "VariableID:14:25872",
+        "VariableID:14:25874",
+        "VariableID:14:25876",
+        "VariableID:14:25878",
+        "VariableID:14:25880",
+        "VariableID:14:25882",
+        "VariableID:14:25884",
+        "VariableID:14:25886",
+        "VariableID:14:25888",
+        "VariableID:14:25890",
+        "VariableID:14:25977",
+        "VariableID:29:1699"
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "id": "VariableID:4:1005",
+      "name": "canvas",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:4:1004",
+      "valuesByMode": {
+        "4:1": {
+          "r": 0.9490196108818054,
+          "g": 0.9607843160629272,
+          "b": 0.9725490212440491,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:4:1006",
+      "name": "surface",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:4:1004",
+      "valuesByMode": {
+        "4:1": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:4:1007",
+      "name": "ink",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:4:1004",
+      "valuesByMode": {
+        "4:1": {
+          "r": 0.0784313753247261,
+          "g": 0.18039216101169586,
+          "b": 0.26274511218070984,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:4:1008",
+      "name": "muted",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:4:1004",
+      "valuesByMode": {
+        "4:1": {
+          "r": 0.32156863808631897,
+          "g": 0.40392157435417175,
+          "b": 0.47843137383461,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:4:1009",
+      "name": "accent",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:4:1004",
+      "valuesByMode": {
+        "4:1": {
+          "r": 0.0784313753247261,
+          "g": 0.35686275362968445,
+          "b": 0.3137255012989044,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:4:1010",
+      "name": "soft",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:4:1004",
+      "valuesByMode": {
+        "4:1": {
+          "r": 0.8784313797950745,
+          "g": 0.9411764740943909,
+          "b": 0.9215686321258545,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:4:1011",
+      "name": "border",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:4:1004",
+      "valuesByMode": {
+        "4:1": {
+          "r": 0.8078431487083435,
+          "g": 0.8470588326454163,
+          "b": 0.886274516582489,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25837",
+      "name": "cor/neutral/950",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.0941176488995552,
+          "g": 0.14509804546833038,
+          "b": 0.12156862765550613,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25838",
+      "name": "cor/texto/marca",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25837"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25839",
+      "name": "cor/slate/900",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.0784313753247261,
+          "g": 0.18039216101169586,
+          "b": 0.26274511218070984,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25840",
+      "name": "cor/texto/primario",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25839"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25841",
+      "name": "cor/neutral/100",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.9333333373069763,
+          "g": 0.9450980424880981,
+          "b": 0.9215686321258545,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25842",
+      "name": "cor/superficie/sutil",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25841"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25843",
+      "name": "cor/slate/600",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.32156863808631897,
+          "g": 0.40392157435417175,
+          "b": 0.47843137383461,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25844",
+      "name": "cor/texto/secundario",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25843"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25845",
+      "name": "cor/slate/200",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.8078431487083435,
+          "g": 0.8470588326454163,
+          "b": 0.886274516582489,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25846",
+      "name": "cor/borda/padrao",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25845"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25847",
+      "name": "cor/teal/800",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.0784313753247261,
+          "g": 0.35686275362968445,
+          "b": 0.3137255012989044,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25848",
+      "name": "cor/acao/link",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25847"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25849",
+      "name": "cor/neutral/0",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25850",
+      "name": "cor/superficie/cartao",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25849"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25851",
+      "name": "cor/lime/400",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.772549033164978,
+          "g": 0.9529411792755127,
+          "b": 0.29019609093666077,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25852",
+      "name": "cor/acao/primaria",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25851"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25853",
+      "name": "cor/neutral/300",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.7843137383460999,
+          "g": 0.8235294222831726,
+          "b": 0.7803921699523926,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25854",
+      "name": "cor/borda/alternativa",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25853"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25855",
+      "name": "cor/lime/500",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.7058823704719543,
+          "g": 0.8941176533699036,
+          "b": 0.21568627655506134,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25856",
+      "name": "cor/acao/primaria-hover",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25855"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25857",
+      "name": "cor/orange/200",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.9490196108818054,
+          "g": 0.7843137383460999,
+          "b": 0.6078431606292725,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25858",
+      "name": "cor/marca/secundaria",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25857"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25859",
+      "name": "cor/neutral/50",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.9607843160629272,
+          "g": 0.9647058844566345,
+          "b": 0.9490196108818054,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25860",
+      "name": "cor/superficie/pagina",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25859"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25861",
+      "name": "cor/green/50",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.9098039269447327,
+          "g": 0.95686274766922,
+          "b": 0.9215686321258545,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25862",
+      "name": "cor/feedback/sucesso-fundo",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25861"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25863",
+      "name": "cor/green/800",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.13725490868091583,
+          "g": 0.38823530077934265,
+          "b": 0.26274511218070984,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25864",
+      "name": "cor/feedback/sucesso-texto",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25863"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25865",
+      "name": "cor/amber/50",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 1,
+          "g": 0.9490196108818054,
+          "b": 0.8509804010391235,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25866",
+      "name": "cor/feedback/atencao-fundo",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25865"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25867",
+      "name": "cor/amber/800",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.5215686559677124,
+          "g": 0.3137255012989044,
+          "b": 0.07058823853731155,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25868",
+      "name": "cor/feedback/atencao-texto",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25867"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25869",
+      "name": "cor/red/50",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.9882352948188782,
+          "g": 0.9254902005195618,
+          "b": 0.9137254953384399,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25870",
+      "name": "cor/feedback/erro-fundo",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25869"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25871",
+      "name": "cor/red/600",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.7019608020782471,
+          "g": 0.20392157137393951,
+          "b": 0.1725490242242813,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25872",
+      "name": "cor/acao/destrutiva",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25871"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25873",
+      "name": "cor/blue/50",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.9176470637321472,
+          "g": 0.9490196108818054,
+          "b": 0.9803921580314636,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25874",
+      "name": "cor/feedback/informacao-fundo",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25873"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25875",
+      "name": "cor/blue/700",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.1568627506494522,
+          "g": 0.364705890417099,
+          "b": 0.5215686559677124,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25876",
+      "name": "cor/feedback/informacao-texto",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25875"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25877",
+      "name": "cor/teal/50",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.8784313797950745,
+          "g": 0.9411764740943909,
+          "b": 0.9215686321258545,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25878",
+      "name": "cor/superficie/destaque",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25877"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25879",
+      "name": "cor/neutral/250",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.8117647171020508,
+          "g": 0.843137264251709,
+          "b": 0.8078431487083435,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25880",
+      "name": "cor/borda/desabilitada",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25879"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25881",
+      "name": "cor/lime/600",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.6274510025978088,
+          "g": 0.8078431487083435,
+          "b": 0.14901961386203766,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25882",
+      "name": "cor/acao/primaria-pressed",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25881"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25883",
+      "name": "cor/neutral/200",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.8901960849761963,
+          "g": 0.9058823585510254,
+          "b": 0.8784313797950745,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25884",
+      "name": "cor/acao/desabilitada-fundo",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25883"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25885",
+      "name": "cor/neutral/600",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.4000000059604645,
+          "g": 0.43921568989753723,
+          "b": 0.3764705955982208,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25886",
+      "name": "cor/acao/desabilitada-texto",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25885"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25887",
+      "name": "cor/red/700",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.6117647290229797,
+          "g": 0.1725490242242813,
+          "b": 0.14509804546833038,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25888",
+      "name": "cor/acao/destrutiva-hover",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25887"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25889",
+      "name": "cor/red/800",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.5058823823928833,
+          "g": 0.14509804546833038,
+          "b": 0.12156862765550613,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25890",
+      "name": "cor/acao/destrutiva-pressed",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25889"
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25891",
+      "name": "espaco/48",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 48
+      }
+    },
+    {
+      "id": "VariableID:14:25892",
+      "name": "espaco/0",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 0
+      }
+    },
+    {
+      "id": "VariableID:14:25893",
+      "name": "raio/0",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 0
+      }
+    },
+    {
+      "id": "VariableID:14:25894",
+      "name": "espaco/16",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 16
+      }
+    },
+    {
+      "id": "VariableID:14:25895",
+      "name": "espaco/20",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 20
+      }
+    },
+    {
+      "id": "VariableID:14:25896",
+      "name": "espaco/3",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 3
+      }
+    },
+    {
+      "id": "VariableID:14:25898",
+      "name": "espaco/12",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 12
+      }
+    },
+    {
+      "id": "VariableID:14:25903",
+      "name": "espaco/40",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 40
+      }
+    },
+    {
+      "id": "VariableID:14:25904",
+      "name": "espaco/32",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 32
+      }
+    },
+    {
+      "id": "VariableID:14:25905",
+      "name": "raio/24",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 24
+      }
+    },
+    {
+      "id": "VariableID:14:25909",
+      "name": "espaco/8",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 8
+      }
+    },
+    {
+      "id": "VariableID:14:25913",
+      "name": "espaco/4",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 4
+      }
+    },
+    {
+      "id": "VariableID:14:25914",
+      "name": "espaco/6",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 6
+      }
+    },
+    {
+      "id": "VariableID:14:25916",
+      "name": "raio/16",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 16
+      }
+    },
+    {
+      "id": "VariableID:14:25917",
+      "name": "raio/8",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 8
+      }
+    },
+    {
+      "id": "VariableID:14:25919",
+      "name": "espaco/24",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 24
+      }
+    },
+    {
+      "id": "VariableID:14:25923",
+      "name": "espaco/28",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 28
+      }
+    },
+    {
+      "id": "VariableID:14:25924",
+      "name": "espaco/22",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 22
+      }
+    },
+    {
+      "id": "VariableID:14:25936",
+      "name": "raio/2",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 2
+      }
+    },
+    {
+      "id": "VariableID:14:25937",
+      "name": "raio/6",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 6
+      }
+    },
+    {
+      "id": "VariableID:14:25941",
+      "name": "raio/4",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 4
+      }
+    },
+    {
+      "id": "VariableID:14:25942",
+      "name": "espaco/10",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 10
+      }
+    },
+    {
+      "id": "VariableID:14:25945",
+      "name": "espaco/14",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 14
+      }
+    },
+    {
+      "id": "VariableID:14:25948",
+      "name": "espaco/18",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 18
+      }
+    },
+    {
+      "id": "VariableID:14:25950",
+      "name": "espaco/5",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 5
+      }
+    },
+    {
+      "id": "VariableID:14:25953",
+      "name": "espaco/2",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 2
+      }
+    },
+    {
+      "id": "VariableID:14:25956",
+      "name": "raio/12",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 12
+      }
+    },
+    {
+      "id": "VariableID:14:25971",
+      "name": "espaco/56",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 56
+      }
+    },
+    {
+      "id": "VariableID:14:25972",
+      "name": "raio/5",
+      "type": "FLOAT",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": 5
+      }
+    },
+    {
+      "id": "VariableID:14:25976",
+      "name": "cor/green/900",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25835",
+      "valuesByMode": {
+        "14:0": {
+          "r": 0.2078431397676468,
+          "g": 0.41960784792900085,
+          "b": 0.0941176488995552,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:14:25977",
+      "name": "cor/foco/anel",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25976"
+        }
+      }
+    },
+    {
+      "id": "VariableID:29:1699",
+      "name": "cor/marca/logo-claro",
+      "type": "COLOR",
+      "collectionId": "VariableCollectionId:14:25836",
+      "valuesByMode": {
+        "14:1": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:14:25976"
+        }
+      }
+    }
+  ],
+  "textStyles": [
+    {
+      "id": "S:85703c57e439decb956c303bc82189e2695dec3d,",
+      "name": "AlloCar v1/Subtitulo/26/Extra-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Extra Bold",
+        "variationSettings": {
+          "wght": 800,
+          "slnt": 0
+        }
+      },
+      "fontSize": 26,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.5
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:e9600b44fcc17713132957a51ec0b7a25ac48106,",
+      "name": "AlloCar v1/Legenda/12/Semi-Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:185528c3f1e41303271f35e26fdb41304de31253,",
+      "name": "AlloCar v1/Corpo/18/Semi-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 18,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:5948001d03dbf70ef205073f43aa10e83ac61f65,",
+      "name": "AlloCar v1/Titulo/48/Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 48,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -2
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:385aa5726341b19e5a132d513c19680450e07ffe,",
+      "name": "AlloCar v1/Corpo/16/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 16,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:872bf99c64a89cfa89cac63c7957833bda34af06,",
+      "name": "AlloCar v1/Titulo/64/Extra-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Extra Bold",
+        "variationSettings": {
+          "wght": 800,
+          "slnt": 0
+        }
+      },
+      "fontSize": 64,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.5
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:679d9a4ba117455fb949a12e0ac045cd6aa3c15e,",
+      "name": "AlloCar v1/Legenda/13/Semi-Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 13,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:cb268f73b3b65760d2aac888a1b5c5b6b701aa32,",
+      "name": "AlloCar v1/Titulo/58/Regular/106pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 58,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 105.9999942779541
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -2.5
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:05fe4c0bdaebffa4d8e048e7546c90b41a085cba,",
+      "name": "AlloCar v1/Legenda/12/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:4161bca1522f2d3aa3a8121dc6597d79ae767dff,",
+      "name": "AlloCar v1/Corpo/18/Semi-Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 18,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:eb1559234f076c4fa22599dd1d2699ab6377baad,",
+      "name": "AlloCar v1/Corpo/14/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:33dbb332578a70905580eba2cdfc364cd0dd7b60,",
+      "name": "AlloCar v1/Subtitulo/22/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 22,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:2adc6942ec15addcf3f459ebc149ffb60e005fc1,",
+      "name": "AlloCar v1/Legenda/12/Medium/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500,
+          "slnt": 0
+        }
+      },
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:32536004519808d853e36fc428c4f255d0b69dd9,",
+      "name": "AlloCar v1/Corpo/14/Semi-Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:a2d22042b7d2a3b5e831e4c468c036b41c57ffba,",
+      "name": "AlloCar v1/Subtitulo/20/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 20,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:7d793ff3f9058ee13eb23e56f7089fcfa28a31e0,",
+      "name": "AlloCar v1/Legenda/13/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 13,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:0b87f0545c10c6ca1e01645df2e22d670f389a3c,",
+      "name": "AlloCar v1/Legenda/11/Semi-Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 11,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:42eb123310ee597aaba1be3e87bec9c20875d398,",
+      "name": "AlloCar v1/Titulo/56/Regular/108pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 56,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 108.00000429153442
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.2999999523162842
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:b16b72e61f7654e736e6104e39d8ff96d103ad79,",
+      "name": "AlloCar v1/Titulo/40/Regular/115pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 40,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 114.99999761581421
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.2999999523162842
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:5569646e22f907188c7caebd35345f907d5ad78f,",
+      "name": "AlloCar v1/Titulo/32/Regular/120pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 32,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 120.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.2999999523162842
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:46aad985cb7e7a29298ab4d7456d54f2d4061d26,",
+      "name": "AlloCar v1/Subtitulo/24/Regular/130pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 24,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 129.99999523162842
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:9453fb83d310c63f6bf0a33d6da98ae9f76f62ed,",
+      "name": "AlloCar v1/Subtitulo/20/Regular/140pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 20,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 139.9999976158142
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:dcceccf1a59e8ea0fe0ff8c744401fd637387db3,",
+      "name": "AlloCar v1/Corpo/16/Regular/150pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 16,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 150
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:dffcdc1c1bb6851f328e07651e4a7d7ec342586b,",
+      "name": "AlloCar v1/Corpo/14/Regular/150pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 150
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:bc7baab7468d40d8791cfa4a976231d80f543a81,",
+      "name": "AlloCar v1/Legenda/12/Regular/150pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 150
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:46771f7e644f4a9008a8ab76f03bcab5a23541d8,",
+      "name": "AlloCar v1/Titulo/32/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 32,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:02d6bdbbfe612d704860a59e058f26e0ad4cf319,",
+      "name": "AlloCar v1/Corpo/18/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 18,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:a8b062fda6424ac51b82a1bc82e33a61ee7102d7,",
+      "name": "AlloCar v1/Titulo/32/Extra-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Extra Bold",
+        "variationSettings": {
+          "wght": 800,
+          "slnt": 0
+        }
+      },
+      "fontSize": 32,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.5
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:a66289eb8c7987c2a9c36cc9410c44338f5673b6,",
+      "name": "AlloCar v1/Corpo/14/Regular/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:2be9a216a1ac875836d563f68d617bbba4f908d3,",
+      "name": "AlloCar v1/Corpo/16/Regular/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 16,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:c9f7719456fe7a87baa955392f5d0fd0129611f1,",
+      "name": "AlloCar v1/Titulo/40/Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 40,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.600000023841858
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:ff2201e013628616d3c9097bd289cbba65b8c3e6,",
+      "name": "AlloCar v1/Subtitulo/20/Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 20,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:4cab66e3561d4758da980a0fddce8cf10495b883,",
+      "name": "AlloCar v1/Legenda/12/Semi-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:ce4d50fa0cdff3bf6222dcb9c1e0b42c8fd37b87,",
+      "name": "AlloCar v1/Subtitulo/22/Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 22,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:11c3ff895ea17e5d9dfb29748f7553be52d8bc5d,",
+      "name": "AlloCar v1/Legenda/12/Regular/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:e572a599a71866f1e63afd3b36ce741fbfd7c8a7,",
+      "name": "AlloCar v1/Subtitulo/30/Regular/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 30,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:586f988b9dbb409224c6e2d85b9edd899fda3fca,",
+      "name": "AlloCar v1/Subtitulo/28/Extra-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Extra Bold",
+        "variationSettings": {
+          "wght": 800,
+          "slnt": 0
+        }
+      },
+      "fontSize": 28,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.5
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:ffbcd42835cfadda71706656b04e0c90897bee61,",
+      "name": "AlloCar v1/Legenda/12/Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 12,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:c8f2d8ffc2dbadbaf37bbf877944d2c2e92abf7a,",
+      "name": "AlloCar v1/Titulo/32/Regular/115pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 32,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 114.99999761581421
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.2000000476837158
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:668cdce8d4da83e657bef6c5ab69f08c8e0da72c,",
+      "name": "AlloCar v1/Legenda/13/Medium/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500,
+          "slnt": 0
+        }
+      },
+      "fontSize": 13,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:2e7a63a602cd7f489f85249e46d2c4dc874125a0,",
+      "name": "AlloCar v1/Subtitulo/28/Regular/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 28,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:e814d70b968d2b3c623268b6c12ad3d17a820da5,",
+      "name": "AlloCar v1/Subtitulo/20/Semi-Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 20,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:82a5231296ddd67c0ad66000095086ef45b33442,",
+      "name": "AlloCar v1/Corpo/14/Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:ae1ae66d1a1cd6129fefca426aa6d9fdbda4358a,",
+      "name": "AlloCar v1/Corpo/14/Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:6297c667193900878fe40f772370ad223664d608,",
+      "name": "AlloCar v1/Corpo/14/Medium/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Medium",
+        "variationSettings": {
+          "wght": 500,
+          "slnt": 0
+        }
+      },
+      "fontSize": 14,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:3155170ac96655059cdbdd2f99feb3df52a86c12,",
+      "name": "AlloCar v1/Legenda/11/Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 11,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:91058e4e5344919b7d1f04c95443a756eb5691b5,",
+      "name": "AlloCar v1/Legenda/11/Regular/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      "fontSize": 11,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:7e78ac3d3abcf74c85df08cf98ddd8b6244dabff,",
+      "name": "AlloCar v1/Subtitulo/28/Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 28,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:e3068d89df23e52c12052e95e69f0930c99b737c,",
+      "name": "AlloCar v1/Subtitulo/20/Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 20,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:930cee48943183daa50adbab016f742bbb3d523c,",
+      "name": "AlloCar v1/Subtitulo/24/Bold/145pct",
+      "fontName": {
+        "family": "Inter",
+        "style": "Bold",
+        "variationSettings": {
+          "wght": 700,
+          "slnt": 0
+        }
+      },
+      "fontSize": 24,
+      "lineHeight": {
+        "unit": "PERCENT",
+        "value": 145.00000476837158
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:95d7bb4d4e1e0d606cc6e2a6c1cb27e6453cfecc,",
+      "name": "AlloCar v1/Titulo/54/Extra-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Extra Bold",
+        "variationSettings": {
+          "wght": 800,
+          "slnt": 0
+        }
+      },
+      "fontSize": 54,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -1.5
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:29ad6130fc58da44bd2c55483f64c1b4d8c8d667,",
+      "name": "AlloCar v1/Titulo/54/Extra-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Extra Bold",
+        "variationSettings": {
+          "wght": 800,
+          "slnt": 0
+        }
+      },
+      "fontSize": 54,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -2
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:286407178f75ce2b3cdd7b7469b4e73b86f87306,",
+      "name": "AlloCar v1/Corpo/16/Semi-Bold/Auto",
+      "fontName": {
+        "family": "Inter",
+        "style": "Semi Bold",
+        "variationSettings": {
+          "wght": 600,
+          "slnt": 0
+        }
+      },
+      "fontSize": 16,
+      "lineHeight": {
+        "unit": "AUTO"
+      },
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    }
+  ],
+  "effectStyles": [
+    {
+      "id": "S:94296b3b2506f4cb397d37bbf3db507fef1cae7b,",
+      "name": "AlloCar v1/Elevacao/1",
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0.0941176488995552,
+            "g": 0.14509804546833038,
+            "b": 0.12156862765550613,
+            "a": 0.05098039284348488
+          },
+          "offset": {
+            "x": 0,
+            "y": 2
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        }
+      ]
+    },
+    {
+      "id": "S:4a939697c8f3c45abcaf87202a127c1c6d31739e,",
+      "name": "AlloCar v1/Elevacao/2",
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0.0941176488995552,
+            "g": 0.14509804546833038,
+            "b": 0.12156862765550613,
+            "a": 0.0784313753247261
+          },
+          "offset": {
+            "x": 0,
+            "y": 8
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        }
+      ]
+    },
+    {
+      "id": "S:3180a6157b1ff5293f2ce770ce5daad58a4bc683,",
+      "name": "AlloCar v1/Elevacao/3",
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 48,
+          "boundVariables": {},
+          "color": {
+            "r": 0.0941176488995552,
+            "g": 0.14509804546833038,
+            "b": 0.12156862765550613,
+            "a": 0.14901961386203766
+          },
+          "offset": {
+            "x": 0,
+            "y": 16
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,45 @@
-# AlloCar — Classes e regras do backend
+# AlloCar · Backend
 
-## Organização dos pacotes
+API REST em Java com Spring Boot, Spring Security e JDBC, responsável por cadastros, pedidos de aluguel, avaliação financeira, contratos e crédito. A persistência usa PostgreSQL no Supabase, com acesso restrito ao contexto da conta autenticada.
+
+## Execução
+
+Com JDK 25, `JAVA_HOME` configurado e Maven, prepare `backend/.env` a partir de [`.env.example`](.env.example), conforme o [guia de conexão do banco](../docs/database.md#conexão-do-backend). O arquivo usa o formato Java properties, sem aspas, e fica ignorado pelo Git. Em implantação, as mesmas propriedades podem ser fornecidas por variáveis de ambiente.
+
+A partir da raiz do repositório:
+
+```powershell
+cd backend
+mvn spring-boot:run '-Dspring-boot.run.profiles=supabase'
+```
+
+A API responde em **`http://localhost:8080/api`**. O perfil `supabase` habilita a conexão JDBC e valida o login dedicado durante a inicialização. Credenciais de banco permanecem no servidor; a aplicação não cria tabelas nem carrega dados ao iniciar.
+
+```powershell
+mvn test
+mvn package
+```
+
+O Maven gera o JAR executável em `target/`. As [rotas, os formatos JSON e os exemplos de consumo](../docs/api.md) descrevem o contrato HTTP da aplicação.
+
+## Organização
+
+```text
+src/
+├── main/
+│   ├── java/com/allocar/backend/
+│   │   ├── application/   # BackendApplication.java
+│   │   ├── controller/    # rotas HTTP e tratamento de erros
+│   │   ├── exception/     # exceções da API e das regras de negócio
+│   │   ├── model/         # domínio, estados, DTOs e projeções de leitura
+│   │   ├── repository/    # consultas e persistência JDBC
+│   │   └── service/       # casos de uso, segurança e transações
+│   └── resources/        # propriedades de execução
+└── test/java/com/allocar/backend/
+    ├── controller/       # contratos HTTP e integração com o banco
+    ├── model/            # regras e operações de domínio
+    └── service/          # autenticação
+```
 
 As classes estão sob `com.allocar.backend`, com as seguintes responsabilidades:
 
@@ -56,7 +95,7 @@ Unicidade de usuário, CPF, CNPJ, matrícula, placa e número de crédito envolv
 
 ## Acesso ao PostgreSQL
 
-`service.SupabaseDatabaseConfiguration` configura JDBC, Hikari e transações no perfil `supabase`. O login dedicado usa o schema privado `allocar`, com políticas RLS e restrições SQL. As [instruções de conexão e os dados fictícios](database.md) descrevem as variáveis de ambiente usadas na execução.
+`service.SupabaseDatabaseConfiguration` configura JDBC, Hikari e transações no perfil `supabase`. O login dedicado usa o schema privado `allocar`, com políticas RLS e restrições SQL. As [instruções de conexão e os dados fictícios](../docs/database.md) descrevem as variáveis de ambiente usadas na execução.
 
 `AutomovelRepository.buscar` consulta o catálogo por marca e ano, retornando `VeiculoCatalogo`. `PedidoRepository.listar` retorna `ResumoPedido` conforme o escopo da conta. Esses tipos são projeções de leitura; as entidades preservam suas regras e independência do Spring.
 
@@ -68,7 +107,9 @@ O banco reproduz as invariantes persistidas com unicidade, chaves estrangeiras, 
 
 ## API REST
 
-Os controllers expõem os [contratos HTTP e exemplos JSON](api.md). `AutenticacaoService` verifica hashes PBKDF2 e usa `ContaAutenticada` como principal de sessão, sem senha/hash. `SegurancaConfiguration` aplica autenticação, perfis, CSRF e CORS. `ClienteService` coordena perfil e rendimentos; `AluguelService` coordena catálogo, pedidos, pareceres, execução e crédito.
+Os controllers expõem os [contratos HTTP e exemplos JSON](../docs/api.md). `AutenticacaoService` verifica hashes PBKDF2 e usa `ContaAutenticada` como principal de sessão, sem senha/hash. `SegurancaConfiguration` aplica autenticação, perfis, CSRF e CORS. `ClienteService` coordena perfil e rendimentos; `AluguelService` coordena catálogo, pedidos, pareceres, execução e crédito.
+
+A sessão usa o cookie `JSESSIONID`, `HttpOnly`, com expiração após 30 minutos sem atividade. Operações de escrita exigem token CSRF, inclusive cadastro e login; o cliente obtém outro token após autenticar. `ALLOCAR_ALLOWED_ORIGINS` define as origens permitidas pelo CORS, e `ALLOCAR_COOKIE_SECURE` controla o atributo `Secure` do cookie. O [fluxo de sessão e CSRF](../docs/api.md#sessão-e-csrf) detalha os cabeçalhos e a sequência das requisições.
 
 `ApiDtos` define entradas validadas e respostas próprias para a API, sem serializar entidades de negócio. `ApiExceptionHandler` transforma validações, conflitos e falhas de autorização/persistência em erros públicos. O frontend envia a versão recebida na consulta; o servidor bloqueia o cadastro antes do pedido para conferir versões e executar a operação na mesma transação.
 
@@ -92,3 +133,21 @@ contrato.associarCredito(contaBanco, credito);
 ```
 
 Os métodos também permitem injetar `Clock` na solicitação para controlar as datas dos pareceres e contratos em testes.
+
+## Testes
+
+Em `backend`, execute a suíte local:
+
+```powershell
+mvn test
+```
+
+Os testes verificam regras de domínio, autenticação, validação de entradas, sessão, CSRF, CORS e contratos HTTP sem conexão com o banco remoto. Os cenários de domínio cobrem permissões, estados terminais, reanálise, versões desatualizadas, execução contratual e exclusividade do crédito.
+
+Para executar a integração com o banco configurado em `.env`:
+
+```powershell
+mvn '-Dtest=SupabaseApiIT' test
+```
+
+`SupabaseApiIT` ativa o perfil `supabase` e usa os repositórios, a cadeia de segurança e as tabelas reais. Cada cenário cria registros exclusivos em uma transação com rollback ao final, preservando os dados fictícios existentes. Os [detalhes dos testes de integração](../docs/api.md#testes) complementam o roteiro.

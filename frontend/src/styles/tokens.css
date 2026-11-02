@@ -1,0 +1,775 @@
+/* Gerado de figma.tokens.json. Atualize com npm run tokens. */
+:root {
+  --interface-canvas: #f2f5f8;
+  --interface-surface: #ffffff;
+  --interface-ink: #142e43;
+  --interface-muted: #52677a;
+  --interface-accent: #145b50;
+  --interface-soft: #e0f0eb;
+  --interface-border: #ced8e2;
+  --cor-neutral-950: #18251f;
+  --cor-texto-marca: var(--cor-neutral-950);
+  --cor-slate-900: #142e43;
+  --cor-texto-primario: var(--cor-slate-900);
+  --cor-neutral-100: #eef1eb;
+  --cor-superficie-sutil: var(--cor-neutral-100);
+  --cor-slate-600: #52677a;
+  --cor-texto-secundario: var(--cor-slate-600);
+  --cor-slate-200: #ced8e2;
+  --cor-borda-padrao: var(--cor-slate-200);
+  --cor-teal-800: #145b50;
+  --cor-acao-link: var(--cor-teal-800);
+  --cor-neutral-0: #ffffff;
+  --cor-superficie-cartao: var(--cor-neutral-0);
+  --cor-lime-400: #c5f34a;
+  --cor-acao-primaria: var(--cor-lime-400);
+  --cor-neutral-300: #c8d2c7;
+  --cor-borda-alternativa: var(--cor-neutral-300);
+  --cor-lime-500: #b4e437;
+  --cor-acao-primaria-hover: var(--cor-lime-500);
+  --cor-orange-200: #f2c89b;
+  --cor-marca-secundaria: var(--cor-orange-200);
+  --cor-neutral-50: #f5f6f2;
+  --cor-superficie-pagina: var(--cor-neutral-50);
+  --cor-green-50: #e8f4eb;
+  --cor-feedback-sucesso-fundo: var(--cor-green-50);
+  --cor-green-800: #236343;
+  --cor-feedback-sucesso-texto: var(--cor-green-800);
+  --cor-amber-50: #fff2d9;
+  --cor-feedback-atencao-fundo: var(--cor-amber-50);
+  --cor-amber-800: #855012;
+  --cor-feedback-atencao-texto: var(--cor-amber-800);
+  --cor-red-50: #fcece9;
+  --cor-feedback-erro-fundo: var(--cor-red-50);
+  --cor-red-600: #b3342c;
+  --cor-acao-destrutiva: var(--cor-red-600);
+  --cor-blue-50: #eaf2fa;
+  --cor-feedback-informacao-fundo: var(--cor-blue-50);
+  --cor-blue-700: #285d85;
+  --cor-feedback-informacao-texto: var(--cor-blue-700);
+  --cor-teal-50: #e0f0eb;
+  --cor-superficie-destaque: var(--cor-teal-50);
+  --cor-neutral-250: #cfd7ce;
+  --cor-borda-desabilitada: var(--cor-neutral-250);
+  --cor-lime-600: #a0ce26;
+  --cor-acao-primaria-pressed: var(--cor-lime-600);
+  --cor-neutral-200: #e3e7e0;
+  --cor-acao-desabilitada-fundo: var(--cor-neutral-200);
+  --cor-neutral-600: #667060;
+  --cor-acao-desabilitada-texto: var(--cor-neutral-600);
+  --cor-red-700: #9c2c25;
+  --cor-acao-destrutiva-hover: var(--cor-red-700);
+  --cor-red-800: #81251f;
+  --cor-acao-destrutiva-pressed: var(--cor-red-800);
+  --espaco-48: 48px;
+  --espaco-0: 0px;
+  --raio-0: 0px;
+  --espaco-16: 16px;
+  --espaco-20: 20px;
+  --espaco-3: 3px;
+  --espaco-12: 12px;
+  --espaco-40: 40px;
+  --espaco-32: 32px;
+  --raio-24: 24px;
+  --espaco-8: 8px;
+  --espaco-4: 4px;
+  --espaco-6: 6px;
+  --raio-16: 16px;
+  --raio-8: 8px;
+  --espaco-24: 24px;
+  --espaco-28: 28px;
+  --espaco-22: 22px;
+  --raio-2: 2px;
+  --raio-6: 6px;
+  --raio-4: 4px;
+  --espaco-10: 10px;
+  --espaco-14: 14px;
+  --espaco-18: 18px;
+  --espaco-5: 5px;
+  --espaco-2: 2px;
+  --raio-12: 12px;
+  --espaco-56: 56px;
+  --raio-5: 5px;
+  --cor-green-900: #356b18;
+  --cor-foco-anel: var(--cor-green-900);
+  --cor-marca-logo-claro: var(--cor-green-900);
+  --type-subtitulo-26-extra-bold-auto-family: "Inter", sans-serif;
+  --type-subtitulo-26-extra-bold-auto-size: 26px;
+  --type-subtitulo-26-extra-bold-auto-weight: 800;
+  --type-subtitulo-26-extra-bold-auto-line: normal;
+  --type-subtitulo-26-extra-bold-auto-tracking: -1.5px;
+  --type-legenda-12-semi-bold-145pct-family: "Inter", sans-serif;
+  --type-legenda-12-semi-bold-145pct-size: 12px;
+  --type-legenda-12-semi-bold-145pct-weight: 600;
+  --type-legenda-12-semi-bold-145pct-line: 1.45;
+  --type-legenda-12-semi-bold-145pct-tracking: 0em;
+  --type-corpo-18-semi-bold-auto-family: "Inter", sans-serif;
+  --type-corpo-18-semi-bold-auto-size: 18px;
+  --type-corpo-18-semi-bold-auto-weight: 600;
+  --type-corpo-18-semi-bold-auto-line: normal;
+  --type-corpo-18-semi-bold-auto-tracking: 0em;
+  --type-titulo-48-bold-auto-family: "Inter", sans-serif;
+  --type-titulo-48-bold-auto-size: 48px;
+  --type-titulo-48-bold-auto-weight: 700;
+  --type-titulo-48-bold-auto-line: normal;
+  --type-titulo-48-bold-auto-tracking: -2px;
+  --type-corpo-16-regular-145pct-family: "Inter", sans-serif;
+  --type-corpo-16-regular-145pct-size: 16px;
+  --type-corpo-16-regular-145pct-weight: 400;
+  --type-corpo-16-regular-145pct-line: 1.45;
+  --type-corpo-16-regular-145pct-tracking: 0em;
+  --type-titulo-64-extra-bold-auto-family: "Inter", sans-serif;
+  --type-titulo-64-extra-bold-auto-size: 64px;
+  --type-titulo-64-extra-bold-auto-weight: 800;
+  --type-titulo-64-extra-bold-auto-line: normal;
+  --type-titulo-64-extra-bold-auto-tracking: -1.5px;
+  --type-legenda-13-semi-bold-145pct-family: "Inter", sans-serif;
+  --type-legenda-13-semi-bold-145pct-size: 13px;
+  --type-legenda-13-semi-bold-145pct-weight: 600;
+  --type-legenda-13-semi-bold-145pct-line: 1.45;
+  --type-legenda-13-semi-bold-145pct-tracking: 0em;
+  --type-titulo-58-regular-106pct-family: "Inter", sans-serif;
+  --type-titulo-58-regular-106pct-size: 58px;
+  --type-titulo-58-regular-106pct-weight: 400;
+  --type-titulo-58-regular-106pct-line: 1.06;
+  --type-titulo-58-regular-106pct-tracking: -2.5px;
+  --type-legenda-12-regular-145pct-family: "Inter", sans-serif;
+  --type-legenda-12-regular-145pct-size: 12px;
+  --type-legenda-12-regular-145pct-weight: 400;
+  --type-legenda-12-regular-145pct-line: 1.45;
+  --type-legenda-12-regular-145pct-tracking: 0em;
+  --type-corpo-18-semi-bold-145pct-family: "Inter", sans-serif;
+  --type-corpo-18-semi-bold-145pct-size: 18px;
+  --type-corpo-18-semi-bold-145pct-weight: 600;
+  --type-corpo-18-semi-bold-145pct-line: 1.45;
+  --type-corpo-18-semi-bold-145pct-tracking: 0em;
+  --type-corpo-14-regular-145pct-family: "Inter", sans-serif;
+  --type-corpo-14-regular-145pct-size: 14px;
+  --type-corpo-14-regular-145pct-weight: 400;
+  --type-corpo-14-regular-145pct-line: 1.45;
+  --type-corpo-14-regular-145pct-tracking: 0em;
+  --type-subtitulo-22-regular-145pct-family: "Inter", sans-serif;
+  --type-subtitulo-22-regular-145pct-size: 22px;
+  --type-subtitulo-22-regular-145pct-weight: 400;
+  --type-subtitulo-22-regular-145pct-line: 1.45;
+  --type-subtitulo-22-regular-145pct-tracking: 0em;
+  --type-legenda-12-medium-145pct-family: "Inter", sans-serif;
+  --type-legenda-12-medium-145pct-size: 12px;
+  --type-legenda-12-medium-145pct-weight: 500;
+  --type-legenda-12-medium-145pct-line: 1.45;
+  --type-legenda-12-medium-145pct-tracking: 0em;
+  --type-corpo-14-semi-bold-145pct-family: "Inter", sans-serif;
+  --type-corpo-14-semi-bold-145pct-size: 14px;
+  --type-corpo-14-semi-bold-145pct-weight: 600;
+  --type-corpo-14-semi-bold-145pct-line: 1.45;
+  --type-corpo-14-semi-bold-145pct-tracking: 0em;
+  --type-subtitulo-20-regular-145pct-family: "Inter", sans-serif;
+  --type-subtitulo-20-regular-145pct-size: 20px;
+  --type-subtitulo-20-regular-145pct-weight: 400;
+  --type-subtitulo-20-regular-145pct-line: 1.45;
+  --type-subtitulo-20-regular-145pct-tracking: 0em;
+  --type-legenda-13-regular-145pct-family: "Inter", sans-serif;
+  --type-legenda-13-regular-145pct-size: 13px;
+  --type-legenda-13-regular-145pct-weight: 400;
+  --type-legenda-13-regular-145pct-line: 1.45;
+  --type-legenda-13-regular-145pct-tracking: 0em;
+  --type-legenda-11-semi-bold-145pct-family: "Inter", sans-serif;
+  --type-legenda-11-semi-bold-145pct-size: 11px;
+  --type-legenda-11-semi-bold-145pct-weight: 600;
+  --type-legenda-11-semi-bold-145pct-line: 1.45;
+  --type-legenda-11-semi-bold-145pct-tracking: 0em;
+  --type-titulo-56-regular-108pct-family: "Inter", sans-serif;
+  --type-titulo-56-regular-108pct-size: 56px;
+  --type-titulo-56-regular-108pct-weight: 400;
+  --type-titulo-56-regular-108pct-line: 1.08;
+  --type-titulo-56-regular-108pct-tracking: -1.2999999523162842px;
+  --type-titulo-40-regular-115pct-family: "Inter", sans-serif;
+  --type-titulo-40-regular-115pct-size: 40px;
+  --type-titulo-40-regular-115pct-weight: 400;
+  --type-titulo-40-regular-115pct-line: 1.15;
+  --type-titulo-40-regular-115pct-tracking: -1.2999999523162842px;
+  --type-titulo-32-regular-120pct-family: "Inter", sans-serif;
+  --type-titulo-32-regular-120pct-size: 32px;
+  --type-titulo-32-regular-120pct-weight: 400;
+  --type-titulo-32-regular-120pct-line: 1.2;
+  --type-titulo-32-regular-120pct-tracking: -1.2999999523162842px;
+  --type-subtitulo-24-regular-130pct-family: "Inter", sans-serif;
+  --type-subtitulo-24-regular-130pct-size: 24px;
+  --type-subtitulo-24-regular-130pct-weight: 400;
+  --type-subtitulo-24-regular-130pct-line: 1.3;
+  --type-subtitulo-24-regular-130pct-tracking: 0em;
+  --type-subtitulo-20-regular-140pct-family: "Inter", sans-serif;
+  --type-subtitulo-20-regular-140pct-size: 20px;
+  --type-subtitulo-20-regular-140pct-weight: 400;
+  --type-subtitulo-20-regular-140pct-line: 1.4;
+  --type-subtitulo-20-regular-140pct-tracking: 0em;
+  --type-corpo-16-regular-150pct-family: "Inter", sans-serif;
+  --type-corpo-16-regular-150pct-size: 16px;
+  --type-corpo-16-regular-150pct-weight: 400;
+  --type-corpo-16-regular-150pct-line: 1.5;
+  --type-corpo-16-regular-150pct-tracking: 0em;
+  --type-corpo-14-regular-150pct-family: "Inter", sans-serif;
+  --type-corpo-14-regular-150pct-size: 14px;
+  --type-corpo-14-regular-150pct-weight: 400;
+  --type-corpo-14-regular-150pct-line: 1.5;
+  --type-corpo-14-regular-150pct-tracking: 0em;
+  --type-legenda-12-regular-150pct-family: "Inter", sans-serif;
+  --type-legenda-12-regular-150pct-size: 12px;
+  --type-legenda-12-regular-150pct-weight: 400;
+  --type-legenda-12-regular-150pct-line: 1.5;
+  --type-legenda-12-regular-150pct-tracking: 0em;
+  --type-titulo-32-regular-145pct-family: "Inter", sans-serif;
+  --type-titulo-32-regular-145pct-size: 32px;
+  --type-titulo-32-regular-145pct-weight: 400;
+  --type-titulo-32-regular-145pct-line: 1.45;
+  --type-titulo-32-regular-145pct-tracking: 0em;
+  --type-corpo-18-regular-145pct-family: "Inter", sans-serif;
+  --type-corpo-18-regular-145pct-size: 18px;
+  --type-corpo-18-regular-145pct-weight: 400;
+  --type-corpo-18-regular-145pct-line: 1.45;
+  --type-corpo-18-regular-145pct-tracking: 0em;
+  --type-titulo-32-extra-bold-auto-family: "Inter", sans-serif;
+  --type-titulo-32-extra-bold-auto-size: 32px;
+  --type-titulo-32-extra-bold-auto-weight: 800;
+  --type-titulo-32-extra-bold-auto-line: normal;
+  --type-titulo-32-extra-bold-auto-tracking: -1.5px;
+  --type-corpo-14-regular-auto-family: "Inter", sans-serif;
+  --type-corpo-14-regular-auto-size: 14px;
+  --type-corpo-14-regular-auto-weight: 400;
+  --type-corpo-14-regular-auto-line: normal;
+  --type-corpo-14-regular-auto-tracking: 0em;
+  --type-corpo-16-regular-auto-family: "Inter", sans-serif;
+  --type-corpo-16-regular-auto-size: 16px;
+  --type-corpo-16-regular-auto-weight: 400;
+  --type-corpo-16-regular-auto-line: normal;
+  --type-corpo-16-regular-auto-tracking: 0em;
+  --type-titulo-40-bold-auto-family: "Inter", sans-serif;
+  --type-titulo-40-bold-auto-size: 40px;
+  --type-titulo-40-bold-auto-weight: 700;
+  --type-titulo-40-bold-auto-line: normal;
+  --type-titulo-40-bold-auto-tracking: -1.600000023841858px;
+  --type-subtitulo-20-bold-145pct-family: "Inter", sans-serif;
+  --type-subtitulo-20-bold-145pct-size: 20px;
+  --type-subtitulo-20-bold-145pct-weight: 700;
+  --type-subtitulo-20-bold-145pct-line: 1.45;
+  --type-subtitulo-20-bold-145pct-tracking: 0em;
+  --type-legenda-12-semi-bold-auto-family: "Inter", sans-serif;
+  --type-legenda-12-semi-bold-auto-size: 12px;
+  --type-legenda-12-semi-bold-auto-weight: 600;
+  --type-legenda-12-semi-bold-auto-line: normal;
+  --type-legenda-12-semi-bold-auto-tracking: 0em;
+  --type-subtitulo-22-bold-145pct-family: "Inter", sans-serif;
+  --type-subtitulo-22-bold-145pct-size: 22px;
+  --type-subtitulo-22-bold-145pct-weight: 700;
+  --type-subtitulo-22-bold-145pct-line: 1.45;
+  --type-subtitulo-22-bold-145pct-tracking: 0em;
+  --type-legenda-12-regular-auto-family: "Inter", sans-serif;
+  --type-legenda-12-regular-auto-size: 12px;
+  --type-legenda-12-regular-auto-weight: 400;
+  --type-legenda-12-regular-auto-line: normal;
+  --type-legenda-12-regular-auto-tracking: 0em;
+  --type-subtitulo-30-regular-auto-family: "Inter", sans-serif;
+  --type-subtitulo-30-regular-auto-size: 30px;
+  --type-subtitulo-30-regular-auto-weight: 400;
+  --type-subtitulo-30-regular-auto-line: normal;
+  --type-subtitulo-30-regular-auto-tracking: -1px;
+  --type-subtitulo-28-extra-bold-auto-family: "Inter", sans-serif;
+  --type-subtitulo-28-extra-bold-auto-size: 28px;
+  --type-subtitulo-28-extra-bold-auto-weight: 800;
+  --type-subtitulo-28-extra-bold-auto-line: normal;
+  --type-subtitulo-28-extra-bold-auto-tracking: -1.5px;
+  --type-legenda-12-bold-145pct-family: "Inter", sans-serif;
+  --type-legenda-12-bold-145pct-size: 12px;
+  --type-legenda-12-bold-145pct-weight: 700;
+  --type-legenda-12-bold-145pct-line: 1.45;
+  --type-legenda-12-bold-145pct-tracking: 0em;
+  --type-titulo-32-regular-115pct-family: "Inter", sans-serif;
+  --type-titulo-32-regular-115pct-size: 32px;
+  --type-titulo-32-regular-115pct-weight: 400;
+  --type-titulo-32-regular-115pct-line: 1.15;
+  --type-titulo-32-regular-115pct-tracking: -1.2000000476837158px;
+  --type-legenda-13-medium-145pct-family: "Inter", sans-serif;
+  --type-legenda-13-medium-145pct-size: 13px;
+  --type-legenda-13-medium-145pct-weight: 500;
+  --type-legenda-13-medium-145pct-line: 1.45;
+  --type-legenda-13-medium-145pct-tracking: 0em;
+  --type-subtitulo-28-regular-auto-family: "Inter", sans-serif;
+  --type-subtitulo-28-regular-auto-size: 28px;
+  --type-subtitulo-28-regular-auto-weight: 400;
+  --type-subtitulo-28-regular-auto-line: normal;
+  --type-subtitulo-28-regular-auto-tracking: -1px;
+  --type-subtitulo-20-semi-bold-145pct-family: "Inter", sans-serif;
+  --type-subtitulo-20-semi-bold-145pct-size: 20px;
+  --type-subtitulo-20-semi-bold-145pct-weight: 600;
+  --type-subtitulo-20-semi-bold-145pct-line: 1.45;
+  --type-subtitulo-20-semi-bold-145pct-tracking: 0em;
+  --type-corpo-14-bold-auto-family: "Inter", sans-serif;
+  --type-corpo-14-bold-auto-size: 14px;
+  --type-corpo-14-bold-auto-weight: 700;
+  --type-corpo-14-bold-auto-line: normal;
+  --type-corpo-14-bold-auto-tracking: 0em;
+  --type-corpo-14-bold-145pct-family: "Inter", sans-serif;
+  --type-corpo-14-bold-145pct-size: 14px;
+  --type-corpo-14-bold-145pct-weight: 700;
+  --type-corpo-14-bold-145pct-line: 1.45;
+  --type-corpo-14-bold-145pct-tracking: 0em;
+  --type-corpo-14-medium-145pct-family: "Inter", sans-serif;
+  --type-corpo-14-medium-145pct-size: 14px;
+  --type-corpo-14-medium-145pct-weight: 500;
+  --type-corpo-14-medium-145pct-line: 1.45;
+  --type-corpo-14-medium-145pct-tracking: 0em;
+  --type-legenda-11-bold-145pct-family: "Inter", sans-serif;
+  --type-legenda-11-bold-145pct-size: 11px;
+  --type-legenda-11-bold-145pct-weight: 700;
+  --type-legenda-11-bold-145pct-line: 1.45;
+  --type-legenda-11-bold-145pct-tracking: 0em;
+  --type-legenda-11-regular-145pct-family: "Inter", sans-serif;
+  --type-legenda-11-regular-145pct-size: 11px;
+  --type-legenda-11-regular-145pct-weight: 400;
+  --type-legenda-11-regular-145pct-line: 1.45;
+  --type-legenda-11-regular-145pct-tracking: 0em;
+  --type-subtitulo-28-bold-145pct-family: "Inter", sans-serif;
+  --type-subtitulo-28-bold-145pct-size: 28px;
+  --type-subtitulo-28-bold-145pct-weight: 700;
+  --type-subtitulo-28-bold-145pct-line: 1.45;
+  --type-subtitulo-28-bold-145pct-tracking: 0em;
+  --type-subtitulo-20-bold-auto-family: "Inter", sans-serif;
+  --type-subtitulo-20-bold-auto-size: 20px;
+  --type-subtitulo-20-bold-auto-weight: 700;
+  --type-subtitulo-20-bold-auto-line: normal;
+  --type-subtitulo-20-bold-auto-tracking: 0em;
+  --type-subtitulo-24-bold-145pct-family: "Inter", sans-serif;
+  --type-subtitulo-24-bold-145pct-size: 24px;
+  --type-subtitulo-24-bold-145pct-weight: 700;
+  --type-subtitulo-24-bold-145pct-line: 1.45;
+  --type-subtitulo-24-bold-145pct-tracking: 0em;
+  --type-titulo-54-extra-bold-auto-family: "Inter", sans-serif;
+  --type-titulo-54-extra-bold-auto-size: 54px;
+  --type-titulo-54-extra-bold-auto-weight: 800;
+  --type-titulo-54-extra-bold-auto-line: normal;
+  --type-titulo-54-extra-bold-auto-tracking: -1.5px;
+  --type-corpo-16-semi-bold-auto-family: "Inter", sans-serif;
+  --type-corpo-16-semi-bold-auto-size: 16px;
+  --type-corpo-16-semi-bold-auto-weight: 600;
+  --type-corpo-16-semi-bold-auto-line: normal;
+  --type-corpo-16-semi-bold-auto-tracking: 0em;
+  --elevacao-1: 0px 2px 8px 0px rgb(24 37 31 / 0.051);
+  --elevacao-2: 0px 8px 24px 0px rgb(24 37 31 / 0.0784);
+  --elevacao-3: 0px 16px 48px 0px rgb(24 37 31 / 0.149);
+}
+
+.type-subtitulo-26-extra-bold-auto {
+  font-family: var(--type-subtitulo-26-extra-bold-auto-family);
+  font-size: var(--type-subtitulo-26-extra-bold-auto-size);
+  font-weight: var(--type-subtitulo-26-extra-bold-auto-weight);
+  line-height: var(--type-subtitulo-26-extra-bold-auto-line);
+  letter-spacing: var(--type-subtitulo-26-extra-bold-auto-tracking);
+}
+
+.type-legenda-12-semi-bold-145pct {
+  font-family: var(--type-legenda-12-semi-bold-145pct-family);
+  font-size: var(--type-legenda-12-semi-bold-145pct-size);
+  font-weight: var(--type-legenda-12-semi-bold-145pct-weight);
+  line-height: var(--type-legenda-12-semi-bold-145pct-line);
+  letter-spacing: var(--type-legenda-12-semi-bold-145pct-tracking);
+}
+
+.type-corpo-18-semi-bold-auto {
+  font-family: var(--type-corpo-18-semi-bold-auto-family);
+  font-size: var(--type-corpo-18-semi-bold-auto-size);
+  font-weight: var(--type-corpo-18-semi-bold-auto-weight);
+  line-height: var(--type-corpo-18-semi-bold-auto-line);
+  letter-spacing: var(--type-corpo-18-semi-bold-auto-tracking);
+}
+
+.type-titulo-48-bold-auto {
+  font-family: var(--type-titulo-48-bold-auto-family);
+  font-size: var(--type-titulo-48-bold-auto-size);
+  font-weight: var(--type-titulo-48-bold-auto-weight);
+  line-height: var(--type-titulo-48-bold-auto-line);
+  letter-spacing: var(--type-titulo-48-bold-auto-tracking);
+}
+
+.type-corpo-16-regular-145pct {
+  font-family: var(--type-corpo-16-regular-145pct-family);
+  font-size: var(--type-corpo-16-regular-145pct-size);
+  font-weight: var(--type-corpo-16-regular-145pct-weight);
+  line-height: var(--type-corpo-16-regular-145pct-line);
+  letter-spacing: var(--type-corpo-16-regular-145pct-tracking);
+}
+
+.type-titulo-64-extra-bold-auto {
+  font-family: var(--type-titulo-64-extra-bold-auto-family);
+  font-size: var(--type-titulo-64-extra-bold-auto-size);
+  font-weight: var(--type-titulo-64-extra-bold-auto-weight);
+  line-height: var(--type-titulo-64-extra-bold-auto-line);
+  letter-spacing: var(--type-titulo-64-extra-bold-auto-tracking);
+}
+
+.type-legenda-13-semi-bold-145pct {
+  font-family: var(--type-legenda-13-semi-bold-145pct-family);
+  font-size: var(--type-legenda-13-semi-bold-145pct-size);
+  font-weight: var(--type-legenda-13-semi-bold-145pct-weight);
+  line-height: var(--type-legenda-13-semi-bold-145pct-line);
+  letter-spacing: var(--type-legenda-13-semi-bold-145pct-tracking);
+}
+
+.type-titulo-58-regular-106pct {
+  font-family: var(--type-titulo-58-regular-106pct-family);
+  font-size: var(--type-titulo-58-regular-106pct-size);
+  font-weight: var(--type-titulo-58-regular-106pct-weight);
+  line-height: var(--type-titulo-58-regular-106pct-line);
+  letter-spacing: var(--type-titulo-58-regular-106pct-tracking);
+}
+
+.type-legenda-12-regular-145pct {
+  font-family: var(--type-legenda-12-regular-145pct-family);
+  font-size: var(--type-legenda-12-regular-145pct-size);
+  font-weight: var(--type-legenda-12-regular-145pct-weight);
+  line-height: var(--type-legenda-12-regular-145pct-line);
+  letter-spacing: var(--type-legenda-12-regular-145pct-tracking);
+}
+
+.type-corpo-18-semi-bold-145pct {
+  font-family: var(--type-corpo-18-semi-bold-145pct-family);
+  font-size: var(--type-corpo-18-semi-bold-145pct-size);
+  font-weight: var(--type-corpo-18-semi-bold-145pct-weight);
+  line-height: var(--type-corpo-18-semi-bold-145pct-line);
+  letter-spacing: var(--type-corpo-18-semi-bold-145pct-tracking);
+}
+
+.type-corpo-14-regular-145pct {
+  font-family: var(--type-corpo-14-regular-145pct-family);
+  font-size: var(--type-corpo-14-regular-145pct-size);
+  font-weight: var(--type-corpo-14-regular-145pct-weight);
+  line-height: var(--type-corpo-14-regular-145pct-line);
+  letter-spacing: var(--type-corpo-14-regular-145pct-tracking);
+}
+
+.type-subtitulo-22-regular-145pct {
+  font-family: var(--type-subtitulo-22-regular-145pct-family);
+  font-size: var(--type-subtitulo-22-regular-145pct-size);
+  font-weight: var(--type-subtitulo-22-regular-145pct-weight);
+  line-height: var(--type-subtitulo-22-regular-145pct-line);
+  letter-spacing: var(--type-subtitulo-22-regular-145pct-tracking);
+}
+
+.type-legenda-12-medium-145pct {
+  font-family: var(--type-legenda-12-medium-145pct-family);
+  font-size: var(--type-legenda-12-medium-145pct-size);
+  font-weight: var(--type-legenda-12-medium-145pct-weight);
+  line-height: var(--type-legenda-12-medium-145pct-line);
+  letter-spacing: var(--type-legenda-12-medium-145pct-tracking);
+}
+
+.type-corpo-14-semi-bold-145pct {
+  font-family: var(--type-corpo-14-semi-bold-145pct-family);
+  font-size: var(--type-corpo-14-semi-bold-145pct-size);
+  font-weight: var(--type-corpo-14-semi-bold-145pct-weight);
+  line-height: var(--type-corpo-14-semi-bold-145pct-line);
+  letter-spacing: var(--type-corpo-14-semi-bold-145pct-tracking);
+}
+
+.type-subtitulo-20-regular-145pct {
+  font-family: var(--type-subtitulo-20-regular-145pct-family);
+  font-size: var(--type-subtitulo-20-regular-145pct-size);
+  font-weight: var(--type-subtitulo-20-regular-145pct-weight);
+  line-height: var(--type-subtitulo-20-regular-145pct-line);
+  letter-spacing: var(--type-subtitulo-20-regular-145pct-tracking);
+}
+
+.type-legenda-13-regular-145pct {
+  font-family: var(--type-legenda-13-regular-145pct-family);
+  font-size: var(--type-legenda-13-regular-145pct-size);
+  font-weight: var(--type-legenda-13-regular-145pct-weight);
+  line-height: var(--type-legenda-13-regular-145pct-line);
+  letter-spacing: var(--type-legenda-13-regular-145pct-tracking);
+}
+
+.type-legenda-11-semi-bold-145pct {
+  font-family: var(--type-legenda-11-semi-bold-145pct-family);
+  font-size: var(--type-legenda-11-semi-bold-145pct-size);
+  font-weight: var(--type-legenda-11-semi-bold-145pct-weight);
+  line-height: var(--type-legenda-11-semi-bold-145pct-line);
+  letter-spacing: var(--type-legenda-11-semi-bold-145pct-tracking);
+}
+
+.type-titulo-56-regular-108pct {
+  font-family: var(--type-titulo-56-regular-108pct-family);
+  font-size: var(--type-titulo-56-regular-108pct-size);
+  font-weight: var(--type-titulo-56-regular-108pct-weight);
+  line-height: var(--type-titulo-56-regular-108pct-line);
+  letter-spacing: var(--type-titulo-56-regular-108pct-tracking);
+}
+
+.type-titulo-40-regular-115pct {
+  font-family: var(--type-titulo-40-regular-115pct-family);
+  font-size: var(--type-titulo-40-regular-115pct-size);
+  font-weight: var(--type-titulo-40-regular-115pct-weight);
+  line-height: var(--type-titulo-40-regular-115pct-line);
+  letter-spacing: var(--type-titulo-40-regular-115pct-tracking);
+}
+
+.type-titulo-32-regular-120pct {
+  font-family: var(--type-titulo-32-regular-120pct-family);
+  font-size: var(--type-titulo-32-regular-120pct-size);
+  font-weight: var(--type-titulo-32-regular-120pct-weight);
+  line-height: var(--type-titulo-32-regular-120pct-line);
+  letter-spacing: var(--type-titulo-32-regular-120pct-tracking);
+}
+
+.type-subtitulo-24-regular-130pct {
+  font-family: var(--type-subtitulo-24-regular-130pct-family);
+  font-size: var(--type-subtitulo-24-regular-130pct-size);
+  font-weight: var(--type-subtitulo-24-regular-130pct-weight);
+  line-height: var(--type-subtitulo-24-regular-130pct-line);
+  letter-spacing: var(--type-subtitulo-24-regular-130pct-tracking);
+}
+
+.type-subtitulo-20-regular-140pct {
+  font-family: var(--type-subtitulo-20-regular-140pct-family);
+  font-size: var(--type-subtitulo-20-regular-140pct-size);
+  font-weight: var(--type-subtitulo-20-regular-140pct-weight);
+  line-height: var(--type-subtitulo-20-regular-140pct-line);
+  letter-spacing: var(--type-subtitulo-20-regular-140pct-tracking);
+}
+
+.type-corpo-16-regular-150pct {
+  font-family: var(--type-corpo-16-regular-150pct-family);
+  font-size: var(--type-corpo-16-regular-150pct-size);
+  font-weight: var(--type-corpo-16-regular-150pct-weight);
+  line-height: var(--type-corpo-16-regular-150pct-line);
+  letter-spacing: var(--type-corpo-16-regular-150pct-tracking);
+}
+
+.type-corpo-14-regular-150pct {
+  font-family: var(--type-corpo-14-regular-150pct-family);
+  font-size: var(--type-corpo-14-regular-150pct-size);
+  font-weight: var(--type-corpo-14-regular-150pct-weight);
+  line-height: var(--type-corpo-14-regular-150pct-line);
+  letter-spacing: var(--type-corpo-14-regular-150pct-tracking);
+}
+
+.type-legenda-12-regular-150pct {
+  font-family: var(--type-legenda-12-regular-150pct-family);
+  font-size: var(--type-legenda-12-regular-150pct-size);
+  font-weight: var(--type-legenda-12-regular-150pct-weight);
+  line-height: var(--type-legenda-12-regular-150pct-line);
+  letter-spacing: var(--type-legenda-12-regular-150pct-tracking);
+}
+
+.type-titulo-32-regular-145pct {
+  font-family: var(--type-titulo-32-regular-145pct-family);
+  font-size: var(--type-titulo-32-regular-145pct-size);
+  font-weight: var(--type-titulo-32-regular-145pct-weight);
+  line-height: var(--type-titulo-32-regular-145pct-line);
+  letter-spacing: var(--type-titulo-32-regular-145pct-tracking);
+}
+
+.type-corpo-18-regular-145pct {
+  font-family: var(--type-corpo-18-regular-145pct-family);
+  font-size: var(--type-corpo-18-regular-145pct-size);
+  font-weight: var(--type-corpo-18-regular-145pct-weight);
+  line-height: var(--type-corpo-18-regular-145pct-line);
+  letter-spacing: var(--type-corpo-18-regular-145pct-tracking);
+}
+
+.type-titulo-32-extra-bold-auto {
+  font-family: var(--type-titulo-32-extra-bold-auto-family);
+  font-size: var(--type-titulo-32-extra-bold-auto-size);
+  font-weight: var(--type-titulo-32-extra-bold-auto-weight);
+  line-height: var(--type-titulo-32-extra-bold-auto-line);
+  letter-spacing: var(--type-titulo-32-extra-bold-auto-tracking);
+}
+
+.type-corpo-14-regular-auto {
+  font-family: var(--type-corpo-14-regular-auto-family);
+  font-size: var(--type-corpo-14-regular-auto-size);
+  font-weight: var(--type-corpo-14-regular-auto-weight);
+  line-height: var(--type-corpo-14-regular-auto-line);
+  letter-spacing: var(--type-corpo-14-regular-auto-tracking);
+}
+
+.type-corpo-16-regular-auto {
+  font-family: var(--type-corpo-16-regular-auto-family);
+  font-size: var(--type-corpo-16-regular-auto-size);
+  font-weight: var(--type-corpo-16-regular-auto-weight);
+  line-height: var(--type-corpo-16-regular-auto-line);
+  letter-spacing: var(--type-corpo-16-regular-auto-tracking);
+}
+
+.type-titulo-40-bold-auto {
+  font-family: var(--type-titulo-40-bold-auto-family);
+  font-size: var(--type-titulo-40-bold-auto-size);
+  font-weight: var(--type-titulo-40-bold-auto-weight);
+  line-height: var(--type-titulo-40-bold-auto-line);
+  letter-spacing: var(--type-titulo-40-bold-auto-tracking);
+}
+
+.type-subtitulo-20-bold-145pct {
+  font-family: var(--type-subtitulo-20-bold-145pct-family);
+  font-size: var(--type-subtitulo-20-bold-145pct-size);
+  font-weight: var(--type-subtitulo-20-bold-145pct-weight);
+  line-height: var(--type-subtitulo-20-bold-145pct-line);
+  letter-spacing: var(--type-subtitulo-20-bold-145pct-tracking);
+}
+
+.type-legenda-12-semi-bold-auto {
+  font-family: var(--type-legenda-12-semi-bold-auto-family);
+  font-size: var(--type-legenda-12-semi-bold-auto-size);
+  font-weight: var(--type-legenda-12-semi-bold-auto-weight);
+  line-height: var(--type-legenda-12-semi-bold-auto-line);
+  letter-spacing: var(--type-legenda-12-semi-bold-auto-tracking);
+}
+
+.type-subtitulo-22-bold-145pct {
+  font-family: var(--type-subtitulo-22-bold-145pct-family);
+  font-size: var(--type-subtitulo-22-bold-145pct-size);
+  font-weight: var(--type-subtitulo-22-bold-145pct-weight);
+  line-height: var(--type-subtitulo-22-bold-145pct-line);
+  letter-spacing: var(--type-subtitulo-22-bold-145pct-tracking);
+}
+
+.type-legenda-12-regular-auto {
+  font-family: var(--type-legenda-12-regular-auto-family);
+  font-size: var(--type-legenda-12-regular-auto-size);
+  font-weight: var(--type-legenda-12-regular-auto-weight);
+  line-height: var(--type-legenda-12-regular-auto-line);
+  letter-spacing: var(--type-legenda-12-regular-auto-tracking);
+}
+
+.type-subtitulo-30-regular-auto {
+  font-family: var(--type-subtitulo-30-regular-auto-family);
+  font-size: var(--type-subtitulo-30-regular-auto-size);
+  font-weight: var(--type-subtitulo-30-regular-auto-weight);
+  line-height: var(--type-subtitulo-30-regular-auto-line);
+  letter-spacing: var(--type-subtitulo-30-regular-auto-tracking);
+}
+
+.type-subtitulo-28-extra-bold-auto {
+  font-family: var(--type-subtitulo-28-extra-bold-auto-family);
+  font-size: var(--type-subtitulo-28-extra-bold-auto-size);
+  font-weight: var(--type-subtitulo-28-extra-bold-auto-weight);
+  line-height: var(--type-subtitulo-28-extra-bold-auto-line);
+  letter-spacing: var(--type-subtitulo-28-extra-bold-auto-tracking);
+}
+
+.type-legenda-12-bold-145pct {
+  font-family: var(--type-legenda-12-bold-145pct-family);
+  font-size: var(--type-legenda-12-bold-145pct-size);
+  font-weight: var(--type-legenda-12-bold-145pct-weight);
+  line-height: var(--type-legenda-12-bold-145pct-line);
+  letter-spacing: var(--type-legenda-12-bold-145pct-tracking);
+}
+
+.type-titulo-32-regular-115pct {
+  font-family: var(--type-titulo-32-regular-115pct-family);
+  font-size: var(--type-titulo-32-regular-115pct-size);
+  font-weight: var(--type-titulo-32-regular-115pct-weight);
+  line-height: var(--type-titulo-32-regular-115pct-line);
+  letter-spacing: var(--type-titulo-32-regular-115pct-tracking);
+}
+
+.type-legenda-13-medium-145pct {
+  font-family: var(--type-legenda-13-medium-145pct-family);
+  font-size: var(--type-legenda-13-medium-145pct-size);
+  font-weight: var(--type-legenda-13-medium-145pct-weight);
+  line-height: var(--type-legenda-13-medium-145pct-line);
+  letter-spacing: var(--type-legenda-13-medium-145pct-tracking);
+}
+
+.type-subtitulo-28-regular-auto {
+  font-family: var(--type-subtitulo-28-regular-auto-family);
+  font-size: var(--type-subtitulo-28-regular-auto-size);
+  font-weight: var(--type-subtitulo-28-regular-auto-weight);
+  line-height: var(--type-subtitulo-28-regular-auto-line);
+  letter-spacing: var(--type-subtitulo-28-regular-auto-tracking);
+}
+
+.type-subtitulo-20-semi-bold-145pct {
+  font-family: var(--type-subtitulo-20-semi-bold-145pct-family);
+  font-size: var(--type-subtitulo-20-semi-bold-145pct-size);
+  font-weight: var(--type-subtitulo-20-semi-bold-145pct-weight);
+  line-height: var(--type-subtitulo-20-semi-bold-145pct-line);
+  letter-spacing: var(--type-subtitulo-20-semi-bold-145pct-tracking);
+}
+
+.type-corpo-14-bold-auto {
+  font-family: var(--type-corpo-14-bold-auto-family);
+  font-size: var(--type-corpo-14-bold-auto-size);
+  font-weight: var(--type-corpo-14-bold-auto-weight);
+  line-height: var(--type-corpo-14-bold-auto-line);
+  letter-spacing: var(--type-corpo-14-bold-auto-tracking);
+}
+
+.type-corpo-14-bold-145pct {
+  font-family: var(--type-corpo-14-bold-145pct-family);
+  font-size: var(--type-corpo-14-bold-145pct-size);
+  font-weight: var(--type-corpo-14-bold-145pct-weight);
+  line-height: var(--type-corpo-14-bold-145pct-line);
+  letter-spacing: var(--type-corpo-14-bold-145pct-tracking);
+}
+
+.type-corpo-14-medium-145pct {
+  font-family: var(--type-corpo-14-medium-145pct-family);
+  font-size: var(--type-corpo-14-medium-145pct-size);
+  font-weight: var(--type-corpo-14-medium-145pct-weight);
+  line-height: var(--type-corpo-14-medium-145pct-line);
+  letter-spacing: var(--type-corpo-14-medium-145pct-tracking);
+}
+
+.type-legenda-11-bold-145pct {
+  font-family: var(--type-legenda-11-bold-145pct-family);
+  font-size: var(--type-legenda-11-bold-145pct-size);
+  font-weight: var(--type-legenda-11-bold-145pct-weight);
+  line-height: var(--type-legenda-11-bold-145pct-line);
+  letter-spacing: var(--type-legenda-11-bold-145pct-tracking);
+}
+
+.type-legenda-11-regular-145pct {
+  font-family: var(--type-legenda-11-regular-145pct-family);
+  font-size: var(--type-legenda-11-regular-145pct-size);
+  font-weight: var(--type-legenda-11-regular-145pct-weight);
+  line-height: var(--type-legenda-11-regular-145pct-line);
+  letter-spacing: var(--type-legenda-11-regular-145pct-tracking);
+}
+
+.type-subtitulo-28-bold-145pct {
+  font-family: var(--type-subtitulo-28-bold-145pct-family);
+  font-size: var(--type-subtitulo-28-bold-145pct-size);
+  font-weight: var(--type-subtitulo-28-bold-145pct-weight);
+  line-height: var(--type-subtitulo-28-bold-145pct-line);
+  letter-spacing: var(--type-subtitulo-28-bold-145pct-tracking);
+}
+
+.type-subtitulo-20-bold-auto {
+  font-family: var(--type-subtitulo-20-bold-auto-family);
+  font-size: var(--type-subtitulo-20-bold-auto-size);
+  font-weight: var(--type-subtitulo-20-bold-auto-weight);
+  line-height: var(--type-subtitulo-20-bold-auto-line);
+  letter-spacing: var(--type-subtitulo-20-bold-auto-tracking);
+}
+
+.type-subtitulo-24-bold-145pct {
+  font-family: var(--type-subtitulo-24-bold-145pct-family);
+  font-size: var(--type-subtitulo-24-bold-145pct-size);
+  font-weight: var(--type-subtitulo-24-bold-145pct-weight);
+  line-height: var(--type-subtitulo-24-bold-145pct-line);
+  letter-spacing: var(--type-subtitulo-24-bold-145pct-tracking);
+}
+
+.type-titulo-54-extra-bold-auto {
+  font-family: var(--type-titulo-54-extra-bold-auto-family);
+  font-size: var(--type-titulo-54-extra-bold-auto-size);
+  font-weight: var(--type-titulo-54-extra-bold-auto-weight);
+  line-height: var(--type-titulo-54-extra-bold-auto-line);
+  letter-spacing: var(--type-titulo-54-extra-bold-auto-tracking);
+}
+
+.type-corpo-16-semi-bold-auto {
+  font-family: var(--type-corpo-16-semi-bold-auto-family);
+  font-size: var(--type-corpo-16-semi-bold-auto-size);
+  font-weight: var(--type-corpo-16-semi-bold-auto-weight);
+  line-height: var(--type-corpo-16-semi-bold-auto-line);
+  letter-spacing: var(--type-corpo-16-semi-bold-auto-tracking);
+}
