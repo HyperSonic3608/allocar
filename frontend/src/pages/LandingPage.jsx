@@ -1,5 +1,6 @@
 import { LandingHeader, Logo } from '../components/layout/Header.jsx'
-import Button, { TextLink } from '../components/ui/Button.jsx'
+import Button from '../components/ui/Button.jsx'
+import Footer from '../components/layout/Footer.jsx'
 import { Badge } from '../components/ui/Feedback.jsx'
 import { Metadata } from '../components/ui/Card.jsx'
 import Icon from '../components/ui/Icon.jsx'
@@ -172,13 +173,7 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
-      <footer className="landing-footer">
-        <div>
-          <Logo width={112} />
-          <p>AlloCar · Seu caminho, sem complicação.</p>
-          <TextLink to="/#inicio">Voltar ao início</TextLink>
-        </div>
-      </footer>
+      <Footer publicPage landing />
     </div>
   )
 }

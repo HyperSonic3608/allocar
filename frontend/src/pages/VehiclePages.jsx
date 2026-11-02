@@ -23,7 +23,11 @@ export function VehicleSearchPage() {
     setParams(next)
   }
   return (
-    <PageLayout figmaId="92:2697" footer={null} className="vehicle-search-page">
+    <PageLayout
+      figmaId="92:2697"
+      progress={{ flow: 'request', current: 0 }}
+      className="vehicle-search-page"
+    >
       <PageHeading
         eyebrow="ALUGAR UM CARRO · 1 DE 4"
         title="Encontre o carro para o seu próximo caminho."
@@ -75,29 +79,33 @@ export function VehicleSearchPage() {
       <div className="search-layout">
         <Card className="search-filters">
           <h2>Refine sua busca</h2>
-          <p className="muted">Marca</p>
-          {['Chevrolet', 'Volkswagen'].map((name) => (
+          <fieldset className="filter-group">
+            <legend>Marca</legend>
+            {['Chevrolet', 'Volkswagen'].map((name) => (
+              <Button
+                key={name}
+                variant="secondary"
+                aria-pressed={brand === name}
+                className={brand === name ? 'filter-selected' : ''}
+                onClick={() => filter('marca', name)}
+              >
+                {name}
+              </Button>
+            ))}
+          </fieldset>
+          <fieldset className="filter-group">
+            <legend>Ano do automóvel</legend>
             <Button
-              key={name}
               variant="secondary"
-              aria-pressed={brand === name}
-              className={brand === name ? 'filter-selected' : ''}
-              onClick={() => filter('marca', name)}
+              onClick={() => filter('ano', '2025')}
+              aria-pressed={params.get('ano') === '2025'}
             >
-              {name}
+              2025
             </Button>
-          ))}
-          <p className="muted">Ano do automóvel</p>
-          <Button
-            variant="secondary"
-            onClick={() => filter('ano', '2025')}
-            aria-pressed={params.get('ano') === '2025'}
-          >
-            2025
-          </Button>
-          <Button variant="secondary" onClick={() => navigate('/veiculos/sem-resultados')}>
-            2026 · sem resultados
-          </Button>
+            <Button variant="secondary" onClick={() => navigate('/veiculos/sem-resultados')}>
+              2026 · sem resultados
+            </Button>
+          </fieldset>
           <Button variant="secondary" onClick={() => setParams({})}>
             Limpar filtros
           </Button>
@@ -131,9 +139,9 @@ export function VehicleDetailPage() {
   const navigate = useNavigate()
   const vehicle = vehicles.find((item) => item.id === id) || vehicles[0]
   return (
-    <PageLayout figmaId="92:2698" footer={null}>
+    <PageLayout figmaId="92:2698" progress={{ flow: 'request', current: 0 }}>
       <PageHeading
-        eyebrow="AUTOMÓVEIS · 2 DE 4"
+        eyebrow="AUTOMÓVEL · 1 DE 4"
         title="Conheça o automóvel escolhido."
         description="Consulte a identificação e siga para o período e o tipo de contrato."
       />
@@ -184,7 +192,7 @@ export function VehicleDetailPage() {
 
 export function EmptySearchPage() {
   return (
-    <PageLayout figmaId="92:2705" className="expanded-page" footer={null}>
+    <PageLayout figmaId="92:2705" progress={{ flow: 'request', current: 0 }}>
       <PageHeading
         className="page-heading--spaced"
         title="Nenhum automóvel para estes filtros."

@@ -31,7 +31,7 @@ src/
 ├── assets/brand/      # assinatura oficial em SVG
 ├── assets/figma/      # ícones e fotografias originais, com manifesto de origem
 ├── components/
-│   ├── layout/       # cabeçalhos, colunas, listas de etapas e painéis laterais
+│   ├── layout/       # cabeçalho, rodapé, navegação, colunas e painéis laterais
 │   ├── rental/       # automóveis, progresso e resumo do pedido
 │   └── ui/           # botões, campos, cartões, metadados e feedback
 ├── data/             # dados locais e correspondência entre rotas e quadros
@@ -41,6 +41,16 @@ src/
 ```
 
 `PrototypeOverlays` reúne os diálogos com foco modal e fechamento por Escape. Formulários usam campos e validação nativos; os componentes compartilham estados de foco, hover, seleção e feedback. Os layouts se reorganizam para telas estreitas; a tabela do agente tem rolagem horizontal própria.
+
+## Padrões de layout
+
+`Header` é compartilhado pela landing, acesso e áreas de cliente/agente. A logo mantém largura de 118 px e sua proporção original em todos os cabeçalhos. A navegação destaca a seção atual e mantém o contexto do perfil demonstrativo entre pedidos e contratos. Em telas estreitas, o botão com o ícone nativo abre o menu; Escape fecha o menu e devolve o foco ao botão.
+
+`Footer` acompanha todas as páginas, com a mesma assinatura e acesso à Ajuda. Documentos fica disponível nas áreas de cliente e agente; a landing também oferece retorno ao início. Os atalhos utilizam os painéis auxiliares existentes.
+
+`PageLayout` recebe a propriedade `progress` para compor `ProgressSteps` nas telas relacionadas ao aluguel. `flow="request"` apresenta automóvel, período/contrato, revisão e envio; `current` identifica a etapa em preenchimento. O fluxo de acompanhamento usa `status` para apresentar recebimento, análise, aprovação e contrato, incluindo interrupção por cancelamento ou reprovação. Listas gerais, cadastro e acesso mantêm seus próprios contextos.
+
+`styles/layout.css` concentra as medidas de cabeçalho, contêineres, rodapé e etapas. As composições usam os tokens de cor, espaçamento, raio e tipografia do Figma. Títulos compartilham a mesma escala e espaçamento; cada tela possui um único título principal. Os filtros mantêm seus rótulos no celular, os selos se reorganizam dentro dos cartões e as ações dos cartões de veículos se alinham na mesma linha em grades.
 
 ## Design system em código
 
@@ -88,7 +98,7 @@ Os aliases semânticos continuam referenciando os primitivos por `var(...)`. Por
 
 `src/data/screens.js` relaciona essas rotas aos IDs dos quadros. Os contêineres das interfaces também expõem `data-figma-id`; a landing informa o quadro móvel por `data-figma-mobile-id`.
 
-Os oito painéis auxiliares podem ser abertos com `?painel=nome` em uma rota, por exemplo `/agente?painel=ajuda`: `decisao`, `decisao-obrigatoria`, `pedido-aprovado`, `contrato`, `creditos`, `pedido-carlos`, `ajuda` e `documentos`. Decisão, validação do parecer e consultas dos pedidos AL-002/AL-003 também são acionados pelos controles correspondentes nas telas.
+Os oito painéis auxiliares podem ser abertos com `?painel=nome` em uma rota, por exemplo `/agente?painel=ajuda`: `decisao`, `decisao-obrigatoria`, `pedido-aprovado`, `contrato`, `creditos`, `pedido-carlos`, `ajuda` e `documentos`. Decisão, validação do parecer e consultas dos pedidos AL-002/AL-003 também são acionados pelos controles correspondentes nas telas. Ajuda e Documentos podem ser abertos pelo rodapé.
 
 ## Interações locais
 
@@ -103,4 +113,4 @@ npx playwright install chromium
 npm run test:e2e
 ```
 
-Playwright percorre as 28 rotas em 1440 px e 390 px (1536 px na central do agente), verifica conteúdo, imagens, ausência de overflow da página e ausência de chamadas à API ou a serviços externos. Também exercita cadastro e rendimentos, pedido/edição/cancelamento, parecer/execução/crédito e os oito painéis com foco e Escape. As capturas de cada tela ficam em `test-results/`, ignorado pelo Git.
+Playwright percorre as 28 rotas em 1440 px, 768 px e 390 px (viewport de 1536 px na central do agente), verifica conteúdo, imagens, medidas uniformes dos cabeçalhos, etapas, rodapé, ausência de overflow da página e ausência de chamadas à API ou a serviços externos. Também exercita cadastro e rendimentos, pedido/edição/cancelamento, parecer/execução/crédito, menu móvel e os oito painéis com foco e Escape. As capturas de cada tela ficam em `test-results/`, ignorado pelo Git.

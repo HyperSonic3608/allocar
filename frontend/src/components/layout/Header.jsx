@@ -1,8 +1,11 @@
-import { NavLink, useNavigate } from 'react-router'
+import { useId, useRef, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { usePrototype } from '../../state/prototype-store.js'
 import logoLight from '../../assets/brand/logo-light.svg'
 import logoDark from '../../assets/brand/logo-dark.svg'
 import Button from '../ui/Button.jsx'
+import Icon from '../ui/Icon.jsx'
+import { accountArea, activeLink, agentLinks, clientLinks, landingLinks } from './navigation.js'
 
 export function Logo({ dark = false, width = 118, className = '' }) {
   return (
@@ -17,73 +20,90 @@ export function Logo({ dark = false, width = 118, className = '' }) {
 }
 
 export default function Header({ kind = 'client' }) {
-  const { dispatch } = usePrototype()
+  const { state, dispatch } = usePrototype()
   const navigate = useNavigate()
-  const agent = kind === 'agent'
-  const publicPage = kind === 'public'
-  const links = agent
-    ? [
-        ['Central de pedidos', '/agente'],
-        ['Histórico', '/agente/historico'],
-        ['Contratos', '/contratos'],
-        ['Créditos', '/agente/creditos'],
-      ]
-    : [
-        ['Buscar veículos', '/veiculos'],
-        ['Meus pedidos', '/pedidos'],
-        ['Meus contratos', '/contratos'],
-        ['Meu cadastro', '/meu-cadastro'],
-      ]
+  const { pathname, hash } = useLocation()
+  const [open, setOpen] = useState(false)
+  const menuId = useId()
+  const menuButton = useRef(null)
+  const area = accountArea(kind, state.profile)
+  const publicPage = area === 'public' || area === 'landing'
+  const links = area === 'landing' ? landingLinks : area === 'agent' ? agentLinks : clientLinks
+  const name = area === 'agent' ? 'Hyper' : state.customer.name.split(' ')[0]
+  function closeMenu() {
+    setOpen(false)
+  }
+  function logout() {
+    closeMenu()
+    dispatch({ type: 'LOGOUT' })
+    navigate('/entrar')
+  }
   return (
-    <header className={`site-header ${agent ? 'site-header--agent' : ''}`}>
+    <header
+      className={`site-header ${open ? 'site-header--open' : ''}`}
+      data-area={area}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape' && open) {
+          closeMenu()
+          menuButton.current?.focus()
+        }
+      }}
+    >
       <div className="site-header__inner">
-        <NavLink className="logo-link" to="/" aria-label="AlloCar · página inicial">
+        <Link
+          className="logo-link"
+          to="/"
+          aria-label="AlloCar · página inicial"
+          onClick={closeMenu}
+        >
           <Logo />
-        </NavLink>
-        <nav className="site-nav" aria-label="Navegação principal">
+        </Link>
+        <nav id={menuId} className="site-nav" aria-label="Navegação principal">
           {links.map(([label, path]) => (
-            <NavLink key={path} to={publicPage ? '/entrar' : path}>
+            <Link
+              key={path}
+              className="site-nav__link"
+              to={area === 'public' ? '/entrar' : path}
+              aria-current={
+                area !== 'public' && activeLink(path, pathname, hash) ? 'page' : undefined
+              }
+              onClick={closeMenu}
+            >
               {label}
-            </NavLink>
+            </Link>
           ))}
         </nav>
         {publicPage ? (
-          <Button to="/entrar" variant="secondary" className="header-account">
+          <Button
+            to="/entrar"
+            variant="secondary"
+            icon="userButton"
+            className="header-account"
+            onClick={closeMenu}
+          >
             Entrar na conta
           </Button>
         ) : (
-          <Button
-            variant="secondary"
-            className="header-account"
-            onClick={() => {
-              dispatch({ type: 'LOGOUT' })
-              navigate('/entrar')
-            }}
-          >
-            Sair · {agent ? 'Hyper' : 'Ana'}
+          <Button variant="secondary" className="header-account" onClick={logout}>
+            Sair · {name}
           </Button>
         )}
+        <button
+          ref={menuButton}
+          type="button"
+          className="icon-button header-menu"
+          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={open}
+          aria-controls={menuId}
+          onClick={() => setOpen(!open)}
+        >
+          <Icon name="menu" />
+        </button>
       </div>
     </header>
   )
 }
 
 export function LandingHeader() {
-  return (
-    <header className="landing-header">
-      <div className="landing-header__inner">
-        <NavLink to="/" aria-label="AlloCar · início">
-          <Logo width={132} />
-        </NavLink>
-        <nav aria-label="Navegação da página inicial">
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#categorias">Categorias</a>
-          <a href="#duvidas">Dúvidas</a>
-          <Button variant="secondary" to="/entrar">
-            Entrar
-          </Button>
-        </nav>
-      </div>
-    </header>
-  )
+  return <Header kind="landing" />
 }

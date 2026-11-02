@@ -106,10 +106,6 @@ export function LoginPage({ error = false }) {
               </Button>
             )}
           </ActionRow>
-          <Note title="Acesso protegido">
-            Cliente, empresa e banco acessam com usuário e senha. Seu perfil determina as ações
-            disponíveis na conta.
-          </Note>
           {error ? (
             <Card className="create-account-card">
               <TextLink className="text-link--accent" to="/cadastro" iconAfter="arrowUpRight">
@@ -226,7 +222,7 @@ export function InstitutionalRegisterPage() {
   const { dispatch } = usePrototype()
   const navigate = useNavigate()
   return (
-    <PageLayout kind="public" figmaId="92:2707" className="expanded-page" footer={null}>
+    <PageLayout kind="public" figmaId="92:2707">
       <PageHeading
         className="page-heading--spaced"
         title="Sua instituição na AlloCar."

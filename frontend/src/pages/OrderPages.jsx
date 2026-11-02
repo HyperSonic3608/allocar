@@ -10,7 +10,7 @@ import Card, { Metadata, PageHeading } from '../components/ui/Card.jsx'
 import Button, { TextLink } from '../components/ui/Button.jsx'
 import Field, { SelectField } from '../components/ui/Field.jsx'
 import { Alert, Badge, Note } from '../components/ui/Feedback.jsx'
-import RentalSummary, { ProgressSteps } from '../components/rental/RentalSummary.jsx'
+import RentalSummary from '../components/rental/RentalSummary.jsx'
 import { VehicleImage } from '../components/rental/VehicleCard.jsx'
 import useRental from '../state/useRental.js'
 import { vehicles, formatMoney, parseMoney } from '../data/demo.js'
@@ -190,12 +190,10 @@ export function OrderFormPage({ editing = false }) {
     ['Contrato', 'Disponível apenas após parecer financeiro positivo da versão atual.'],
   ]
   return (
-    <PageLayout
-      figmaId={editing ? '4:1326' : '4:1234'}
-      footer={editing ? 'AlloCar · Área do cliente' : undefined}
-    >
+    <PageLayout figmaId={editing ? '4:1326' : '4:1234'} progress={{ flow: 'request', current: 1 }}>
       {!editing && (
         <PageHeading
+          eyebrow="PERÍODO E CONTRATO · 2 DE 4"
           title="Novo pedido de aluguel"
           description="Escolha o automóvel e o período desejado. Os dados cadastrais e a renda serão considerados na análise financeira."
         />
@@ -204,7 +202,7 @@ export function OrderFormPage({ editing = false }) {
         <Columns className={editing ? '' : 'columns--tight'}>
           <Card>
             <div className="panel-heading panel-heading--large">
-              <h1>{editing ? 'Alterar pedido #AL-001' : 'Resumo do pedido #AL-001'}</h1>
+              {editing ? <h1>Alterar pedido #AL-001</h1> : <h2>Resumo do pedido #AL-001</h2>}
               <p>
                 {editing
                   ? 'Ana Silva · Revise o pedido antes de enviar uma nova versão para análise financeira.'
@@ -339,7 +337,7 @@ export function OrderReviewPage() {
   const { state, vehicle, period, days } = useRental()
   const income = state.customer.incomes.reduce((sum, value) => sum + parseMoney(value), 0)
   return (
-    <PageLayout figmaId="92:2699" footer={null}>
+    <PageLayout figmaId="92:2699" progress={{ flow: 'request', current: 2 }}>
       <PageHeading
         eyebrow="REVISE SEU PEDIDO · 3 DE 4"
         title="Tudo certo com o seu pedido?"
@@ -393,9 +391,9 @@ export function OrderReviewPage() {
 export function OrderSentPage() {
   const { vehicle, price, period } = useRental()
   return (
-    <PageLayout figmaId="92:2700" className="expanded-page" footer={null}>
+    <PageLayout figmaId="92:2700" progress={{ status: 'EM_ANALISE' }}>
       <PageHeading
-        eyebrow="PEDIDO · 4 DE 4"
+        eyebrow="PEDIDO ENVIADO"
         title="Pedido enviado. Próximo passo: análise."
         description="Sua solicitação #AL-001 foi registrada para avaliação pelo agente."
       />
@@ -433,8 +431,7 @@ export function OrderDetailPage() {
   const terminal = ['CANCELADO', 'EM_EXECUCAO'].includes(state.status)
   const title = statusLabels[state.status]
   return (
-    <PageLayout figmaId="4:1288" footer="AlloCar · Área do cliente">
-      <ProgressSteps />
+    <PageLayout figmaId="4:1288" progress={{ status: state.status }}>
       <Columns>
         <Card>
           <PageHeading
@@ -507,7 +504,7 @@ export function CancelOrderPage() {
   const { state, vehicle, period, days, price, dispatch } = useRental()
   const navigate = useNavigate()
   return (
-    <PageLayout figmaId="4:1380" footer="AlloCar · Área do cliente">
+    <PageLayout figmaId="4:1380" progress={{ status: state.status }}>
       <Columns>
         <Card>
           <PageHeading
@@ -602,7 +599,7 @@ export function CancelOrderPage() {
 export function CancelledOrderPage() {
   const { state, vehicle, period, price } = useRental()
   return (
-    <PageLayout figmaId="4:1409" footer="AlloCar · Área do cliente">
+    <PageLayout figmaId="4:1409" progress={{ status: 'CANCELADO' }}>
       <Columns>
         <Card>
           <PageHeading

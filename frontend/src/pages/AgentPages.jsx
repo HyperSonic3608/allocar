@@ -36,12 +36,7 @@ export function AgentDashboardPage() {
         ? state.status === 'APROVADO'
         : state.status === 'REPROVADO'
   return (
-    <PageLayout
-      kind="agent"
-      figmaId="4:1428"
-      className="agent-dashboard"
-      footer="AlloCar · Área do agente"
-    >
+    <PageLayout kind="agent" figmaId="4:1428" className="agent-dashboard">
       <div className="agent-workspace">
         <Card className="agent-sidebar">
           <Note className="agent-identity">
@@ -262,7 +257,7 @@ export function AnalysisPage() {
     )
   }
   return (
-    <PageLayout kind="agent" figmaId="4:1460" footer="AlloCar · Área do agente">
+    <PageLayout kind="agent" figmaId="4:1460" progress={{ status: state.status }}>
       <Stack>
         <PageHeading
           title="Análise do pedido #AL-001"
@@ -356,7 +351,7 @@ export function AnalysisPage() {
 
 export function RejectedOrderPage() {
   return (
-    <PageLayout kind="agent" figmaId="4:1567" footer="AlloCar · Área do cliente">
+    <PageLayout kind="agent" figmaId="4:1567" progress={{ status: 'REPROVADO' }}>
       <Columns>
         <Stack>
           <Card>
@@ -374,6 +369,7 @@ export function RejectedOrderPage() {
           </Card>
           <Card>
             <PageHeading
+              as="h2"
               title="Status do pedido"
               description="O parecer atual impede a execução contratual. Revise os dados e altere o pedido para solicitar nova análise."
             />
@@ -385,6 +381,7 @@ export function RejectedOrderPage() {
         <SidePanel title={null}>
           <Card className="rejected-next">
             <PageHeading
+              as="h2"
               title="Próximos passos"
               description="Atualize os dados e altere o pedido para solicitar nova análise. Nenhum contrato pode ser executado com parecer negativo."
             />
@@ -420,7 +417,7 @@ export function DecisionHistoryPage() {
     state.justification ||
     'Renda informada compatível com a proposta de R$ 1.250,00. Cadastro e vínculos de renda conferidos para esta avaliação demonstrativa.'
   return (
-    <PageLayout kind="agent" figmaId="92:2704" className="expanded-page" footer={null}>
+    <PageLayout kind="agent" figmaId="92:2704">
       <PageHeading
         className="page-heading--spaced"
         title="Histórico da avaliação financeira."

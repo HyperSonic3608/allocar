@@ -36,32 +36,3 @@ export default function RentalSummary() {
     </aside>
   )
 }
-
-export function ProgressSteps() {
-  return (
-    <section className="progress-steps" aria-label="Etapas do pedido">
-      <ol>
-        {[
-          ['Recebido', 'Concluído'],
-          ['Em análise', 'Etapa atual'],
-          ['Aprovação', 'A seguir'],
-          ['Contrato', 'A seguir'],
-        ].map(([title, caption], index) => (
-          <li key={title} aria-current={index === 1 ? 'step' : undefined}>
-            <span
-              className={`progress-steps__number ${index < 2 ? 'progress-steps__number--active' : ''}`}
-            >
-              {index === 0 ? <Icon name="stepCheck" size={14} /> : index}
-            </span>
-            <div>
-              <strong>{title}</strong>
-              <small>{caption}</small>
-            </div>
-            {index < 3 && <Icon name="chevronRight" size={12} />}
-          </li>
-        ))}
-      </ol>
-      <p>A contratação depende de parecer financeiro positivo vigente.</p>
-    </section>
-  )
-}

@@ -1,10 +1,12 @@
 import Header from './Header.jsx'
+import Footer from './Footer.jsx'
+import ProgressSteps from '../rental/ProgressSteps.jsx'
 import { journey } from '../../data/demo.js'
 
 export default function PageLayout({
   children,
   kind = 'client',
-  footer = 'AlloCar · Aluguel com clareza em cada etapa',
+  progress,
   className = '',
   figmaId,
 }) {
@@ -12,9 +14,10 @@ export default function PageLayout({
     <div className={`app-page ${className}`} data-figma-id={figmaId}>
       <Header kind={kind} />
       <main id="conteudo" className="page-content">
+        {progress && <ProgressSteps {...progress} />}
         {children}
-        {footer && <footer className="page-footer">{footer}</footer>}
       </main>
+      <Footer publicPage={kind === 'public'} />
     </div>
   )
 }

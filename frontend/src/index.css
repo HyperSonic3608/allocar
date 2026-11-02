@@ -6,6 +6,7 @@
 @import './styles/tokens.css';
 @import './styles/components.css';
 @import './styles/pages.css';
+@import './styles/layout.css';
 
 :root {
   font-family: var(--type-corpo-14-regular-145pct-family);

@@ -4,6 +4,7 @@ const files = import.meta.glob('../../assets/figma/*.svg', {
   import: 'default',
 })
 const icons = {
+  menu: '24252.svg',
   user: '2200c.svg',
   eye: '1a358.svg',
   pin: '08765.svg',

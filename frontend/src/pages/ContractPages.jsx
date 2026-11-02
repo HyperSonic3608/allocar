@@ -16,7 +16,7 @@ export function ApprovalPage() {
   const { state, vehicle, period, price, dispatch } = useRental()
   const navigate = useNavigate()
   return (
-    <PageLayout kind="agent" figmaId="4:1508" footer="AlloCar · Área do agente">
+    <PageLayout kind="agent" figmaId="4:1508" progress={{ status: 'APROVADO' }}>
       <Stack className="stack--tight">
         <section className="breadcrumbs">
           <nav aria-label="Caminho">
@@ -102,7 +102,7 @@ export function ApprovalPage() {
 export function ExecutedContractPage() {
   const { state, vehicle, period, price } = useRental()
   return (
-    <PageLayout kind="agent" figmaId="4:1629">
+    <PageLayout kind="agent" figmaId="4:1629" progress={{ status: 'EM_EXECUCAO' }}>
       <Columns>
         <Card>
           <PageHeading
@@ -173,7 +173,7 @@ export function ExecutedContractPage() {
 export function MyContractsPage() {
   const { state, vehicle, price } = useRental()
   return (
-    <PageLayout figmaId="92:2701" className="expanded-page" footer={null}>
+    <PageLayout figmaId="92:2701">
       <PageHeading
         className="page-heading--spaced"
         title="Seus contratos, em um só lugar."
@@ -218,7 +218,7 @@ export function MyContractsPage() {
 export function ContractDetailPage() {
   const { state, vehicle, period, price } = useRental()
   return (
-    <PageLayout figmaId="92:2702" className="expanded-page" footer={null}>
+    <PageLayout figmaId="92:2702" progress={{ status: 'EM_EXECUCAO' }}>
       <PageHeading
         className="page-heading--spaced"
         title="Detalhes do contrato."
@@ -269,7 +269,7 @@ export function CreditAssociationPage() {
     navigate('/agente/creditos/CR-001/associado')
   }
   return (
-    <PageLayout kind="agent" figmaId="92:2703" className="expanded-page" footer={null}>
+    <PageLayout kind="agent" figmaId="92:2703" progress={{ status: 'EM_EXECUCAO' }}>
       <PageHeading
         className="page-heading--spaced"
         title="Associe o crédito ao aluguel."
@@ -347,7 +347,7 @@ export function CreditAssociationPage() {
 export function CreditReceiptPage() {
   const { state } = useRental()
   return (
-    <PageLayout kind="agent" figmaId="4:1639">
+    <PageLayout kind="agent" figmaId="4:1639" progress={{ status: 'EM_EXECUCAO' }}>
       <Columns>
         <Card>
           <PageHeading
@@ -433,7 +433,7 @@ export function CreditReceiptPage() {
 export function CreditsPage() {
   const { state } = useRental()
   return (
-    <PageLayout kind="agent" figmaId="92:2706" className="expanded-page" footer={null}>
+    <PageLayout kind="agent" figmaId="92:2706">
       <PageHeading
         className="page-heading--spaced"
         title="Créditos vinculados a aluguéis."
