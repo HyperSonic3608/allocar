@@ -6,11 +6,11 @@ As classes estão sob `com.allocar.backend`, com as seguintes responsabilidades:
 
 | Pacote | Responsabilidade |
 | --- | --- |
-| `application` | Inicialização e configuração da aplicação Spring Boot. |
+| `application` | Inicialização da aplicação Spring Boot. |
 | `controller` | Entrada HTTP e tradução de requisições/respostas. |
 | `model` | Entidades, objetos de valor, estados e regras de negócio. |
 | `repository` | Consultas, persistência e restrições de unicidade dos registros. |
-| `service` | Coordenação dos casos de uso, autorização e transações. |
+| `service` | Coordenação dos casos de uso, autorização, transações e configuração JDBC. |
 
 `application.BackendApplication` configura a varredura de componentes em `com.allocar.backend`. As classes de `model` usam Java e não dependem de Spring ou de uma conexão com o banco.
 
@@ -53,6 +53,16 @@ As contas passadas aos métodos devem ser obtidas do contexto autenticado pelo c
 O agente responsável identifica o escopo do pedido. O cliente titular e esse agente podem consultá-lo; após a associação, o banco concedente também tem acesso à consulta. O banco não recebe permissão para alterar um pedido de outra instituição apenas por conceder crédito.
 
 Unicidade de usuário, CPF, CNPJ, matrícula, placa e número de crédito envolve o conjunto dos registros e deve ser garantida por consultas e restrições de persistência. A coordenação entre instâncias persistidas exige transações e controle de concorrência no armazenamento.
+
+## Acesso ao PostgreSQL
+
+`service.SupabaseDatabaseConfiguration` configura JDBC, Hikari e transações no perfil `supabase`. O login dedicado usa o schema privado `allocar`, com políticas RLS e restrições SQL. As [instruções de conexão e os dados fictícios](database.md) descrevem as variáveis de ambiente usadas na execução.
+
+`AutomovelRepository.buscar` consulta o catálogo por marca e ano, retornando `VeiculoCatalogo`. `PedidoRepository.listar` retorna `ResumoPedido` conforme o escopo da conta. Esses tipos são projeções de leitura; as entidades preservam suas regras e independência do Spring.
+
+Os repositórios recebem a conta do contexto autenticado do servidor e utilizam `ContextoBanco.comConta` para abrir uma transação e definir o responsável localmente. A identificação expira no término da transação, evitando reaproveitamento de permissões entre conexões do pool. As consultas usam parâmetros vinculados.
+
+O banco reproduz as invariantes persistidas com unicidade, chaves estrangeiras, validações, snapshots e bloqueios. Alterações na API e nos adaptadores devem preservar as regras do modelo e do banco.
 
 ## Exemplo de uso
 
