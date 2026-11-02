@@ -12,7 +12,7 @@ Sistema web de aluguel de carros que conecta clientes, empresas e bancos na soli
 - [Sobre o projeto](#-sobre-o-projeto)
 - [Funcionalidades principais](#-funcionalidades-principais)
 - [Tecnologias utilizadas](#-tecnologias-utilizadas)
-- [Design System](#-design-system)
+- [Design system](#-design-system)
 - [Arquitetura e diagramas](#-arquitetura)
 - [Histórias de usuário](#-histórias-de-usuário)
 - [Consulta dos artefatos](#-consulta-dos-artefatos)
@@ -26,6 +26,7 @@ Sistema web de aluguel de carros que conecta clientes, empresas e bancos na soli
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | Requisitos, regras, estados e arquitetura | [Modelagem detalhada](docs/modelagem.md)                                                                                         |
 | Histórias e critérios de aceitação        | [Histórias de usuário](docs/historias-de-usuario.md)                                                                             |
+| Classes e regras do backend               | [Modelo e operações](docs/backend.md) |
 | Diagramas editáveis                       | [Fontes draw.io e prévias](docs/diagramas/)                                                                                      |
 | Protótipos editáveis                      | [Arquivo Figma](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK)                                                             |
 | Wireframes navegáveis                     | [Apresentar baixa fidelidade](https://www.figma.com/proto/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=4-1697&starting-point-node-id=4%3A1697) |
@@ -137,11 +138,22 @@ Para consultar os artefatos:
 ```text
 allocar/
 ├── README.md
+├── backend/
+│   ├── pom.xml
+│   └── src/
+│       ├── main/java/com/allocar/backend/
+│       │   ├── application/   # inicialização e configuração
+│       │   ├── controller/    # entrada HTTP
+│       │   ├── model/         # entidades e regras de negócio
+│       │   ├── repository/    # persistência
+│       │   └── service/       # coordenação de casos de uso
+│       └── test/java/         # testes do backend
 └── docs/
     ├── allocar-logo.svg        # export oficial para fundo escuro
     ├── allocar-logo-claro.svg
     ├── allocar-logo-monocromatica.svg
     ├── modelagem.md
+    ├── backend.md
     ├── historias-de-usuario.md
     ├── gerar-diagramas.cjs
     ├── design-system/          # tokens, inventário e prévias da biblioteca

@@ -10,25 +10,25 @@
         <mxCell id="web" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;«subsystem» apresentacao.web&lt;/b&gt;&lt;hr&gt;React + Vite · construção dinâmica de páginas&lt;br&gt;pages · components · routes · apiClient&lt;br&gt;View MVC · cliente e agente" vertex="1">
           <mxGeometry height="150" width="530" x="370" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="controller" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;gestao.api.controller&lt;/b&gt;&lt;hr&gt;Controllers REST · DTOs · validação HTTP" vertex="1">
+        <mxCell id="controller" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;com.allocar.backend.controller&lt;/b&gt;&lt;hr&gt;Controllers REST · DTOs · validação HTTP" vertex="1">
           <mxGeometry height="110" width="430" x="420" y="350" as="geometry" />
         </mxCell>
-        <mxCell id="service" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;gestao.application.service&lt;/b&gt;&lt;hr&gt;Casos de uso · transações · autorização" vertex="1">
+        <mxCell id="service" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;com.allocar.backend.service&lt;/b&gt;&lt;hr&gt;Casos de uso · transações · autorização" vertex="1">
           <mxGeometry height="110" width="430" x="420" y="540" as="geometry" />
         </mxCell>
-        <mxCell id="domain" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;gestao.domain.model&lt;/b&gt;&lt;hr&gt;Entidades · estados · regras de negócio" vertex="1">
+        <mxCell id="domain" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;com.allocar.backend.model&lt;/b&gt;&lt;hr&gt;Entidades · estados · regras de negócio" vertex="1">
           <mxGeometry height="110" width="360" x="30" y="730" as="geometry" />
         </mxCell>
-        <mxCell id="repo" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;gestao.infrastructure.repository&lt;/b&gt;&lt;hr&gt;Repositórios · persistência PostgreSQL" vertex="1">
+        <mxCell id="repo" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;com.allocar.backend.repository&lt;/b&gt;&lt;hr&gt;Repositórios · persistência PostgreSQL" vertex="1">
           <mxGeometry height="110" width="400" x="870" y="730" as="geometry" />
         </mxCell>
-        <mxCell id="security" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#eee8fa;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;gestao.security&lt;/b&gt;&lt;hr&gt;Autenticação e perfis" vertex="1">
+        <mxCell id="security" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#eee8fa;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;com.allocar.backend.application&lt;/b&gt;&lt;hr&gt;Autenticação e perfis" vertex="1">
           <mxGeometry height="110" width="270" x="30" y="350" as="geometry" />
         </mxCell>
         <mxCell id="db" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e6f4ef;shape=folder;tabWidth=90;tabHeight=24;" value="&lt;b&gt;«external» Supabase&lt;/b&gt;&lt;hr&gt;PostgreSQL · armazenamento de dados" vertex="1">
           <mxGeometry height="110" width="390" x="880" y="430" as="geometry" />
         </mxCell>
-        <mxCell id="notes" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;text;strokeColor=none;fillColor=none;align=left;" value="Subsistema de gestão: gestao.api + application + domain + infrastructure + security (Spring Boot).&#xa;Subsistema de páginas: apresentacao.web. Navegadores de clientes/agentes acessam pela Internet.&#xa;Seta tracejada A → B: A depende de B. Credenciais do banco permanecem no servidor central." vertex="1">
+        <mxCell id="notes" parent="1" style="html=1;whiteSpace=wrap;fontSize=14;strokeColor=#53657c;fillColor=#e8f0fe;text;strokeColor=none;fillColor=none;align=left;" value="Subsistema de gestão: application + controller + model + repository + service (Spring Boot).&#xa;Subsistema de páginas: apresentacao.web. Navegadores de clientes/agentes acessam pela Internet.&#xa;Seta tracejada A → B: A depende de B. Credenciais do banco permanecem no servidor central." vertex="1">
           <mxGeometry height="70" width="1220" x="30" y="895" as="geometry" />
         </mxCell>
         <mxCell id="e0" edge="1" parent="1" source="web" style="html=1;fontSize=12;edgeStyle=orthogonalEdgeStyle;strokeColor=#53657c;endArrow=open;endFill=0;dashed=1;" target="controller" value="HTTPS / JSON">

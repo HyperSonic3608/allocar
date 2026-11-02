@@ -98,6 +98,8 @@ As premissas de autorização, integridade, cardinalidade, consistência e rastr
 | ContratoCredito          | Número, valor e taxa; um Banco concedente; associação opcional e exclusiva a um aluguel.                                                 |
 | StatusPedido             | EM_ANALISE, APROVADO, REPROVADO, CANCELADO, EM_EXECUCAO.                                                                                 |
 | TipoContrato             | Código de modalidade contratual: PADRAO / COM_CREDITO. Propriedade não é deduzida automaticamente do código. |
+| PropostaAluguel           | Automóvel, período, tipo e valor total reunidos em um objeto de valor validado. |
+| DadosCliente             | Fotografia imutável da identificação, profissão e rendimentos usados no parecer, com versão cadastral. |
 
 O diagrama é conceitual: IDs são UUIDs e não substituem identificadores naturais. Atributos de associação aparecem como relações, evitando duplicar FKs no modelo UML. RG é texto; senhas não são armazenadas em texto puro.
 
@@ -121,7 +123,7 @@ O diagrama é conceitual: IDs são UUIDs e não substituem identificadores natur
 
 O servidor central é um monólito modular Spring Boot. Navegadores acessam a apresentação React pela Internet; a apresentação chama Controllers REST via HTTPS/JSON. Controllers delegam aos serviços de aplicação; serviços aplicam regras sobre o domínio e usam repositórios para persistir no PostgreSQL do Supabase. Segurança participa de cada operação protegida.
 
-O subsistema `apresentacao.web` realiza a construção dinâmica das páginas e corresponde à View do MVC. O subsistema de gestão agrupa `gestao.api.controller` (Controller), `gestao.application.service`, `gestao.domain.model` e `gestao.infrastructure.repository` (Model e persistência). `gestao.security` atende autenticação e perfis. O navegador não recebe credenciais do PostgreSQL e não altera pedidos diretamente no banco.
+O subsistema `apresentacao.web` realiza a construção dinâmica das páginas e corresponde à View do MVC. O backend organiza os pacotes diretamente sob `com.allocar.backend`: `application` inicializa e configura a aplicação; `controller` recebe requisições; `model` contém as entidades e regras; `repository` atende à persistência; `service` coordena casos de uso e transações. O navegador não recebe credenciais do PostgreSQL e não altera pedidos diretamente no banco.
 
 Os pacotes UML representam a organização lógica dos dois subsistemas e suas dependências.
 
@@ -130,3 +132,7 @@ Os pacotes UML representam a organização lógica dos dois subsistemas e suas d
 Os rótulos **Pendente** e **Em análise** representam `EM_ANALISE`; **Rejeitado** corresponde a `REPROVADO`. A consulta de contratos apresenta o estado vazio antes da execução. Associar crédito não equivale a aprovar financeiramente ou executar o contrato.
 
 O [guia dos protótipos](prototipos/README.md) relaciona as interfaces às histórias de usuário. O [design system](design-system/README.md) descreve tokens, componentes e padrões de composição.
+
+## Classes do backend
+
+O [guia das classes e regras](backend.md) relaciona os atributos e métodos de `com.allocar.backend.model`. `PropostaAluguel` reúne os dados da proposta; `DadosCliente` preserva os dados financeiros avaliados. Mudanças no cadastro exigem nova análise antes da execução, e contratos executados mantêm o parecer e as condições registradas.
