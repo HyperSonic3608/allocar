@@ -27,6 +27,7 @@ Sistema web de aluguel de carros que conecta clientes, empresas e bancos na soli
 | Requisitos, regras, estados e arquitetura | [Modelagem detalhada](docs/modelagem.md)                                                                                         |
 | Histórias e critérios de aceitação        | [Histórias de usuário](docs/historias-de-usuario.md)                                                                             |
 | Classes e regras do backend               | [Modelo e operações](docs/backend.md) |
+| API REST e integração com o frontend      | [Rotas, autenticação e exemplos JSON](docs/api.md) |
 | Banco de dados e conexão                  | [Configuração, tabelas e dados fictícios](docs/database.md) |
 | Diagramas editáveis                       | [Fontes draw.io e prévias](docs/diagramas/)                                                                                      |
 | Protótipos editáveis                      | [Arquivo Figma](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK)                                                             |
@@ -155,6 +156,7 @@ allocar/
     ├── allocar-logo-monocromatica.svg
     ├── modelagem.md
     ├── backend.md
+    ├── api.md
     ├── database.md
     ├── historias-de-usuario.md
     ├── gerar-diagramas.cjs

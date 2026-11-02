@@ -56,6 +56,8 @@ public class SupabaseDatabaseConfiguration {
                 select not r.rolsuper and not r.rolbypassrls
                   and pg_has_role(current_user, 'allocar_backend', 'member')
                   and to_regclass('allocar.pedidos_aluguel') is not null
+                  and to_regprocedure('allocar.credencial_login(text)') is not null
+                  and to_regprocedure('allocar.registrar_conta(text,jsonb,text)') is not null
                 from pg_roles r where r.rolname = current_user
                 """, Boolean.class);
             if (!Boolean.TRUE.equals(seguro)) {

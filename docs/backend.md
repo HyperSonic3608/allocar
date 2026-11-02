@@ -60,9 +60,19 @@ Unicidade de usuário, CPF, CNPJ, matrícula, placa e número de crédito envolv
 
 `AutomovelRepository.buscar` consulta o catálogo por marca e ano, retornando `VeiculoCatalogo`. `PedidoRepository.listar` retorna `ResumoPedido` conforme o escopo da conta. Esses tipos são projeções de leitura; as entidades preservam suas regras e independência do Spring.
 
+`ContaRepository` coordena os cadastros atômicos e a leitura interna das credenciais; `ClienteRepository` mantém o perfil e os vínculos; `PedidoRepository` também grava propostas e transições; `FinanceiroRepository` mantém pareceres, contratos e créditos. As escritas usam o mesmo contexto transacional e as restrições SQL de negócio.
+
 Os repositórios recebem a conta do contexto autenticado do servidor e utilizam `ContextoBanco.comConta` para abrir uma transação e definir o responsável localmente. A identificação expira no término da transação, evitando reaproveitamento de permissões entre conexões do pool. As consultas usam parâmetros vinculados.
 
 O banco reproduz as invariantes persistidas com unicidade, chaves estrangeiras, validações, snapshots e bloqueios. Alterações na API e nos adaptadores devem preservar as regras do modelo e do banco.
+
+## API REST
+
+Os controllers expõem os [contratos HTTP e exemplos JSON](api.md). `AutenticacaoService` verifica hashes PBKDF2 e usa `ContaAutenticada` como principal de sessão, sem senha/hash. `SegurancaConfiguration` aplica autenticação, perfis, CSRF e CORS. `ClienteService` coordena perfil e rendimentos; `AluguelService` coordena catálogo, pedidos, pareceres, execução e crédito.
+
+`ApiDtos` define entradas validadas e respostas próprias para a API, sem serializar entidades de negócio. `ApiExceptionHandler` transforma validações, conflitos e falhas de autorização/persistência em erros públicos. O frontend envia a versão recebida na consulta; o servidor bloqueia o cadastro antes do pedido para conferir versões e executar a operação na mesma transação.
+
+As regras dos objetos de domínio continuam independentes dos adaptadores HTTP/JDBC. Na persistência, as invariantes são verificadas pelos serviços e pelas restrições/triggers do banco. Pareceres históricos permanecem cópias dos dados efetivamente analisados.
 
 ## Exemplo de uso
 

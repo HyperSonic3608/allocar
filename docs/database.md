@@ -44,7 +44,9 @@ mvn spring-boot:run '-Dspring-boot.run.profiles=supabase'
 
 `service.SupabaseDatabaseConfiguration` configura o pool JDBC, as transações e a validação do login dedicado. `service.DatabaseProperties` reúne somente as propriedades usadas na conexão. A inicialização não altera tabelas nem carrega dados. A administração do banco é feita pelo Supabase, separadamente da aplicação.
 
-O perfil `supabase` usa um login sem privilégios administrativos e sem bypass de RLS, membro de `allocar_backend`. `ContextoBanco.comConta` define a conta apenas durante a transação e impede trocar o responsável em uma transação aninhada. Esse identificador deve vir de uma sessão autenticada pelo servidor. RLS restringe pedidos ao cliente, agente responsável e banco do crédito associado. O contexto não é uma credencial de autenticação e não deve ser aceito diretamente de parâmetros HTTP.
+O perfil `supabase` usa um login sem privilégios administrativos e sem bypass de RLS, membro de `allocar_backend`. `ContextoBanco.comConta` define a conta apenas durante a transação e impede trocar o responsável em uma transação aninhada. Esse identificador vem da sessão autenticada pelo servidor. RLS restringe pedidos ao cliente, agente responsável e banco do crédito associado. O contexto não é uma credencial de autenticação e não deve ser aceito diretamente de parâmetros HTTP.
+
+`allocar.credencial_login(text)` faz a consulta interna anterior à autenticação; o hash é conferido pelo Java e não é enviado na resposta HTTP. `allocar.registrar_conta(text,jsonb,text)` cria um novo cadastro com seus relacionamentos em uma única transação, gerando identidades no banco e mantendo novas instituições sem validação e inativas. São funções privadas com `search_path` fixo e execução exclusiva de `allocar_backend`; não concedem acesso aos papéis da Data API. A política de desativação permite encerrar a própria conta sem remover o histórico.
 
 ## Dados fictícios
 
@@ -75,4 +77,4 @@ cd backend
 mvn test
 ```
 
-Os testes locais verificam o domínio e o carregamento do contexto Spring no perfil `test`, sem conexão com o Supabase. Para conferir a conexão real, inicie o backend com o perfil `supabase`: a aplicação valida o login dedicado e a existência da tabela de pedidos durante a inicialização.
+Os testes locais verificam domínio, autenticação e contratos HTTP sem conexão com o Supabase. Para conferir a conexão real, inicie o backend com o perfil `supabase`: a aplicação valida o login dedicado, a tabela de pedidos e as funções privadas de cadastro/login durante a inicialização. Os [testes de integração da API](api.md#testes) usam transações com rollback no projeto configurado.

@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -29,7 +30,7 @@ public class ContextoBanco {
             }
             jdbc.queryForObject("select set_config('allocar.conta_id', ?, true)", String.class, conta.toString());
             UUID titular = jdbc.queryForObject("select allocar.ator()", UUID.class);
-            if (titular == null) throw new RegraDeNegocioException("Conta inativa ou instituição não habilitada.");
+            if (titular == null) throw new CredentialsExpiredException("Conta inativa ou instituição não habilitada.");
             return operacao.get();
         });
     }
