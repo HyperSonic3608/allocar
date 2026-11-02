@@ -12,7 +12,7 @@ Sistema web de aluguel de carros que conecta clientes, empresas e bancos na soli
 - [Sobre o projeto](#-sobre-o-projeto)
 - [Funcionalidades principais](#-funcionalidades-principais)
 - [Tecnologias utilizadas](#-tecnologias-utilizadas)
-- [Design system AlloCar](#design-system)
+- [Design System](#-design-system)
 - [Arquitetura e diagramas](#-arquitetura)
 - [Histórias de usuário](#-histórias-de-usuário)
 - [Consulta dos artefatos](#-consulta-dos-artefatos)
