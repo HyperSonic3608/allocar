@@ -1,0 +1,6 @@
+figma
+*.*js
+*.json
+*.xml
+/*/*.md
+!/*/README.md
