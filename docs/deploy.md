@@ -4,6 +4,8 @@ O frontend React é hospedado no Vercel, a API Spring Boot/Java 25 no Render e o
 
 ## Backend no Render
 
+Na criação direta por MCP, os caminhos são relativos à raiz do repositório: `dockerfilePath=backend/Dockerfile` e `dockerContext=backend`, com Root Directory vazio. Isso equivale aos caminhos do Blueprint abaixo, que usa Root Directory `backend`. A origem da API é `https://allocar-backend.onrender.com`.
+
 1. No Render, crie um **Blueprint** a partir deste repositório, usando `render.yaml` na raiz.
 2. Confira o serviço `allocar-backend`, runtime Docker e Root Directory `backend`. O Dockerfile compila com Maven/JDK 25, executa os testes e inicia o JAR com JRE 25 e usuário sem privilégios.
 3. Preencha as variáveis privadas solicitadas pelo Blueprint:
@@ -16,6 +18,8 @@ O frontend React é hospedado no Vercel, a API Spring Boot/Java 25 no Render e o
 | `ALLOCAR_ALLOWED_ORIGINS` | O Blueprint define `https://allocar.vercel.app`. Atualize se mudar o domínio; para mais de uma origem exata, separe por vírgula. |
 
 O Blueprint define `SPRING_PROFILES_ACTIVE=supabase`, cookie seguro e pool com três conexões. `PORT` é fornecida pelo Render; o Spring escuta em `0.0.0.0` nessa porta. A verificação de saúde é `GET /api/health`: retorna apenas `{"status":"UP"}`, sem criar sessão ou expor dados do banco. A inicialização JDBC valida a conexão antes de liberar o serviço.
+
+O Blueprint configura a sonda HTTP em `/api/health`. Se o serviço for criado diretamente por uma ferramenta que não aceita `healthCheckPath`, o Render usa sua sonda TCP padrão; para adotar a sonda HTTP, configure esse caminho nas configurações do serviço. O endpoint também pode ser consultado diretamente e através do proxy do Vercel.
 
 O plano `free` está definido no Blueprint. Ele pode suspender a aplicação por inatividade; a retomada causa espera no primeiro acesso. Sessões ficam na memória desta única instância: suspensão, reinício e novo deploy encerram os logins. Para uso contínuo, escolha um plano adequado no Render; múltiplas instâncias exigem armazenamento compartilhado de sessão.
 
