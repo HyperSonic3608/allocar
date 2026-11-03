@@ -49,33 +49,33 @@ src/
 
 As classes estão sob `com.allocar.backend`, com as seguintes responsabilidades:
 
-| Pacote | Responsabilidade |
-| --- | --- |
-| `application` | Inicialização da aplicação Spring Boot. |
-| `controller` | Entrada HTTP e tradução de requisições/respostas. |
-| `model` | Entidades, objetos de valor, estados e regras de negócio. |
-| `repository` | Consultas, persistência e restrições de unicidade dos registros. |
-| `service` | Coordenação dos casos de uso, autorização, transações e configuração JDBC. |
+| Pacote        | Responsabilidade                                                           |
+| ------------- | -------------------------------------------------------------------------- |
+| `application` | Inicialização da aplicação Spring Boot.                                    |
+| `controller`  | Entrada HTTP e tradução de requisições/respostas.                          |
+| `model`       | Entidades, objetos de valor, estados e regras de negócio.                  |
+| `repository`  | Consultas, persistência e restrições de unicidade dos registros.           |
+| `service`     | Coordenação dos casos de uso, autorização, transações e configuração JDBC. |
 
 `application.BackendApplication` configura a varredura de componentes em `com.allocar.backend`. As classes de `model` usam Java e não dependem de Spring ou de uma conexão com o banco.
 
 ## Classes e atributos
 
-| Classe | Dados e comportamento |
-| --- | --- |
-| `Parte` | UUID, nome, endereço e uma conta por titular; base de cliente e agente. |
-| `Conta` | Usuário, hash da senha, titular e ativação/desativação. Instituições exigem validação antes da ativação. |
-| `Cliente` | RG, CPF, profissão, versão do cadastro e até três vínculos; atualização cadastral e cálculo de renda total. |
-| `Endereco` | Logradouro, número, complemento opcional, bairro, cidade, UF e CEP; objeto de valor imutável. |
-| `VinculoEmpregaticio` | UUID, empregador e rendimento não negativo; atualização pelo cadastro preserva o identificador. |
+| Classe                       | Dados e comportamento                                                                                                     |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `Parte`                      | UUID, nome, endereço e uma conta por titular; base de cliente e agente.                                                   |
+| `Conta`                      | Usuário, hash da senha, titular e ativação/desativação. Instituições exigem validação antes da ativação.                  |
+| `Cliente`                    | RG, CPF, profissão, versão do cadastro e até três vínculos; atualização cadastral e cálculo de renda total.               |
+| `Endereco`                   | Logradouro, número, complemento opcional, bairro, cidade, UF e CEP; objeto de valor imutável.                             |
+| `VinculoEmpregaticio`        | UUID, empregador e rendimento não negativo; atualização pelo cadastro preserva o identificador.                           |
 | `Agente`, `Empresa`, `Banco` | CNPJ, validação institucional e tipo de agente; avaliação e modificação dos pedidos de seu escopo. Banco concede crédito. |
-| `Automovel` | Matrícula, ano, marca, modelo, placa e proprietário cliente/empresa/banco. |
-| `PropostaAluguel` | Automóvel, início, fim, tipo e valor total; objeto de valor que valida o período e o preço. |
-| `PedidoAluguel` | Cliente, agente responsável, proposta, estado, versão, pareceres e contrato; controla o ciclo de vida. |
-| `DadosCliente` | Cópia imutável dos dados e rendimentos usados na avaliação, identificada pela versão do cadastro. |
-| `ParecerFinanceiro` | UUID, pedido, agente, decisão, justificativa, versão do pedido, data, dados cadastrais e proposta analisada. |
-| `ContratoAluguel` | Pedido, tipo, valor, data de execução, parecer aprovador, proprietário registrado e crédito opcional. |
-| `ContratoCredito` | Número, valor, taxa, banco concedente e vínculo exclusivo com um aluguel. |
+| `Automovel`                  | Matrícula, ano, marca, modelo, placa e proprietário cliente/empresa/banco.                                                |
+| `PropostaAluguel`            | Automóvel, início, fim, tipo e valor total; objeto de valor que valida o período e o preço.                               |
+| `PedidoAluguel`              | Cliente, agente responsável, proposta, estado, versão, pareceres e contrato; controla o ciclo de vida.                    |
+| `DadosCliente`               | Cópia imutável dos dados e rendimentos usados na avaliação, identificada pela versão do cadastro.                         |
+| `ParecerFinanceiro`          | UUID, pedido, agente, decisão, justificativa, versão do pedido, data, dados cadastrais e proposta analisada.              |
+| `ContratoAluguel`            | Pedido, tipo, valor, data de execução, parecer aprovador, proprietário registrado e crédito opcional.                     |
+| `ContratoCredito`            | Número, valor, taxa, banco concedente e vínculo exclusivo com um aluguel.                                                 |
 
 `StatusPedido` representa `EM_ANALISE`, `APROVADO`, `REPROVADO`, `CANCELADO` e `EM_EXECUCAO`. `DecisaoParecer` aceita aprovação ou reprovação; `TipoContrato` distingue `PADRAO`/`COM_CREDITO`, e `TipoAgente` distingue empresa/banco.
 

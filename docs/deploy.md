@@ -1,6 +1,6 @@
 # Hospedagem · Vercel e Render
 
-O frontend React é hospedado no Vercel, a API Spring Boot/Java 25 no Render e os dados permanecem no Supabase. O navegador acessa a API pelo mesmo domínio do frontend, em `/api`, usando o proxy externo do Vercel. Java não consta entre os [runtimes oficiais do Vercel](https://vercel.com/docs/functions/runtimes); o Render executa a API como contêiner Docker.
+Este guia descreve a publicação do frontend React no Vercel e da API Spring Boot/Java 25 no Render, com os dados no Supabase. O navegador acessa `/api` pelo domínio do frontend; o Vercel encaminha essas requisições ao contêiner Java no Render.
 
 ## Backend no Render
 
@@ -10,11 +10,11 @@ Na criação direta por MCP, os caminhos são relativos à raiz do repositório:
 2. Confira o serviço `allocar-backend`, runtime Docker e Root Directory `backend`. O Dockerfile compila com Maven/JDK 25, executa os testes e inicia o JAR com JRE 25 e usuário sem privilégios.
 3. Preencha as variáveis privadas solicitadas pelo Blueprint:
 
-| Variável | Valor |
-| --- | --- |
-| `SUPABASE_DB_URL` | URL JDBC do Session pooler, com `sslmode=require`. |
-| `SUPABASE_DB_USERNAME` | Usuário dedicado da aplicação, no formato exigido pelo pooler. |
-| `SUPABASE_DB_PASSWORD` | Senha do usuário dedicado. |
+| Variável                  | Valor                                                                                                                            |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `SUPABASE_DB_URL`         | URL JDBC do Session pooler, com `sslmode=require`.                                                                               |
+| `SUPABASE_DB_USERNAME`    | Usuário dedicado da aplicação, no formato exigido pelo pooler.                                                                   |
+| `SUPABASE_DB_PASSWORD`    | Senha do usuário dedicado.                                                                                                       |
 | `ALLOCAR_ALLOWED_ORIGINS` | O Blueprint define `https://allocar.vercel.app`. Atualize se mudar o domínio; para mais de uma origem exata, separe por vírgula. |
 
 O Blueprint define `SPRING_PROFILES_ACTIVE=supabase`, cookie seguro e pool com três conexões. `PORT` é fornecida pelo Render; o Spring escuta em `0.0.0.0` nessa porta. A verificação de saúde é `GET /api/health`: retorna apenas `{"status":"UP"}`, sem criar sessão ou expor dados do banco. A inicialização JDBC valida a conexão antes de liberar o serviço.
@@ -28,14 +28,26 @@ Use somente o login JDBC dedicado já utilizado pelo backend. Nunca copie arquiv
 ## Frontend no Vercel
 
 1. Importe o repositório e selecione **Root Directory: `frontend`**, framework **Vite**, Node **22.x**.
-2. Defina `BACKEND_URL` com a origem HTTPS real fornecida pelo Render, por exemplo `https://seu-servico.onrender.com`, sem `/api`, parâmetros ou credenciais. Configure separadamente os ambientes Production e Preview.
-3. Mantenha `VITE_API_URL=/api`, ou deixe essa variável ausente para usar o padrão. Não use a URL externa diretamente no JavaScript.
-4. O arquivo `frontend/vercel.mjs` fornece instalação `npm ci`, build `npm run build`, saída `dist`, proxy `/api/:path*` e fallback das rotas React para `index.html`. O destino vem de `BACKEND_URL`; o arquivo recusa configuração ausente ou inválida. A variável é avaliada na configuração do deployment: alterações exigem outro deploy.
+2. Confira [`frontend/vercel.json`](../frontend/vercel.json): a regra `/api/:path*` deve ter `destination` igual a `https://allocar-backend.onrender.com/api/:path*`. Se mudar o backend, altere esse endereço no arquivo.
+3. Mantenha `VITE_API_URL=/api` nos ambientes Production e Preview, ou deixe essa variável ausente para usar o padrão. As variáveis JDBC pertencem exclusivamente ao serviço Render.
+4. O arquivo define instalação `npm ci`, build `npm run build`, saída `dist` e fallback das rotas React para `index.html`. Mantenha somente um arquivo de configuração Vercel no diretório `frontend`.
 5. Inclua a origem HTTPS atribuída pelo Vercel em `ALLOCAR_ALLOWED_ORIGINS` no Render. Para previews autenticados, inclua a origem exata de cada preview e use um backend/banco de homologação quando necessário. Não libere todas as origens com cookies.
 
 O proxy preserva o caminho `/api`, consultas, métodos e cookies. O cookie `JSESSIONID` não recebe um domínio fixo e é apresentado ao navegador pelo domínio do Vercel. As rotas da API usam `Cache-Control: private, no-store`; o fallback React exclui `/api` para preservar erros HTTP reais. O CSRF continua obrigatório nas operações de escrita.
 
-Com a CLI autenticada, execute os comandos Vercel na raiz do repositório: o projeto já usa `Root Directory: frontend`, e essa opção também é aplicada pela CLI. `vercel link` vincula o projeto; o repositório conectado pode gerar deployments a cada push. `vercel env add BACKEND_URL production` e `vercel env add BACKEND_URL preview` configuram o destino. Depois, use `vercel pull --yes --environment preview` e `vercel build` para validar localmente. Nunca adicione credenciais Supabase ao Vercel. O [guia de preparação do agente](https://vercel.com/get-started.md) descreve CLI, skills/plugin e MCP.
+`BACKEND_URL` controla apenas o proxy de desenvolvimento/preview local do Vite. A configuração estática do Vercel usa o endereço definido em `destination`; alterar uma variável com esse nome no painel não muda a regra hospedada.
+
+Com a CLI autenticada, execute os comandos Vercel na raiz do repositório. A opção Root Directory `frontend` também é aplicada pela CLI. `vercel link` vincula o projeto; `vercel pull --yes --environment preview` recupera as configurações, e `vercel build` executa a compilação local. Mantenha `.vercel/` e os ambientes locais fora do Git. O [guia de preparação do agente](https://vercel.com/get-started.md) descreve CLI, skills/plugin e MCP.
+
+### Publicação em produção
+
+Confira se a branch de produção é `main`. Publique nessa branch o commit que contém `frontend/vercel.json`; a integração Git do Vercel usa esse conteúdo para o novo build. Se iniciar pelo painel, selecione esse commit em **Deployments → Create Deployment**. Repetir o deploy de um commit anterior usa os arquivos daquele commit.
+
+Para publicar por CLI, na raiz do repositório, execute `vercel deploy --prod` depois de conferir o projeto vinculado e as configurações de Production. O comando `vercel deploy` sem `--prod` cria um preview. Publicações protegidas por autenticação Vercel exigem acesso à equipe correspondente.
+
+### Diagnóstico de configuração
+
+Se a validação indicar `rewrites[0]` sem `destination`, confira se o commit selecionado contém o JSON estático e a URL completa de destino. Remova configurações Vercel concorrentes e mantenha Root Directory `frontend`. Cada alteração no arquivo ou nas variáveis de build exige um novo deployment.
 
 ## Verificação após publicar
 
@@ -49,4 +61,4 @@ docker build -t allocar-backend ./backend
 
 Forneça as variáveis JDBC ao executar o contêiner. O arquivo local do backend usa Java properties e não deve ser convertido automaticamente em um `--env-file` Docker sem conferir sua sintaxe.
 
-Referências: [configuração programática Vercel](https://vercel.com/docs/project-configuration/vercel-ts), [rewrites](https://vercel.com/docs/routing/rewrites), [Blueprint Render](https://render.com/docs/blueprint-spec) e [Docker no Render](https://render.com/docs/docker).
+Referências: [configuração estática Vercel](https://vercel.com/docs/project-configuration/vercel-json), [rewrites](https://vercel.com/docs/routing/rewrites), [Blueprint Render](https://render.com/docs/blueprint-spec) e [Docker no Render](https://render.com/docs/docker).

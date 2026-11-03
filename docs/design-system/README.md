@@ -1,4 +1,4 @@
-# AlloCar — Design System
+# AlloCar · Design System
 
 O [Figma](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK) reúne identidade visual, tokens, componentes nativos e exemplos de composição para as interfaces AlloCar.
 
@@ -29,7 +29,7 @@ Os SVGs foram exportados do conjunto [AlloCar/Logo](https://www.figma.com/design
 
 ## Tokens e estilos
 
-O [frontend React](../../frontend/README.md#design-system-em-código) usa o export visual em [`figma.tokens.json`](../../frontend/src/styles/figma.tokens.json). O gerador converte variáveis, aliases, tipografia e sombras em [`tokens.css`](../../frontend/src/styles/tokens.css), compartilhado pelos componentes. Ícones, fotografias e assinaturas mantêm os ativos originais do Figma.
+O [frontend React](../../frontend/README.md#design-system-em-código) usa o export visual em [`figma.tokens.json`](../../frontend/src/styles/figma.tokens.json) e os estilos correspondentes em [`tokens.css`](../../frontend/src/styles/tokens.css). O frontend documenta os comandos de geração quando os scripts locais de exportação estiverem disponíveis. Ícones, fotografias e assinaturas mantêm os ativos originais do Figma.
 
 | Coleção / estilo                 | Quantidade | Observação                                                                              |
 | -------------------------------- | ---------- | --------------------------------------------------------------------------------------- |
@@ -42,7 +42,7 @@ O [frontend React](../../frontend/README.md#design-system-em-código) usa o expo
 | Estilos de texto                 | 53         | Inter; títulos, subtítulos, corpo e legendas em diferentes tamanhos/pesos.              |
 | Estilos de elevação              | 3          | Sombras com raios de 8, 24 e 48 px.                                                     |
 
-As seis coleções totalizam 133 variáveis: 86 de fundações, 14 das coleções Interface/Wireframe e 33 de interação. <!--O [inventário de interação](interacao-expansao.json) descreve IDs, tipos e escopos das variáveis de seleção de automóvel, filtros, tipo institucional e lista de contratos. Variáveis de interação são separadas dos tokens de marca.-->
+As seis coleções totalizam 133 variáveis: 86 de fundações, 14 das coleções Interface/Wireframe e 33 de interação. O export do frontend contém 93 variáveis visuais: Primitivos, Semânticos e Interface. Tokens de wireframe e variáveis de simulação de navegação pertencem ao arquivo de design.
 
 | Uso                          | Cor       |
 | ---------------------------- | --------- |
@@ -69,7 +69,7 @@ A biblioteca reúne **65 famílias no nível da página**: 43 componentes indepe
 | Dados         | Tabela, LinhaTabela, CartaoConteudo, ItemLista, Lista, Avatar, Metadados.                                                                         |
 | Locação       | CartaoVeiculo, BuscaLocacao, Filtros, Tarifa, Modalidade, Protecao, Extra, ResumoReserva, Confirmacao, StatusReserva, Cupom, Condicoes, Politica. |
 
-As variantes usam a propriedade `Modelo`; a logo usa `Aplicacao`. Por exemplo, Botao possui 47 variantes, Campo 18 e Logo três aplicações. <!--O [inventário](inventario-figma.json) contém os IDs, nomes e dimensões de todas as famílias e variantes, bem como as pranchas do design system.-->
+As variantes usam a propriedade `Modelo`; a logo usa `Aplicacao`. Por exemplo, Botao possui 47 variantes, Campo 18 e Logo três aplicações.
 
 ![Variantes dos botões nativos](componentes-botoes.png)
 
@@ -90,6 +90,6 @@ Os exemplos da biblioteca incluem agências, horários, categorias, extras, prot
 
 As 27 telas do sistema usam a biblioteca existente. A busca reutiliza CartaoVeiculo e Campo; o resumo lateral usa ResumoReserva, com extras, proteção e cupom ocultados para adequação ao projeto. Detalhes e consultas reutilizam Metadados; navegação e ações usam Logo e Botao. A landing mantém CartaoConteudo e Acordeao. As interfaces permanecem editáveis e as fotos vêm dos componentes existentes.
 
-O cabeçalho ocupa toda a largura e o conteúdo se organiza em um grid central, com formulários, cartões e apoio lateral. Os wireframes recebem a mesma estrutura e navegação com superfícies neutras, sem fotografias, efeitos ou cores de marca. Veja as [referências e decisões de escopo](../prototipos/referencias-e-escopo.md).
+O cabeçalho ocupa toda a largura e o conteúdo se organiza em um grid central, com formulários, cartões e apoio lateral. Os wireframes recebem a mesma estrutura e navegação com superfícies neutras, sem fotografias, efeitos ou cores de marca. Veja as [referências e decisões de escopo](../referencias-e-escopo.md).
 
 Os wireframes de baixa fidelidade preservam a organização e os fluxos, com marca textual, contornos neutros, fotografias substituídas por blocos e sem efeitos. Consulte as [prévias e roteiros](../prototipos/README.md).

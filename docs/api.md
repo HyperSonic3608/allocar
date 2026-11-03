@@ -1,4 +1,4 @@
-# AlloCar — API REST
+# AlloCar · API REST
 
 ## Execução e conexão
 
@@ -27,36 +27,45 @@ O token CSRF não substitui a autenticação. Uma sessão ausente/encerrada não
 Exemplo de cliente para React/Vite:
 
 ```javascript
-const base = 'http://localhost:8080/api'
-let csrf
+const base = "/api";
+let csrf;
 
 async function renovarCsrf() {
-  const resposta = await fetch(`${base}/auth/csrf`, { credentials: 'include' })
-  if (!resposta.ok) throw new Error('Não foi possível iniciar a sessão.')
-  csrf = await resposta.json()
+    const resposta = await fetch(`${base}/auth/csrf`, {
+        credentials: "include",
+    });
+    if (!resposta.ok) throw new Error("Não foi possível iniciar a sessão.");
+    csrf = await resposta.json();
 }
 
-async function api(caminho, { method = 'GET', body } = {}) {
-  const escrita = !['GET', 'HEAD', 'OPTIONS'].includes(method)
-  if (escrita && !csrf) await renovarCsrf()
-  const headers = {}
-  if (body !== undefined) headers['Content-Type'] = 'application/json'
-  if (escrita) headers[csrf.headerName] = csrf.token
-  const resposta = await fetch(`${base}${caminho}`, {
-    method, credentials: 'include', headers,
-    body: body === undefined ? undefined : JSON.stringify(body),
-  })
-  const dados = resposta.status === 204 ? null : await resposta.json()
-  if (!resposta.ok) throw Object.assign(new Error(dados.mensagem), { status: resposta.status, dados })
-  return dados
+async function api(caminho, { method = "GET", body } = {}) {
+    const escrita = !["GET", "HEAD", "OPTIONS"].includes(method);
+    if (escrita && !csrf) await renovarCsrf();
+    const headers = {};
+    if (body !== undefined) headers["Content-Type"] = "application/json";
+    if (escrita) headers[csrf.headerName] = csrf.token;
+    const resposta = await fetch(`${base}${caminho}`, {
+        method,
+        credentials: "include",
+        headers,
+        body: body === undefined ? undefined : JSON.stringify(body),
+    });
+    const dados = resposta.status === 204 ? null : await resposta.json();
+    if (!resposta.ok)
+        throw Object.assign(new Error(dados.mensagem), {
+            status: resposta.status,
+            dados,
+        });
+    return dados;
 }
 
-await renovarCsrf()
-const conta = await api('/auth/login', {
-  method: 'POST', body: { usuario: 'ana', senha: 'AlloCar@Teste2026' },
-})
-await renovarCsrf()
-const pedidos = await api('/pedidos?pagina=0&tamanho=20')
+await renovarCsrf();
+const conta = await api("/auth/login", {
+    method: "POST",
+    body: { usuario: "ana", senha: "AlloCar@Teste2026" },
+});
+await renovarCsrf();
+const pedidos = await api("/pedidos?pagina=0&tamanho=20");
 // Ao sair: await api('/auth/logout', { method: 'POST' }); csrf = undefined
 ```
 
@@ -64,40 +73,41 @@ O exemplo usa uma [conta fictícia](database.md). Não registre senhas no consol
 
 ## Rotas
 
-As rotas da tabela são relativas a `/api`. Apenas obtenção de CSRF, login e criação de cliente/agente são públicas. Logout é tratado pelo Spring Security e requer CSRF. As demais exigem conta ativa.
+As rotas da tabela são relativas a `/api`. Saúde, obtenção de CSRF, login e criação de cliente/agente são públicas. Logout é tratado pelo Spring Security e requer CSRF. As operações de negócio exigem conta ativa.
 
-| Método | Rota | Operação |
-| --- | --- | --- |
-| GET | `/auth/csrf` | Obter token CSRF. |
-| POST | `/auth/login` | Entrar; retorna conta, titular, usuário, nome e tipo. |
-| GET | `/auth/me` | Consultar o perfil autenticado. |
-| POST | `/auth/logout` | Encerrar sessão; resposta 204. |
-| POST | `/clientes` | Registrar cliente e conta ativa; resposta 201. |
-| GET | `/clientes/me` | Consultar identificação, endereço, vínculos, renda total e versão cadastral. |
-| PUT | `/clientes/me` | Atualizar identificação/endereço/profissão com versão esperada. |
-| DELETE | `/clientes/me?versaoCadastro=N` | Desativar a própria conta e encerrar a sessão; preserva histórico; resposta 204. |
-| POST | `/clientes/me/vinculos` | Adicionar vínculo; retorna perfil atualizado, resposta 201. |
-| PUT | `/clientes/me/vinculos/{id}` | Atualizar vínculo próprio; retorna perfil atualizado. |
-| DELETE | `/clientes/me/vinculos/{id}?versaoCadastro=N` | Remover vínculo próprio; retorna perfil atualizado. |
-| POST | `/agentes` | Registrar empresa/banco inativo, sujeito a validação; resposta 201. |
-| GET | `/agentes` | Listar instituições habilitadas para escolha do responsável pelo pedido. |
-| GET | `/automoveis` | Listar catálogo com filtros opcionais `marca` e `ano`. |
-| GET | `/automoveis/{id}` | Consultar identificação e proprietário do automóvel. |
-| GET | `/pedidos` | Listar pedidos visíveis; filtro opcional `status`. |
-| POST | `/pedidos` | Cliente cria pedido em análise; resposta 201 e `Location`. |
-| GET | `/pedidos/{id}` | Consultar proposta, veículo, cliente/rendimentos, pareceres e contrato. |
-| PUT | `/pedidos/{id}` | Cliente titular/agente responsável altera a proposta; exige versão. |
-| POST | `/pedidos/{id}/reenvio` | Titular/agente responsável reenvia para análise; exige versão. |
-| POST | `/pedidos/{id}/cancelamento` | Cliente titular cancela antes da execução; exige versão. |
-| GET | `/pedidos/{id}/pareceres` | Consultar o histórico financeiro autorizado. |
-| POST | `/pedidos/{id}/pareceres` | Agente responsável avalia proposta e cadastro vigentes; resposta 201. |
-| POST | `/pedidos/{id}/contrato` | Agente executa contrato aprovado; resposta 201 e `Location`. |
-| GET | `/contratos` | Listar contratos visíveis. |
-| GET | `/contratos/{id}` | Consultar condições executadas e crédito associado. |
-| PUT | `/contratos/{id}/credito` | Banco concedente associa crédito livre ao contrato executado. |
-| GET | `/creditos` | Listar créditos visíveis, incluindo livres do próprio banco. |
-| POST | `/creditos` | Banco registra uma concessão; resposta 201 e `Location`. |
-| GET | `/creditos/{id}` | Consultar crédito autorizado. |
+| Método | Rota                                          | Operação                                                                         |
+| ------ | --------------------------------------------- | -------------------------------------------------------------------------------- |
+| GET    | `/health`                                     | Verificar saúde; retorna `{"status":"UP"}` sem criar sessão.                     |
+| GET    | `/auth/csrf`                                  | Obter token CSRF.                                                                |
+| POST   | `/auth/login`                                 | Entrar; retorna conta, titular, usuário, nome e tipo.                            |
+| GET    | `/auth/me`                                    | Consultar o perfil autenticado.                                                  |
+| POST   | `/auth/logout`                                | Encerrar sessão; resposta 204.                                                   |
+| POST   | `/clientes`                                   | Registrar cliente e conta ativa; resposta 201.                                   |
+| GET    | `/clientes/me`                                | Consultar identificação, endereço, vínculos, renda total e versão cadastral.     |
+| PUT    | `/clientes/me`                                | Atualizar identificação/endereço/profissão com versão esperada.                  |
+| DELETE | `/clientes/me?versaoCadastro=N`               | Desativar a própria conta e encerrar a sessão; preserva histórico; resposta 204. |
+| POST   | `/clientes/me/vinculos`                       | Adicionar vínculo; retorna perfil atualizado, resposta 201.                      |
+| PUT    | `/clientes/me/vinculos/{id}`                  | Atualizar vínculo próprio; retorna perfil atualizado.                            |
+| DELETE | `/clientes/me/vinculos/{id}?versaoCadastro=N` | Remover vínculo próprio; retorna perfil atualizado.                              |
+| POST   | `/agentes`                                    | Registrar empresa/banco inativo, sujeito a validação; resposta 201.              |
+| GET    | `/agentes`                                    | Listar instituições habilitadas para escolha do responsável pelo pedido.         |
+| GET    | `/automoveis`                                 | Listar catálogo com filtros opcionais `marca` e `ano`.                           |
+| GET    | `/automoveis/{id}`                            | Consultar identificação e proprietário do automóvel.                             |
+| GET    | `/pedidos`                                    | Listar pedidos visíveis; filtro opcional `status`.                               |
+| POST   | `/pedidos`                                    | Cliente cria pedido em análise; resposta 201 e `Location`.                       |
+| GET    | `/pedidos/{id}`                               | Consultar proposta, veículo, cliente/rendimentos, pareceres e contrato.          |
+| PUT    | `/pedidos/{id}`                               | Cliente titular/agente responsável altera a proposta; exige versão.              |
+| POST   | `/pedidos/{id}/reenvio`                       | Titular/agente responsável reenvia para análise; exige versão.                   |
+| POST   | `/pedidos/{id}/cancelamento`                  | Cliente titular cancela antes da execução; exige versão.                         |
+| GET    | `/pedidos/{id}/pareceres`                     | Consultar o histórico financeiro autorizado.                                     |
+| POST   | `/pedidos/{id}/pareceres`                     | Agente responsável avalia proposta e cadastro vigentes; resposta 201.            |
+| POST   | `/pedidos/{id}/contrato`                      | Agente executa contrato aprovado; resposta 201 e `Location`.                     |
+| GET    | `/contratos`                                  | Listar contratos visíveis.                                                       |
+| GET    | `/contratos/{id}`                             | Consultar condições executadas e crédito associado.                              |
+| PUT    | `/contratos/{id}/credito`                     | Banco concedente associa crédito livre ao contrato executado.                    |
+| GET    | `/creditos`                                   | Listar créditos visíveis, incluindo livres do próprio banco.                     |
+| POST   | `/creditos`                                   | Banco registra uma concessão; resposta 201 e `Location`.                         |
+| GET    | `/creditos/{id}`                              | Consultar crédito autorizado.                                                    |
 
 As listas de automóveis, agentes, pedidos, contratos e créditos aceitam `pagina` (início em 0) e `tamanho` (1 a 100, padrão 20). Elas retornam:
 
@@ -115,17 +125,22 @@ Os contratos completos de entrada/saída estão em [`ApiDtos.java`](../backend/s
 
 ```json
 {
-  "usuario": "cliente.exemplo",
-  "senha": "uma-senha-com-12-ou-mais-caracteres",
-  "nome": "Cliente Exemplo",
-  "rg": "RG-EXEMPLO",
-  "cpf": "123.456.789-01",
-  "profissao": "Analista",
-  "endereco": {
-    "logradouro": "Rua Exemplo", "numero": "100", "complemento": "",
-    "bairro": "Centro", "cidade": "São Paulo", "uf": "SP", "cep": "01000-000"
-  },
-  "vinculos": [{ "empregador": "Empresa Exemplo", "rendimento": 4500.00 }]
+    "usuario": "cliente.exemplo",
+    "senha": "uma-senha-com-12-ou-mais-caracteres",
+    "nome": "Cliente Exemplo",
+    "rg": "RG-EXEMPLO",
+    "cpf": "123.456.789-01",
+    "profissao": "Analista",
+    "endereco": {
+        "logradouro": "Rua Exemplo",
+        "numero": "100",
+        "complemento": "",
+        "bairro": "Centro",
+        "cidade": "São Paulo",
+        "uf": "SP",
+        "cep": "01000-000"
+    },
+    "vinculos": [{ "empregador": "Empresa Exemplo", "rendimento": 4500.0 }]
 }
 ```
 
@@ -138,7 +153,7 @@ Para cadastrar agente, envie `usuario`, `senha`, `nome`, `cnpj`, `tipo` (`EMPRES
 `PUT /clientes/me` recebe `versaoCadastro`, `nome`, `rg`, `cpf`, `profissao` e `endereco`. As operações POST/PUT de vínculo recebem:
 
 ```json
-{ "versaoCadastro": 1, "empregador": "Empresa Exemplo", "rendimento": 4500.00 }
+{ "versaoCadastro": 1, "empregador": "Empresa Exemplo", "rendimento": 4500.0 }
 ```
 
 Use sempre a `versaoCadastro` retornada pelo último perfil consultado/atualizado. O contador pode avançar mais de uma unidade ao atualizar dados relacionados; não calcule a próxima versão no frontend.
@@ -149,12 +164,14 @@ Use sempre a `versaoCadastro` retornada pelo último perfil consultado/atualizad
 
 ```json
 {
-  "agenteResponsavelId": "20000000-0000-0000-0000-000000000001",
-  "proposta": {
-    "automovelId": "60000000-0000-0000-0000-000000000001",
-    "inicio": "2026-12-10", "fim": "2026-12-15",
-    "tipo": "PADRAO", "valorTotal": 1250.00
-  }
+    "agenteResponsavelId": "20000000-0000-0000-0000-000000000001",
+    "proposta": {
+        "automovelId": "60000000-0000-0000-0000-000000000001",
+        "inicio": "2026-12-10",
+        "fim": "2026-12-15",
+        "tipo": "PADRAO",
+        "valorTotal": 1250.0
+    }
 }
 ```
 
@@ -170,8 +187,10 @@ O detalhe contém `pedido`, `automovel`, `cliente`, `pareceres` e `contrato` (nu
 
 ```json
 {
-  "versaoPedido": 1, "versaoCadastro": 2,
-  "decisao": "APROVADO", "justificativa": "Dados e rendimentos analisados."
+    "versaoPedido": 1,
+    "versaoCadastro": 2,
+    "decisao": "APROVADO",
+    "justificativa": "Dados e rendimentos analisados."
 }
 ```
 
@@ -187,23 +206,23 @@ Execução usa apenas a versão esperada. Tipo, valor, proprietário e parecer s
 
 ```json
 {
-  "status": 409,
-  "codigo": "VERSAO_DESATUALIZADA",
-  "mensagem": "Os dados foram alterados; recarregue antes de continuar.",
-  "campos": {}
+    "status": 409,
+    "codigo": "VERSAO_DESATUALIZADA",
+    "mensagem": "Os dados foram alterados; recarregue antes de continuar.",
+    "campos": {}
 }
 ```
 
-| HTTP | Situação |
-| --- | --- |
-| 400 | JSON, campos, UUID, enumeração ou parâmetros inválidos. `campos` identifica validações de entrada quando disponíveis. |
-| 401 | Credencial inválida, sessão ausente ou conta sem acesso ativo. |
-| 403 | Perfil/escopo sem permissão ou CSRF ausente/inválido. Uma escrita sem CSRF pode receber 403 antes da autenticação. |
-| 404 | Recurso inexistente ou invisível à conta. |
-| 409 | Versão desatualizada, registro/vínculo duplicado ou conflito concorrente. |
-| 422 | Violação de regra: limite de vínculos, estado terminal, falta de aprovação ou referência inválida. |
-| 503 | Indisponibilidade temporária do banco. |
-| 500 | Falha interna sem detalhes de SQL, credenciais ou pilha de execução. |
+| HTTP | Situação                                                                                                              |
+| ---- | --------------------------------------------------------------------------------------------------------------------- |
+| 400  | JSON, campos, UUID, enumeração ou parâmetros inválidos. `campos` identifica validações de entrada quando disponíveis. |
+| 401  | Credencial inválida, sessão ausente ou conta sem acesso ativo.                                                        |
+| 403  | Perfil/escopo sem permissão ou CSRF ausente/inválido. Uma escrita sem CSRF pode receber 403 antes da autenticação.    |
+| 404  | Recurso inexistente ou invisível à conta.                                                                             |
+| 409  | Versão desatualizada, registro/vínculo duplicado ou conflito concorrente.                                             |
+| 422  | Violação de regra: limite de vínculos, estado terminal, falta de aprovação ou referência inválida.                    |
+| 503  | Indisponibilidade temporária do banco.                                                                                |
+| 500  | Falha interna sem detalhes de SQL, credenciais ou pilha de execução.                                                  |
 
 Em conflito de versão, recarregue os dados e apresente as mudanças ao usuário antes de reenviar. Não repita automaticamente criação de pedido, parecer ou contrato. Em 401, limpe o estado de usuário do frontend. Após logout ou nova sessão, obtenha outro CSRF antes de escrever.
 

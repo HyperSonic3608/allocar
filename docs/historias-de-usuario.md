@@ -1,4 +1,4 @@
-# AlloCar — Histórias de usuário
+# AlloCar · Histórias de usuário
 
 As prioridades agrupam as histórias: P1 = autenticação/cadastro e fluxo inicial; P2 = gestão/contratos. Os critérios de aceitação descrevem os comportamentos e as restrições de cada operação.
 
@@ -28,12 +28,14 @@ Como cliente, quero consultar e manter identificação, endereço, profissão e 
 - Dados três vínculos existentes, quando tentar incluir o quarto, então a inclusão é bloqueada.
 - Dado cliente diferente do autenticado, quando tentar consultar/alterar, então o acesso é negado.
 - Dado pedido de exclusão, quando confirmar, então a conta é desativada e o histórico contratual é preservado (premissa).
+- Dados pareceres sobre cadastro anterior, quando mudar identificação, endereço, profissão ou renda, então pedidos abertos exigem nova análise e contratos executados preservam suas condições.
+- Dada uma versão cadastral desatualizada, quando salvar, então o servidor recusa a escrita e a interface orienta recarregar.
 
 ## HU04 — Criar pedido (P1, UC04)
 
 Como cliente, quero solicitar um automóvel por um período para iniciar um aluguel pela Internet.
 
-- Dados cadastro completo, automóvel e período válido, quando enviar, então é criado pedido EM_ANALISE com identificador e versão inicial.
+- Dados cadastro completo, automóvel, agente responsável habilitado, tipo, período válido e valor total positivo, quando enviar, então é criado pedido EM_ANALISE com identificador e versão inicial.
 - Dada data final anterior/igual à inicial, quando enviar, então o sistema impede o pedido e indica o campo.
 - Dado o catálogo, quando consultar um automóvel, então matrícula, ano, marca, modelo e placa são identificáveis.
 - Dados filtros de marca e ano, quando aplicá-los à busca, então os resultados e a ausência de opções são comunicados; limpar filtros permite retomar a seleção.
@@ -77,7 +79,7 @@ Como agente, quero consultar pedidos sob minha responsabilidade para organizar a
 
 Como agente, quero avaliar os pedidos para aprovar ou reprovar a viabilidade financeira do aluguel.
 
-- Dado pedido EM_ANALISE, quando salvar aprovação/reprovação justificada, então o parecer registra agente, data, decisão e versão.
+- Dado pedido EM_ANALISE, quando o agente responsável salvar aprovação/reprovação justificada, então o parecer registra agente, data, decisão, versões da proposta e do cadastro e cópias dos dados analisados.
 - Dada decisão positiva, então o pedido passa a APROVADO; dada decisão negativa, passa a REPROVADO.
 - Dada justificativa vazia ou versão desatualizada, quando salvar, então o parecer é rejeitado.
 - Dado histórico autorizado, quando consultar, então decisão, justificativa, agente e versão avaliada podem ser relacionados ao pedido; o histórico não autoriza a execução de uma versão alterada.
@@ -94,7 +96,7 @@ Como agente, quero corrigir pedidos autorizados para adequar a proposta antes da
 
 Como agente, quero executar um contrato com parecer positivo para formalizar o aluguel aprovado.
 
-- Dados pedido APROVADO, parecer da versão atual, tipo e valor válidos, quando executar, então é criado um único contrato e o pedido passa a EM_EXECUCAO.
+- Dados pedido APROVADO e parecer positivo das versões atuais da proposta e do cadastro, quando o agente responsável executar, então é criado um único contrato e o pedido passa a EM_EXECUCAO.
 - Dado pedido reprovado, cancelado ou sem aprovação vigente, então não há criação de contrato.
 - Dado contrato existente, quando repetir a operação, então não é criado contrato duplicado.
 - Dado tipo contratual aplicável, então o proprietário registrado é um cliente, empresa ou banco, sem transferência automática presumida.
@@ -104,7 +106,9 @@ Como agente, quero executar um contrato com parecer positivo para formalizar o a
 
 Como banco agente, quero registrar e associar crédito que concedi ao aluguel para representar seu financiamento.
 
-- Dados número, valor, taxa e banco concedente válidos, quando associar, então o crédito fica vinculado ao contrato de aluguel.
+- Dados número único, valor positivo e taxa não negativa, quando o banco autenticado registrar a concessão, então o crédito fica livre para associação.
+- Dados crédito livre do próprio banco e identificador de contrato executado sem outro crédito, quando associar, então ambos passam a compartilhar o vínculo exclusivo.
+- Dado contrato apresentado ao banco antes de estar visível nesse escopo, quando informar seu UUID e concluir a associação autorizada, então o banco passa a poder consultá-lo.
 - Dada empresa ou banco diferente do concedente, quando tentar conceder/associar, então a operação é negada.
 - Dado aluguel sem crédito, então a execução permanece possível com as demais condições satisfeitas.
 - Dado crédito já associado ou aluguel com crédito existente, então uma segunda associação é rejeitada.
@@ -113,17 +117,19 @@ Como banco agente, quero registrar e associar crédito que concedi ao aluguel pa
 
 Os números BF/AF identificam baixa e alta fidelidade. A tabela relaciona cada história às interfaces e aos elementos do domínio. Consulte os [roteiros e as interações](prototipos/README.md).
 
-| História | Tela(s)                                                | Elementos centrais do domínio    |
-| -------- | ------------------------------------------------------ | -------------------------------- |
-| HU01     | 02 Cadastro cliente, 27 Cadastro institucional         | Conta, Parte, Cliente, Agente    |
-| HU02     | 01 Login, 14 Erro                                      | Conta                            |
-| HU03     | 03 Cadastro do cliente                                 | Cliente, VinculoEmpregaticio     |
-| HU04     | 17 Busca, 18 Automóvel, 05 Período/tipo, 19 Resumo, 20 Enviado, 25 Sem resultados | PedidoAluguel, Automovel |
-| HU05     | 04 Lista, 06 Detalhes, 13 Reprovação                   | PedidoAluguel, ParecerFinanceiro |
-| HU06     | 07 Alteração                                           | PedidoAluguel, ParecerFinanceiro |
-| HU07     | 08 Confirmação, 09 Cancelado                           | PedidoAluguel                    |
-| HU08     | 10 Fila do agente                                      | Agente, PedidoAluguel            |
-| HU09     | 11 Avaliação, 12 Aprovação, 13 Reprovação, 24 Histórico | ParecerFinanceiro                |
-| HU10     | 11 Avaliação → 07 Alteração (formulário compartilhado) | Agente, PedidoAluguel            |
-| HU11     | 12 Contrato, 15 Em execução, 21 Lista, 22 Detalhe       | ContratoAluguel, Parte           |
-| HU12     | 12 Contrato, 23 Formulário, 16 Associado, 26 Créditos   | Banco, ContratoCredito           |
+Na aplicação, `/agente/creditos/novo` registra a concessão, e `/agente/creditos/associar` vincula um crédito livre ao aluguel. Ambas atendem à HU12, usando os mesmos componentes visuais da área bancária.
+
+| História | Tela(s)                                                                           | Elementos centrais do domínio    |
+| -------- | --------------------------------------------------------------------------------- | -------------------------------- |
+| HU01     | 02 Cadastro cliente, 27 Cadastro institucional                                    | Conta, Parte, Cliente, Agente    |
+| HU02     | 01 Login, 14 Erro                                                                 | Conta                            |
+| HU03     | 03 Cadastro do cliente                                                            | Cliente, VinculoEmpregaticio     |
+| HU04     | 17 Busca, 18 Automóvel, 05 Período/tipo, 19 Resumo, 20 Enviado, 25 Sem resultados | PedidoAluguel, Automovel         |
+| HU05     | 04 Lista, 06 Detalhes, 13 Reprovação                                              | PedidoAluguel, ParecerFinanceiro |
+| HU06     | 07 Alteração                                                                      | PedidoAluguel, ParecerFinanceiro |
+| HU07     | 08 Confirmação, 09 Cancelado                                                      | PedidoAluguel                    |
+| HU08     | 10 Fila do agente                                                                 | Agente, PedidoAluguel            |
+| HU09     | 11 Avaliação, 12 Aprovação, 13 Reprovação, 24 Histórico                           | ParecerFinanceiro                |
+| HU10     | 11 Avaliação → 07 Alteração (formulário compartilhado)                            | Agente, PedidoAluguel            |
+| HU11     | 12 Contrato, 15 Em execução, 21 Lista, 22 Detalhe                                 | ContratoAluguel, Parte           |
+| HU12     | 12 Contrato, 23 Formulário, 16 Associado, 26 Créditos                             | Banco, ContratoCredito           |

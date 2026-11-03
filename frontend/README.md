@@ -16,7 +16,7 @@ npm run dev:all
 
 Abra **http://localhost:5173**. O comando usa `concurrently`, seguindo o [exemplo AraCoffee](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/blob/main/PROJETOS/FullStack/AraCoffee/Front/README.md#-rodando-os-dois-projetos-ao-mesmo-tempo): executa o Spring Boot no perfil `supabase` em **8080** e o Vite em **5173**, com prefixos `BACK` e `FRONT` no terminal. `Ctrl+C` encerra ambos; a saída de um dos processos também encerra o outro. Aguarde o backend concluir a conexão com o banco antes de entrar.
 
-No Windows, `npm run dev:all:windows` é um alias do mesmo comando. Para selecionar o JDK nesta máquina pelo PowerShell, por exemplo:
+O mesmo comando funciona no Windows. Para selecionar uma instalação do JDK 25 pelo PowerShell, ajuste o caminho conforme sua máquina:
 
 ```powershell
 $env:JAVA_HOME = 'C:/Program Files/Java/jdk-25.0.3'
@@ -50,7 +50,7 @@ Na hospedagem, sirva `dist/index.html` como fallback das rotas da aplicação e 
 
 ## Hospedagem
 
-A [configuração de hospedagem Vercel + Render](../docs/deploy.md) descreve o proxy de produção, as variáveis e a publicação dos dois serviços. No Vercel, selecione a pasta `frontend` e configure `BACKEND_URL` com a origem HTTPS da API Render; `vercel.mjs` mantém o consumo em `/api`.
+A [configuração de hospedagem Vercel + Render](../docs/deploy.md) descreve o proxy de produção, as variáveis e a publicação dos dois serviços. No Vercel, selecione a pasta `frontend`. O arquivo [`vercel.json`](vercel.json) encaminha `/api` à API Render e mantém o fallback das rotas React. Para mudar a API hospedada, altere o campo `destination` da regra `/api/:path*`; `BACKEND_URL` controla o proxy local do Vite.
 
 ## Organização
 
@@ -110,36 +110,36 @@ node scripts/generate-tokens.mjs --check
 
 `:id` representa o UUID do recurso indicado na rota.
 
-| Quadro | Interface | Rota |
-| --- | --- | --- |
-| AF00 / AF00M | Landing desktop / móvel | `/` |
-| AF01 / AF14 | Acesso e erro real de autenticação | `/entrar` |
-| AF02 | Cadastro de cliente | `/cadastro` |
-| AF03 | Perfil e rendimentos | `/meu-cadastro` |
-| AF04 | Meus pedidos | `/pedidos` |
-| AF05 | Novo pedido | `/pedidos/novo` |
-| AF06 | Detalhe e acompanhamento | `/pedidos/:id` |
-| AF07 | Alterar pedido | `/pedidos/:id/alterar` |
-| AF08 | Confirmar cancelamento | `/pedidos/:id/cancelar` |
-| AF09 | Consulta do cancelamento | `/pedidos/:id/cancelado` |
-| AF10 | Central do agente | `/agente` |
-| AF11 | Análise financeira | `/agente/pedidos/:id/analise` |
-| AF12 | Revisão do contrato aprovado | `/agente/pedidos/:id/aprovado` |
-| AF13 | Consulta do parecer negativo | `/pedidos/:id/reprovado` |
-| AF15 | Contrato em execução | `/contratos/:id/executado` |
-| AF16 | Recibo de associação | `/agente/creditos/:id/associado` |
-| AF17 / AF25 | Catálogo e resultado vazio do filtro | `/veiculos` |
-| AF18 | Detalhe do automóvel | `/veiculos/:id` |
-| AF19 | Resumo e revisão | `/pedidos/revisao` |
-| AF20 | Consulta do pedido enviado | `/pedidos/:id/enviado` |
-| AF21 | Meus contratos | `/contratos` |
-| AF22 | Consulta do contrato | `/contratos/:id` |
-| AF23 | Associação de crédito | `/agente/creditos/associar` |
-| AF24 | Histórico de pareceres | `/agente/historico?pedido=:id` |
-| AF26 | Créditos do banco | `/agente/creditos` |
-| AF27 | Cadastro institucional | `/cadastro/instituicao` |
-| — | Concessão de crédito | `/agente/creditos/novo` |
-| — | Consulta de crédito | `/agente/creditos/:id` ou `/creditos/:id` |
+| Quadro       | Interface                            | Rota                                      |
+| ------------ | ------------------------------------ | ----------------------------------------- |
+| AF00 / AF00M | Landing desktop / móvel              | `/`                                       |
+| AF01 / AF14  | Acesso e erro real de autenticação   | `/entrar`                                 |
+| AF02         | Cadastro de cliente                  | `/cadastro`                               |
+| AF03         | Perfil e rendimentos                 | `/meu-cadastro`                           |
+| AF04         | Meus pedidos                         | `/pedidos`                                |
+| AF05         | Novo pedido                          | `/pedidos/novo`                           |
+| AF06         | Detalhe e acompanhamento             | `/pedidos/:id`                            |
+| AF07         | Alterar pedido                       | `/pedidos/:id/alterar`                    |
+| AF08         | Confirmar cancelamento               | `/pedidos/:id/cancelar`                   |
+| AF09         | Consulta do cancelamento             | `/pedidos/:id/cancelado`                  |
+| AF10         | Central do agente                    | `/agente`                                 |
+| AF11         | Análise financeira                   | `/agente/pedidos/:id/analise`             |
+| AF12         | Revisão do contrato aprovado         | `/agente/pedidos/:id/aprovado`            |
+| AF13         | Consulta do parecer negativo         | `/pedidos/:id/reprovado`                  |
+| AF15         | Contrato em execução                 | `/contratos/:id/executado`                |
+| AF16         | Recibo de associação                 | `/agente/creditos/:id/associado`          |
+| AF17 / AF25  | Catálogo e resultado vazio do filtro | `/veiculos`                               |
+| AF18         | Detalhe do automóvel                 | `/veiculos/:id`                           |
+| AF19         | Resumo e revisão                     | `/pedidos/revisao`                        |
+| AF20         | Consulta do pedido enviado           | `/pedidos/:id/enviado`                    |
+| AF21         | Meus contratos                       | `/contratos`                              |
+| AF22         | Consulta do contrato                 | `/contratos/:id`                          |
+| AF23         | Associação de crédito                | `/agente/creditos/associar`               |
+| AF24         | Histórico de pareceres               | `/agente/historico?pedido=:id`            |
+| AF26         | Créditos do banco                    | `/agente/creditos`                        |
+| AF27         | Cadastro institucional               | `/cadastro/instituicao`                   |
+| —            | Concessão de crédito                 | `/agente/creditos/novo`                   |
+| —            | Consulta de crédito                  | `/agente/creditos/:id` ou `/creditos/:id` |
 
 `src/data/screens.js` relaciona rotas e IDs dos quadros; os contêineres expõem `data-figma-id`. Estados de erro, resultado vazio e confirmação dependem das respostas reais. Abrir uma URL de confirmação consulta o recurso, sem repetir a operação.
 

@@ -2,6 +2,14 @@
     <img src="docs/allocar-logo.svg" alt="Logo AlloCar" width="320"/>
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=20232A" alt="React 19"/>
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&amp;logo=vite&amp;logoColor=white" alt="Vite 8"/>
+  <img src="https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge" alt="Java 25"/>
+  <img src="https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?style=for-the-badge&amp;logo=springboot&amp;logoColor=white" alt="Spring Boot 4.1"/>
+  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3FCF8E?style=for-the-badge&amp;logo=supabase&amp;logoColor=white" alt="Supabase PostgreSQL"/>
+</p>
+
 ---
 
 Sistema web de aluguel de carros que conecta clientes, empresas e bancos na solicitação, análise financeira e contratação de aluguéis.
@@ -16,20 +24,31 @@ Sistema web de aluguel de carros que conecta clientes, empresas e bancos na soli
 - [Arquitetura e diagramas](#-arquitetura)
 - [Histórias de usuário](#-histórias-de-usuário)
 - [Consulta dos artefatos](#-consulta-dos-artefatos)
+- [Instalação e execução](#-instalação-e-execução)
+- [Deploy](#-deploy)
 - [Estrutura de pastas](#-estrutura-de-pastas)
 - [Demonstração e protótipos](#-demonstração)
+- [Testes e validação](#-testes-e-validação)
+- [Documentações e referências](#-documentações-e-referências)
 - [Autor](#-autor)
+- [Contribuição](#-contribuição)
+- [Agradecimentos](#-agradecimentos)
+- [Licença](#-licença)
 
 ## 🔗 Links Úteis
 
 | Recurso                                   | Acesso                                                                                                                           |
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Aplicação web                             | [allocar.vercel.app](https://allocar.vercel.app)                                                                                 |
+| Repositório                               | [HyperSonic3608/allocar](https://github.com/HyperSonic3608/allocar)                                                              |
+| Saúde da API                              | [Endpoint público no Render](https://allocar-backend.onrender.com/api/health)                                                    |
+| Hospedagem e produção                     | [Vercel, Render, proxy e variáveis](docs/deploy.md)                                                                              |
 | Requisitos, regras, estados e arquitetura | [Modelagem detalhada](docs/modelagem.md)                                                                                         |
 | Histórias e critérios de aceitação        | [Histórias de usuário](docs/historias-de-usuario.md)                                                                             |
-| Backend, execução e regras de negócio     | [Organização, modelo, operações e testes](backend/README.md) |
-| API REST e integração com o frontend      | [Rotas, autenticação e exemplos JSON](docs/api.md) |
-| Interface React e execução local          | [Componentes, tokens, rotas e comandos](frontend/README.md) |
-| Banco de dados e conexão                  | [Configuração, tabelas e dados fictícios](docs/database.md) |
+| Backend, execução e regras de negócio     | [Organização, modelo, operações e testes](backend/README.md)                                                                     |
+| API REST e integração com o frontend      | [Rotas, autenticação e exemplos JSON](docs/api.md)                                                                               |
+| Interface React e execução local          | [Componentes, tokens, rotas e comandos](frontend/README.md)                                                                      |
+| Banco de dados e conexão                  | [Configuração, tabelas e dados fictícios](docs/database.md)                                                                      |
 | Diagramas editáveis                       | [Fontes draw.io e prévias](docs/diagramas/)                                                                                      |
 | Protótipos editáveis                      | [Arquivo Figma](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK)                                                             |
 | Wireframes navegáveis                     | [Apresentar baixa fidelidade](https://www.figma.com/proto/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=4-1697&starting-point-node-id=4%3A1697) |
@@ -40,7 +59,9 @@ Sistema web de aluguel de carros que conecta clientes, empresas e bancos na soli
 
 O AlloCar centraliza pedidos de aluguel feitos pela Internet. Clientes cadastrados solicitam automóveis e consultam, alteram ou cancelam seus pedidos. Empresas e bancos atuam como agentes: modificam propostas, realizam análise financeira e dão continuidade aos contratos após parecer positivo.
 
-O cadastro de cada cliente contempla RG, CPF, nome, endereço, profissão e até três entidades empregadoras com seus rendimentos. Automóveis possuem matrícula, ano, marca, modelo e placa, podendo pertencer a clientes, empresas ou bancos. Um aluguel também pode estar associado a crédito concedido por banco agente
+O cadastro de cada cliente contempla RG, CPF, nome, endereço, profissão e até três entidades empregadoras com seus rendimentos. Automóveis possuem matrícula, ano, marca, modelo e placa, podendo pertencer a clientes, empresas ou bancos. Um aluguel também pode estar associado a crédito concedido por banco agente.
+
+O contexto é acadêmico: o sistema reúne modelagem UML, prototipação, implementação de regras de domínio e integração entre uma interface React, uma API REST e um banco relacional.
 
 ## ✨ Funcionalidades Principais
 
@@ -48,24 +69,28 @@ O cadastro de cada cliente contempla RG, CPF, nome, endereço, profissão e até
 - Cadastro do cliente com identificação, endereço, profissão e até três vínculos de renda.
 - Criação, consulta, alteração e cancelamento de pedidos pelo cliente.
 - Consulta e modificação de pedidos por agentes autorizados.
-- Avaliação financeira com decisão, justificativa e versão do pedido.
+- Avaliação financeira com decisão, justificativa e versões da proposta e do cadastro.
 - Execução de contrato condicionada à aprovação financeira vigente.
-- Propriedade de automóveis por cliente, empresa ou banco, conforme o contrato.
+- Registro do proprietário do automóvel no contrato, preservando suas condições na execução.
 - Associação opcional de crédito concedido por banco agente.
 
 ## 🛠 Tecnologias Utilizadas
 
-| Área                     | Tecnologia                           |
-| ------------------------ | ------------------------------------ |
-| Modelagem UML            | draw.io / diagrams.net               |
-| Prototipação             | Figma Design                         |
-| Interface dos protótipos | Inter e design system nativo AlloCar |
-| Documentação             | Markdown, SVG e PNG                  |
-| Front-end                | React + Vite                         |
-| Back-end                 | Java JDK 25 + Spring Boot 4.0.x      |
-| Build                    | Apache Maven                         |
-| Banco de dados           | Supabase — PostgreSQL                |
-| Arquitetura              | MVC                                  |
+| Área                     | Tecnologia                                                   |
+| ------------------------ | ------------------------------------------------------------ |
+| Modelagem UML            | draw.io / diagrams.net                                       |
+| Prototipação             | Figma Design                                                 |
+| Interface dos protótipos | Inter e design system nativo AlloCar                         |
+| Documentação             | Markdown, SVG e PNG                                          |
+| Frontend                 | React 19, React Router 8, Vite 8 e JavaScript com ES Modules |
+| Estilização              | CSS, tokens do Figma e fonte Inter local                     |
+| Backend                  | JDK 25 e Spring Boot 4.1.2                                   |
+| Segurança                | Spring Security, sessão por cookie, CSRF e CORS              |
+| Persistência             | Spring JDBC, HikariCP e transações                           |
+| Build                    | Apache Maven                                                 |
+| Banco de dados           | Supabase — PostgreSQL                                        |
+| Arquitetura              | MVC                                                          |
+| Hospedagem               | Vercel para o frontend e Render com Docker para a API        |
 
 ## 🖥️ Design System
 
@@ -107,7 +132,7 @@ As imagens abaixo são prévias vetoriais das fontes editáveis. Para editar, ab
 
 ### Decisões e premissas
 
-O ciclo de vida do pedido compreende os estados `EM_ANALISE`, `APROVADO`, `REPROVADO`, `CANCELADO` e `EM_EXECUCAO`. Alterar um pedido invalida o parecer anterior. Cancelamento e alteração são permitidos antes da execução; a contratação exige aprovação da versão atual do pedido. As [regras de domínio](docs/modelagem.md) detalham essas condições.
+O ciclo de vida do pedido compreende os estados `EM_ANALISE`, `APROVADO`, `REPROVADO`, `CANCELADO` e `EM_EXECUCAO`. Alterar a proposta ou o cadastro considerado na avaliação exige nova análise. Estados cancelados e em execução são terminais; executar um contrato exige aprovação das versões atuais da proposta e do cadastro. As [regras de domínio](docs/modelagem.md) detalham essas condições.
 
 ## 📖 Histórias de Usuário
 
@@ -128,13 +153,75 @@ O ciclo de vida do pedido compreende os estados `EM_ANALISE`, `APROVADO`, `REPRO
 
 Os [critérios de aceitação, prioridades e vínculos com telas e classes](docs/historias-de-usuario.md) detalham cada história, inclusive fluxos alternativos e restrições por perfil.
 
-## 🔧 Consulta dos Artefatos
+## 🧐 Consulta dos Artefatos
 
 Para consultar os artefatos:
 
 1. Leia este README e a modelagem detalhada.
 2. Abra os diagramas SVG pelo repositório ou as fontes `.drawio` no diagrams.net.
 3. Abra uma apresentação no Figma e percorra os fluxos de cliente, agente e banco. Na análise, escolha aprovar ou reprovar antes de salvar.
+
+## 🔧 Instalação e execução
+
+### Pré-requisitos
+
+Prepare as ferramentas e o acesso ao banco:
+
+- Node.js 22.12 ou superior e npm
+- JDK 25, com `JAVA_HOME` configurado, e Maven no `PATH`
+- Git para obter o repositório
+- Projeto Supabase com o schema privado `allocar` e o usuário JDBC dedicado
+
+Confira as instalações com `node --version`, `java -version` e `mvn -version`. O Maven deve usar o JDK 25.
+
+### Variáveis de ambiente
+
+Copie `backend/.env.example` para `backend/.env` e preencha as credenciais do banco. O arquivo usa Java properties, sem aspas; siga o [guia de conexão](docs/database.md#conexão-do-backend).
+
+| Local      | Variável                  | Finalidade                                              |
+| ---------- | ------------------------- | ------------------------------------------------------- |
+| Backend    | `SUPABASE_DB_URL`         | Conexão JDBC com TLS; use Session pooler em redes IPv4. |
+| Backend    | `SUPABASE_DB_USERNAME`    | Usuário dedicado da aplicação.                          |
+| Backend    | `SUPABASE_DB_PASSWORD`    | Senha privada desse usuário.                            |
+| Backend    | `SUPABASE_DB_POOL_SIZE`   | Limite de conexões do pool, padrão 5.                   |
+| Backend    | `ALLOCAR_ALLOWED_ORIGINS` | Origens exatas permitidas para o frontend.              |
+| Backend    | `ALLOCAR_COOKIE_SECURE`   | `false` em HTTP local e `true` em HTTPS.                |
+| Frontend   | `VITE_API_URL`            | Caminho público `/api`, também usado na hospedagem.     |
+| Vite local | `BACKEND_URL`             | Destino do proxy local, padrão `http://localhost:8080`. |
+
+As opções do frontend estão em `frontend/.env.example`; use `frontend/.env.local` para substituí-las. Credenciais JDBC ficam somente no backend. Variáveis `VITE_*` são públicas no navegador.
+
+### Dependências e banco
+
+Obtenha o código e instale as dependências do frontend:
+
+```bash
+git clone https://github.com/HyperSonic3608/allocar.git
+cd allocar/frontend
+npm ci
+```
+
+O Maven resolve as dependências Java ao executar o backend ou seus testes. O banco é administrado no Supabase: iniciar a aplicação não cria tabelas nem carrega dados. O [guia do banco](docs/database.md) descreve o schema, as permissões e as contas fictícias para testar os perfis.
+
+### Executar os dois serviços
+
+Na pasta `frontend`, execute:
+
+```bash
+npm run dev:all
+```
+
+Abra **http://localhost:5173**. O `concurrently` inicia Vite e Spring Boot no perfil `supabase`, com a API em **http://localhost:8080/api**. `Ctrl+C` encerra ambos; aguarde a conexão do backend antes de entrar.
+
+Para usar terminais separados, execute `npm run back` e `npm run dev` na pasta `frontend`. Os [guias do frontend](frontend/README.md#execução) e do [backend](backend/README.md#execução) detalham os comandos e a seleção do JDK no PowerShell.
+
+## 🚀 Deploy
+
+O frontend usa o [Vercel](https://allocar.vercel.app), a API usa o [Render](https://allocar-backend.onrender.com/api/health) e o PostgreSQL permanece no Supabase. O navegador chama `/api` pelo domínio do frontend, e o proxy encaminha a requisição ao backend com cookies de sessão.
+
+No Vercel, selecione Root Directory `frontend`, framework Vite e Node 22.x. `frontend/vercel.json` define instalação, build, saída `dist`, proxy e fallback das rotas React. O destino HTTPS do Render está no campo `destination`; `BACKEND_URL` é uma opção do proxy local do Vite.
+
+No Render, use o Dockerfile do backend e forneça as variáveis JDBC privadas, as origens autorizadas e `ALLOCAR_COOKIE_SECURE=true`. O Blueprint `render.yaml` descreve essa configuração. Consulte o [roteiro de hospedagem](docs/deploy.md) para publicar, configurar saúde, revisar previews e validar autenticação.
 
 ## 📂 Estrutura de Pastas
 
@@ -144,23 +231,27 @@ allocar/
 ├── frontend/
 │   ├── src/
 │   │   ├── assets/        # logo, ícones e fotografias do Figma
+│   │   ├── api/           # cliente HTTP, CSRF e endpoints
 │   │   ├── components/    # elementos de interface, layout e aluguel
 │   │   ├── pages/         # composição das telas
-│   │   ├── state/         # estado local dos fluxos demonstrativos
+│   │   ├── state/         # sessão, rascunho e requisições assíncronas
 │   │   └── styles/        # tokens exportados e estilos reutilizáveis
-│   ├── scripts/           # geração dos tokens CSS
-│   └── tests/             # navegação e interfaces no navegador
+│   ├── README.md
+│   └── vercel.json        # build, proxy e rotas da hospedagem
 ├── backend/
 │   ├── README.md
 │   ├── pom.xml
+│   ├── Dockerfile
 │   └── src/
 │       ├── main/java/com/allocar/backend/
 │       │   ├── application/   # BackendApplication.java
 │       │   ├── controller/    # entrada HTTP
+│       │   ├── exception/     # tradução de erros
 │       │   ├── model/         # entidades e regras de negócio
 │       │   ├── repository/    # persistência
 │       │   └── service/       # casos de uso, transações e conexão JDBC
 │       └── test/java/         # testes do backend
+├── render.yaml                # configuração declarativa da API
 └── docs/
     ├── allocar-logo.svg        # export oficial para fundo escuro
     ├── allocar-logo-claro.svg
@@ -168,8 +259,8 @@ allocar/
     ├── modelagem.md
     ├── api.md
     ├── database.md
+    ├── deploy.md
     ├── historias-de-usuario.md
-    ├── gerar-diagramas.cjs
     ├── design-system/          # tokens, inventário e prévias da biblioteca
     ├── diagramas/              # .drawio, XML nativo e prévias .svg
     └── prototipos/             # guia, prévias PNG e mapa de nós Figma
@@ -185,7 +276,7 @@ npm ci
 npm run dev:all
 ```
 
-A interface React usa os componentes, tokens e ativos do Figma e consome a API REST para autenticação, cadastro, catálogo, pedidos, análise, contratos e crédito. O comando inicia o frontend em **http://localhost:5173** e o backend em **http://localhost:8080**, usando `concurrently`. Requer JDK 25, Maven e as variáveis de conexão do banco no ambiente do backend. `Ctrl+C` encerra os dois processos. O [guia do frontend](frontend/README.md) detalha a configuração, as rotas e o consumo da API; o [guia do backend](backend/README.md) descreve a conexão JDBC e os testes.
+A interface React usa os componentes, tokens e ativos do Figma e consome a API REST para autenticação, cadastro, catálogo, pedidos, análise, contratos e crédito. Entre com uma conta cadastrada ou use os [perfis fictícios de teste](docs/database.md#dados-fictícios) para percorrer as áreas de cliente, empresa e banco.
 
 O [guia de hospedagem](docs/deploy.md) descreve frontend no Vercel, backend Java no Render e acesso ao Supabase, com variáveis privadas, proxy e cookies de sessão.
 
@@ -219,7 +310,7 @@ Os layouts usam cabeçalhos, hierarquia tipográfica, raios, superfícies e espa
 
 Os protótipos cobrem login, cadastro, perfil e rendimentos, lista, novo pedido, detalhe/status, alteração, cancelamento, fila do agente, análise, contrato e crédito. A jornada também inclui busca com filtros e estado sem resultados, detalhe do automóvel, revisão, confirmação de envio, lista e detalhe de contratos, formulário e lista de créditos, histórico de pareceres e cadastro institucional.
 
-[Abrir busca de veículos](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=92-2697) · [Abrir resumo do pedido](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=92-2699) · [Referências e decisões de escopo](docs/prototipos/referencias-e-escopo.md).
+[Abrir busca de veículos](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=92-2697) · [Abrir resumo do pedido](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=92-2699) · [Referências e decisões de escopo](docs/referencias-e-escopo.md).
 
 | Busca de veículos                                              | Resumo do pedido                                               |
 | -------------------------------------------------------------- | -------------------------------------------------------------- |
@@ -237,12 +328,57 @@ Os protótipos cobrem login, cadastro, perfil e rendimentos, lista, novo pedido,
 
 [Guia completo e links das telas](docs/prototipos/README.md). A escolha entre Onix e T-Cross acompanha o pedido; os filtros alternam resultados e a lista de contratos apresenta o aluguel após sua execução. A análise exige uma decisão, e o crédito distingue proposta de associação pelo banco concedente.
 
-<!--## 📚 Documentações Utilizadas
+### Exemplo de resposta da API
 
-- [Documentação do diagrams.net](https://www.drawio.com/doc/).
-- [Figma — design system AlloCar](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=0-1). Os wireframes usam overrides neutros dos componentes da interface atual.
-- [Spring Boot](https://docs.spring.io/spring-boot/), [React](https://react.dev/), [Vite](https://vite.dev/) e [Supabase](https://supabase.com/docs): referências técnicas.
--->
+O endpoint público de saúde permite conferir o acesso à API:
+
+```bash
+curl https://allocar-backend.onrender.com/api/health
+```
+
+Resposta JSON:
+
+```json
+{ "status": "UP" }
+```
+
+As operações de negócio exigem sessão e CSRF. O [guia HTTP](docs/api.md#sessão-e-csrf) apresenta a sequência de autenticação.
+
+## 🧪 Testes e validação
+
+Execute lint e compilação do frontend na pasta `frontend`:
+
+```bash
+npm run lint
+npm run build
+```
+
+Na pasta `backend`, execute os testes de domínio, segurança e contratos HTTP:
+
+```bash
+mvn test
+```
+
+Para testar a persistência real no banco configurado em `backend/.env`, execute em `backend`:
+
+```bash
+mvn '-Dtest=SupabaseApiIT' test
+```
+
+Esses cenários criam dados exclusivos em transações com rollback. Os [testes do backend](backend/README.md#testes) e a [verificação do frontend](frontend/README.md#verificação) descrevem a cobertura e os recursos locais de navegador.
+
+## 📚 Documentações e referências
+
+As referências técnicas e de apresentação são:
+
+- [React](https://react.dev/), [React Router](https://reactrouter.com/) e [Vite](https://vite.dev/)
+- [Spring Boot](https://docs.spring.io/spring-boot/), [Spring Security](https://docs.spring.io/spring-security/reference/) e [Maven](https://maven.apache.org/guides/)
+- [Supabase e conexões PostgreSQL](https://supabase.com/docs/guides/database/connecting-to-postgres)
+- [Vercel: rewrites](https://vercel.com/docs/routing/rewrites) e [Render: Docker](https://render.com/docs/docker)
+- [diagrams.net](https://www.drawio.com/doc/) e [design system AlloCar no Figma](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=0-1)
+- [Template de README da disciplina](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/blob/main/TEMPLATES/template_README.md)
+- [AraCoffee: execução conjunta](https://github.com/joaopauloaramuni/desenvolvimento-e-integracao-de-aplicacoes-web/blob/main/PROJETOS/FullStack/AraCoffee/Front/README.md#-rodando-os-dois-projetos-ao-mesmo-tempo)
+- [Localiza e Movida](docs/referencias-e-escopo.md), referências de organização da jornada de aluguel
 
 ## 👨‍💻 Autor
 
@@ -251,4 +387,22 @@ Os protótipos cobrem login, cadastro, perfil e rendimentos, lista, novo pedido,
 - GitHub: [HyperSonic3608](https://github.com/HyperSonic3608)
 - LinkedIn: [linkedin.com/in/davisollar](https://linkedin.com/in/davisollar).
 
-<!--## 🙏 Agradecimentos-->
+## 🤝 Contribuição
+
+Para propor uma alteração:
+
+1. Abra uma issue descrevendo o problema, comportamento esperado e passos para reprodução.
+2. Prepare a alteração em uma branch e mantenha os componentes e tokens compartilhados.
+3. Execute as verificações correspondentes e atualize a documentação afetada.
+4. Abra um pull request com descrição, validação e capturas quando alterar interfaces.
+
+Preserve as regras de autorização, a análise financeira por agente e o histórico dos contratos. Envie somente dados fictícios em exemplos e mantenha credenciais fora do código e das issues.
+
+## 🙏 Agradecimentos
+
+- Ao professor João Paulo Aramuni pelo material de referência e pelo template de documentação
+- Às comunidades React, Spring, Supabase, diagrams.net e Figma pelas ferramentas e documentação
+
+<!--## 📄 Licença
+
+O repositório não inclui um arquivo de licença de software. Para condições de uso e redistribuição, entre em contato com o autor. Ferramentas, fontes e materiais de terceiros seguem as condições dos respectivos responsáveis.-->

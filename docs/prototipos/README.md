@@ -1,8 +1,10 @@
-# AlloCar — Protótipos
+# AlloCar · Protótipos
 
 Os protótipos no [Figma](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK) apresentam 27 telas do sistema, duas landings e oito painéis auxiliares em cada fidelidade.
 
-O layout usa os exemplos de busca e resumo do design system: cabeçalho em toda a largura, conteúdo central, filtros, cartões de veículos e resumo lateral. As [referências oficiais de Localiza/Movida e decisões de escopo](referencias-e-escopo.md) explicam a organização dos fluxos.
+Este guia descreve as interações do arquivo de design, com dados e sessões ilustrativos. Na [aplicação React](../../frontend/README.md), o login usa credenciais reais, as consultas vêm da API e as ações seguem as permissões e regras do backend.
+
+O layout usa os exemplos de busca e resumo do design system: cabeçalho em toda a largura, conteúdo central, filtros, cartões de veículos e resumo lateral. As [referências oficiais de Localiza/Movida e decisões de escopo](../referencias-e-escopo.md) explicam a organização dos fluxos.
 
 - [Apresentar alta fidelidade](https://www.figma.com/proto/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=4-1017&starting-point-node-id=4%3A1017).
 - [Apresentar baixa fidelidade](https://www.figma.com/proto/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=4-1697&starting-point-node-id=4%3A1697).
@@ -124,12 +126,9 @@ A coleção **AlloCar / Navegação de protótipo** contém oito variáveis: per
 
 A coleção **AlloCar / Seleção do automóvel** contém 25 variáveis. Onix e T-Cross atualizam identificação, marca/modelo e foto no detalhe, além dos textos do pedido e das consultas. Os filtros mudam os cartões e a contagem. O cadastro institucional alterna Empresa/Banco; a lista de contratos alterna vazio/CT-001 após execução e é reiniciada no acesso. As duas fidelidades compartilham os estados de demonstração, com destinos separados.
 
-As duas fidelidades usam os mesmos estados de demonstração, com destinos separados por página. Ao escolher a decisão, a justificativa recebe um texto de exemplo.
+Ao escolher a decisão no Figma, a justificativa recebe um texto de exemplo. Na aplicação, o agente precisa informar sua própria justificativa para registrar o parecer.
 
 ## Artefatos e manutenção
 
 - [Painel em alta fidelidade](alta-fidelidade.png), [login com cenário de erro](login-alta.png), [análise em alta](analise-alta.png), [seletor financeiro](decisao-alta.png) e [contrato](contrato-alta-fidelidade.png).
 - [Automóvel](automovel-alta.png), [crédito](credito-alta.png), [central do agente](agente-alta.png) e [cadastro institucional](cadastro-institucional.png).
-
-<!--- [Inventário de alta](alta-figma.json) e [de baixa](baixa-figma.json): `schemaVersion: 4`, com dimensões, tipos de nós, fontes, imagens de conteúdo, fontes/destinos das reações, âncoras de rolagem, ações condicionais e vínculos de visibilidade.
-- [Scripts de edição e validação](../figma/README.md): manutenção das interfaces. Os JSONs são inventários e não backups completos do arquivo.-->
