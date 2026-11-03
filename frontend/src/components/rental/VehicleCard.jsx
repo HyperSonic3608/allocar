@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import { formatMoney } from '../../data/demo.js'
-import { usePrototype } from '../../state/prototype-store.js'
+import { useApp } from '../../state/app-context.js'
+import { formatMoney, vehiclePresentation } from '../../data/rental.js'
 import Icon from '../ui/Icon.jsx'
 import Button from '../ui/Button.jsx'
 import { Badge } from '../ui/Feedback.jsx'
@@ -11,79 +10,87 @@ const images = import.meta.glob('../../assets/figma/*.png', {
   query: '?url',
   import: 'default',
 })
+
 export function VehicleImage({ vehicle, className = '', ...props }) {
+  const item = vehicle.modelo ? vehiclePresentation(vehicle) : vehicle
+  if (!item.image)
+    return (
+      <div
+        className={`vehicle-image vehicle-image--placeholder ${className}`}
+        role="img"
+        aria-label={`Imagem não disponível para ${item.name}`}
+      >
+        <Icon name="car" size={48} />
+        <span>Imagem não disponível</span>
+      </div>
+    )
   return (
     <img
       className={`vehicle-image ${className}`}
-      src={images[`../../assets/figma/${vehicle.image}`]}
-      alt={vehicle.name}
+      src={images[`../../assets/figma/${item.image}`]}
+      alt={item.name}
       {...props}
     />
   )
 }
 
-export default function VehicleCard({ vehicle, landing = false, days = 5 }) {
-  const [favorite, setFavorite] = useState(false)
-  const { dispatch } = usePrototype()
+export default function VehicleCard({ vehicle, landing = false }) {
+  const { setDraft } = useApp()
   const navigate = useNavigate()
+  const item = landing ? vehicle : vehiclePresentation(vehicle)
   function select() {
-    dispatch({ type: 'VEHICLE', id: vehicle.id })
-    navigate(landing ? '/entrar' : `/veiculos/${vehicle.id}`)
+    if (landing) {
+      navigate('/veiculos')
+      return
+    }
+    setDraft((draft) => ({ ...draft, vehicleId: item.id }))
+    navigate(`/veiculos/${item.id}`)
   }
-  const price = landing ? vehicle.landingDaily : vehicle.daily
   return (
     <article className={`vehicle-card ${landing ? 'vehicle-card--landing' : ''}`}>
       <div className="vehicle-card__top">
-        <Badge>{landing ? vehicle.group : vehicle.category}</Badge>
-        {landing && (
-          <button
-            type="button"
-            className={`icon-button ${favorite ? 'icon-button--selected' : ''}`}
-            aria-label={
-              favorite ? `Remover ${vehicle.name} dos favoritos` : `Favoritar ${vehicle.name}`
-            }
-            aria-pressed={favorite}
-            onClick={() => setFavorite(!favorite)}
-          >
-            <Icon name="heart" />
-          </button>
-        )}
+        <Badge>{landing ? item.group : `Matrícula ${item.registration}`}</Badge>
       </div>
-      <VehicleImage vehicle={vehicle} />
+      <VehicleImage vehicle={item} />
       <div className="vehicle-card__identity">
-        <h3>{vehicle.name}</h3>
-        <p>
-          {landing
-            ? 'ou similar da mesma categoria'
-            : `${vehicle.year} · ${vehicle.plate} · ${vehicle.registration}`}
-        </p>
+        <h3>{item.name}</h3>
+        <p>{landing ? 'ou similar da mesma categoria' : `${item.year} · ${item.plate}`}</p>
       </div>
-      <ul className="vehicle-specs">
-        <li>
-          <Icon name="settings" size={16} />
-          Automático
-        </li>
-        <li>
-          <Icon name="users" size={16} />5 pessoas
-        </li>
-        <li>
-          <Icon name="briefcase" size={16} />2 malas
-        </li>
-      </ul>
+      {landing && (
+        <ul className="vehicle-specs">
+          <li>
+            <Icon name="settings" size={16} />
+            Automático
+          </li>
+          <li>
+            <Icon name="users" size={16} />5 pessoas
+          </li>
+          <li>
+            <Icon name="briefcase" size={16} />2 malas
+          </li>
+        </ul>
+      )}
       <div className="vehicle-card__pricing">
-        {landing && vehicle.originalDaily && <del>{formatMoney(vehicle.originalDaily)}</del>}
+        {landing && item.originalDaily && <del>{formatMoney(item.originalDaily)}</del>}
         <div className="vehicle-card__price-row">
-          <p className="vehicle-price">
-            <span>R$</span> {price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-            <small>/ diária</small>
-          </p>
-          <Badge tone="success">{landing ? 'Categoria de exemplo' : 'Disponível'}</Badge>
+          {landing ? (
+            <p className="vehicle-price">
+              <span>R$</span>
+              {item.landingDaily.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+              <small>/ diária</small>
+            </p>
+          ) : (
+            <h3>Valor a propor</h3>
+          )}
+          <Badge tone={landing ? 'success' : 'neutral'}>
+            {landing ? 'Categoria de exemplo' : 'Catálogo'}
+          </Badge>
         </div>
       </div>
       <p className="vehicle-card__caption">
         {landing
           ? 'Valores ilustrativos · condições sujeitas à análise'
-          : `${days} dias · proposta de ${formatMoney(days * vehicle.daily)}`}
+          : 'Informe o período e o valor total da proposta antes de solicitar.'}
       </p>
       <Button className="button--full" onClick={select}>
         {landing ? 'Consultar opções' : 'Ver automóvel'}

@@ -633,6 +633,59 @@
   color: inherit;
   font-size: 20px;
 }
+.vehicle-image--placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-16, 16px);
+  background: var(--cor-superficie-pagina, #f5f6f7);
+  color: var(--cor-texto-secundario, #62696c);
+  font-size: 14px;
+}
+.resource-loading {
+  padding: 32px;
+  text-align: center;
+}
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+.validation-errors {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+.decision-snapshot {
+  margin: 16px 0;
+}
+.decision-snapshot summary {
+  cursor: pointer;
+  color: var(--cor-acao-link);
+  font-weight: 500;
+}
+.decision-snapshot[open] > .metadata {
+  margin-top: 16px;
+}
+.employment-form + .employment-form {
+  border-top: 1px solid var(--cor-borda-padrao, #d9dfe3);
+  padding-top: 24px;
+}
+.header-error {
+  max-width: 1280px;
+  padding: 0 24px 16px;
+  margin: auto;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.metadata dd {
+  overflow-wrap: anywhere;
+}
 @media (max-width: 1250px) {
   .columns {
     grid-template-columns: minmax(0, 1fr) 300px;

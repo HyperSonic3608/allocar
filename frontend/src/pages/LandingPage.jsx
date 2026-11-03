@@ -5,7 +5,7 @@ import { Badge } from '../components/ui/Feedback.jsx'
 import { Metadata } from '../components/ui/Card.jsx'
 import Icon from '../components/ui/Icon.jsx'
 import VehicleCard, { VehicleImage } from '../components/rental/VehicleCard.jsx'
-import { vehicles } from '../data/demo.js'
+import { vehicles } from '../data/landing.js'
 
 const steps = [
   [
@@ -20,7 +20,7 @@ const steps = [
     'Informe o veículo e o período desejados. Seu pedido segue para avaliação financeira.',
     'Solicitação pela internet',
     'Acessar pedidos',
-    '/entrar',
+    '/veiculos',
   ],
   [
     '03 · Acompanhe o pedido',
@@ -73,7 +73,7 @@ export default function LandingPage() {
                 um só lugar.
               </p>
               <div className="landing-hero__actions">
-                <Button to="/entrar">Começar meu pedido</Button>
+                <Button to="/veiculos">Começar meu pedido</Button>
                 <Button className="hero-create-account" variant="inverse" to="/cadastro">
                   Criar minha conta
                 </Button>

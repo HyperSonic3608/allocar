@@ -15,6 +15,8 @@ mvn spring-boot:run '-Dspring-boot.run.profiles=supabase'
 
 A API responde em **`http://localhost:8080/api`**. O perfil `supabase` habilita a conexão JDBC e valida o login dedicado durante a inicialização. Credenciais de banco permanecem no servidor; a aplicação não cria tabelas nem carrega dados ao iniciar.
 
+Para iniciar frontend e backend no mesmo terminal, execute `npm ci` e `npm run dev:all` na pasta `frontend`, com JDK 25 e Maven disponíveis. O comando inicia este backend e o Vite, encaminha `/api` ao servidor e encerra ambos por `Ctrl+C`. Consulte os [endereços, variáveis e comandos do frontend](../frontend/README.md#execução).
+
 ```powershell
 mvn test
 mvn package

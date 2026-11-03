@@ -1,7 +1,7 @@
 import Header from './Header.jsx'
 import Footer from './Footer.jsx'
 import ProgressSteps from '../rental/ProgressSteps.jsx'
-import { journey } from '../../data/demo.js'
+import { journey } from '../../data/rental.js'
 
 export default function PageLayout({
   children,

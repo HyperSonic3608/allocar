@@ -1,341 +1,412 @@
-import { useNavigate } from 'react-router'
+import { useCallback, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
+import { api, all } from '../api/client.js'
+import { useApp, emptyDraft } from '../state/app-context.js'
+import useResource from '../state/useResource.js'
+import useMutation from '../state/useMutation.js'
+import useOrder from '../state/useOrder.js'
 import PageLayout, {
   ActionRow,
   Columns,
   SidePanel,
   Stack,
-  StepsList,
 } from '../components/layout/PageLayout.jsx'
 import Card, { Metadata, PageHeading } from '../components/ui/Card.jsx'
 import Button, { TextLink } from '../components/ui/Button.jsx'
 import Field, { SelectField } from '../components/ui/Field.jsx'
-import { Alert, Badge, Note } from '../components/ui/Feedback.jsx'
+import { Alert, Note } from '../components/ui/Feedback.jsx'
+import ResourceState, { ErrorMessage, Pagination } from '../components/ui/ResourceState.jsx'
 import RentalSummary from '../components/rental/RentalSummary.jsx'
 import { VehicleImage } from '../components/rental/VehicleCard.jsx'
-import useRental from '../state/useRental.js'
-import { vehicles, formatMoney, parseMoney } from '../data/demo.js'
-
-const statusLabels = {
-  EM_ANALISE: 'Em análise',
-  APROVADO: 'Aprovado',
-  REPROVADO: 'Reprovado',
-  CANCELADO: 'Cancelado',
-  EM_EXECUCAO: 'Em execução',
-}
+import { OrderActions, OrderFacts, OrderStatus } from '../components/rental/OrderFacts.jsx'
+import DecisionFacts from '../components/rental/DecisionFacts.jsx'
+import {
+  contractType,
+  formatDate,
+  formatMoney,
+  formatTime,
+  ownerName,
+  period,
+  permissions,
+  rentalDays,
+  statusLabels,
+  vehicleName,
+} from '../data/rental.js'
 
 export function MyOrdersPage() {
-  const { state, vehicle, period, dispatch } = useRental()
-  const terminal = ['CANCELADO', 'EM_EXECUCAO'].includes(state.status)
+  const { account } = useApp()
+  const [page, setPage] = useState(0)
+  const [status, setStatus] = useState('')
+  const resource = useResource(
+    useCallback(
+      async (signal) => {
+        const [list, pending, approved, executing] = await Promise.all([
+          api.orders({ pagina: page, tamanho: 6, status }, signal),
+          ...['EM_ANALISE', 'APROVADO', 'EM_EXECUCAO'].map((status) =>
+            api.orders({ status, tamanho: 1 }, signal),
+          ),
+        ])
+        const details = await Promise.all(list.itens.map((order) => api.order(order.id, signal)))
+        return {
+          ...list,
+          details,
+          pending: pending.total,
+          approved: approved.total,
+          executing: executing.total,
+        }
+      },
+      [page, status],
+    ),
+  )
   return (
     <PageLayout figmaId="4:1196">
-      <Stack className="stack--tight">
-        <PageHeading
-          title="Meus pedidos"
-          description="Acompanhe seus pedidos e o andamento da análise financeira."
-        />
-        <div className="metrics">
-          <div>
-            <strong>{state.status === 'EM_ANALISE' ? 1 : 0} pendente</strong>
-            <p>Solicitações aguardando análise financeira.</p>
-          </div>
-          <div className="metric--success">
-            <strong>
-              {state.status === 'APROVADO' ? 2 : 1} aprovado{state.status === 'APROVADO' ? 's' : ''}
-            </strong>
-            <p>Pedidos com aprovação financeira concluída.</p>
-          </div>
-          <div>
-            <strong>{state.executed ? 1 : 0} em execução</strong>
-            <p>
-              {state.executed
-                ? 'Contrato em vigência neste momento.'
-                : 'Nenhum contrato em vigência neste momento.'}
-            </p>
-          </div>
-        </div>
-        <ActionRow>
-          <Button to="/veiculos">Novo pedido</Button>
-          <Button to="/pedidos/AL-001" variant="secondary">
-            Ver #AL-001
-          </Button>
-          <Button to="/meu-cadastro" variant="secondary">
-            Meu perfil
-          </Button>
-        </ActionRow>
-        <div className="orders-grid">
-          <Card className="order-card">
-            <div className="order-card__header">
-              <div>
-                <h2>#AL-001</h2>
-                <p className="muted">
-                  {state.status === 'EM_ANALISE'
-                    ? 'Pedido aguardando análise financeira'
-                    : `Pedido ${statusLabels[state.status].toLowerCase()}`}
-                </p>
-              </div>
-              <Badge
-                outlined
-                tone={
-                  state.status === 'APROVADO' || state.executed
-                    ? 'success'
-                    : state.status === 'CANCELADO' || state.status === 'REPROVADO'
-                      ? 'error'
-                      : 'warning'
-                }
-              >
-                {statusLabels[state.status]}
-              </Badge>
-            </div>
-            <div className="order-card__details">
-              <Note>
-                <p className="fact-label">Veículo</p>
-                <strong>
-                  {vehicle.name} {vehicle.year}
-                </strong>
-                <p>Automóvel do pedido #AL-001</p>
-              </Note>
-              <Note>
-                <p className="fact-label">Período</p>
-                <strong>{period}</strong>
-                <p>Período solicitado · sujeito à análise</p>
-              </Note>
+      <PageHeading
+        title={account.tipo === 'CLIENTE' ? 'Meus pedidos' : 'Pedidos do meu escopo'}
+        description="Acompanhe os pedidos e o andamento da avaliação financeira."
+      />
+      <ResourceState resource={resource}>
+        {(data) => (
+          <Stack>
+            <div className="metrics">
+              {[
+                [`${data.pending} em análise`, 'Solicitações aguardando avaliação financeira.'],
+                [`${data.approved} aprovados`, 'Pedidos com parecer positivo vigente.'],
+                [`${data.executing} em execução`, 'Pedidos com contrato executado.'],
+              ].map(([title, text], index) => (
+                <div key={title} className={index === 1 ? 'metric--success' : ''}>
+                  <strong>{title}</strong>
+                  <p>{text}</p>
+                </div>
+              ))}
             </div>
             <ActionRow>
-              <Button
-                to={state.status === 'CANCELADO' ? '/pedidos/AL-001/cancelado' : '/pedidos/AL-001'}
-                variant="secondary"
-              >
-                Ver pedido
-              </Button>
-              <Button
-                to={terminal ? '/contratos/CT-001' : '/pedidos/AL-001/alterar'}
-                variant="secondary"
-              >
-                {terminal ? 'Consultar registro' : 'Editar pedido'}
-              </Button>
+              {account.tipo === 'CLIENTE' && <Button to="/veiculos">Novo pedido</Button>}
+              {account.tipo === 'CLIENTE' ? (
+                <Button variant="secondary" to="/meu-cadastro">
+                  Meu cadastro
+                </Button>
+              ) : (
+                <Button variant="secondary" to="/agente">
+                  Central do agente
+                </Button>
+              )}
             </ActionRow>
-          </Card>
-          <Card className="order-card">
-            <div className="order-card__header">
-              <div>
-                <h2>#AL-002</h2>
-                <p className="muted">Aprovação financeira da versão atual</p>
+            <div className="queue-filters" role="group" aria-label="Filtrar pedidos por status">
+              {[['', 'Todos'], ...Object.entries(statusLabels)].map(([value, label]) => (
+                <Button
+                  key={value}
+                  variant="secondary"
+                  aria-pressed={status === value}
+                  onClick={() => {
+                    setStatus(value)
+                    setPage(0)
+                  }}
+                >
+                  {label}
+                </Button>
+              ))}
+            </div>
+            {data.details.length ? (
+              <div className="orders-grid">
+                {data.details.map((detail) => (
+                  <Card className="order-card" key={detail.pedido.id}>
+                    <div className="order-card__header">
+                      <div>
+                        <h2>{detail.pedido.numero}</h2>
+                        <p className="muted">
+                          {detail.cliente.nome} · versão {detail.pedido.versao}
+                        </p>
+                      </div>
+                      <OrderStatus outlined status={detail.pedido.status} />
+                    </div>
+                    <div className="order-card__details">
+                      <Note title="Veículo">
+                        <strong>
+                          {vehicleName(detail.automovel)} · {detail.automovel.ano}
+                        </strong>
+                        <p>{detail.automovel.matricula}</p>
+                      </Note>
+                      <Note title="Período">
+                        <strong>{period(detail.pedido)}</strong>
+                        <p>{formatMoney(detail.pedido.valorTotal)}</p>
+                      </Note>
+                    </div>
+                    <ActionRow>
+                      <Button to={`/pedidos/${detail.pedido.id}`} variant="secondary">
+                        Ver pedido
+                      </Button>
+                      {permissions(account, detail).edit && (
+                        <Button to={`/pedidos/${detail.pedido.id}/alterar`} variant="secondary">
+                          Editar pedido
+                        </Button>
+                      )}
+                    </ActionRow>
+                  </Card>
+                ))}
               </div>
-              <Badge outlined tone="success">
-                Aprovado
-              </Badge>
-            </div>
-            <div className="order-card__details">
-              <Note>
-                <p className="fact-label">Veículo</p>
-                <strong>Volkswagen Polo 2025</strong>
-                <p>Automóvel do pedido #AL-002</p>
-              </Note>
-              <Note>
-                <p className="fact-label">Período</p>
-                <strong>18/12/2026 a 20/12/2026</strong>
-                <p>Aprovado não significa em execução.</p>
-              </Note>
-            </div>
-            <ActionRow>
-              <Button
-                variant="secondary"
-                onClick={() => dispatch({ type: 'MODAL', name: 'pedido-aprovado' })}
-              >
-                Ver pedido
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={() => dispatch({ type: 'MODAL', name: 'pedido-aprovado' })}
-              >
-                Ver aprovação
-              </Button>
-            </ActionRow>
-          </Card>
-        </div>
-      </Stack>
+            ) : (
+              <Card>
+                <h2>Nenhum pedido neste filtro.</h2>
+                <p className="muted">Suas solicitações aparecerão aqui após o envio.</p>
+                {account.tipo === 'CLIENTE' && (
+                  <Button to="/veiculos" className="empty-action">
+                    Escolher um automóvel
+                  </Button>
+                )}
+              </Card>
+            )}
+            <Pagination
+              page={data.pagina}
+              size={data.tamanho}
+              total={data.total}
+              onChange={setPage}
+            />
+          </Stack>
+        )}
+      </ResourceState>
     </PageLayout>
   )
 }
 
-export function OrderFormPage({ editing = false }) {
-  const { state, vehicle, dispatch, price } = useRental()
+function OrderEditor({ editing, data, onReload }) {
+  const { draft, setDraft, account, notify } = useApp()
+  const detail = data.detail
+  const original = editing
+    ? {
+        vehicleId: detail.pedido.automovelId,
+        start: detail.pedido.inicio,
+        end: detail.pedido.fim,
+        contractType: detail.pedido.tipo,
+        total: detail.pedido.valorTotal,
+        agentId: detail.pedido.agenteResponsavelId,
+      }
+    : draft
+  const [values, setValues] = useState(original)
+  const mutation = useMutation()
   const navigate = useNavigate()
-  function submit(event) {
+  const vehicle = data.vehicles.find((item) => item.id === values.vehicleId)
+  async function submit(event) {
     event.preventDefault()
-    const data = Object.fromEntries(new FormData(event.currentTarget))
-    if (data.end <= data.start) {
-      event.currentTarget
-        .querySelector('[name=end]')
-        .setCustomValidity('O término deve ser posterior ao início.')
-      event.currentTarget.reportValidity()
+    const end = event.currentTarget.querySelector('[name=end]')
+    if (values.end <= values.start) {
+      end.setCustomValidity('O término deve ser posterior ao início.')
+      end.reportValidity()
       return
     }
-    dispatch({
-      type: editing ? 'EDIT' : 'DRAFT',
-      values: {
-        start: data.start,
-        end: data.end,
-        contractType: data.contractType,
-        vehicleId: data.vehicleId || state.vehicleId,
-      },
+    if (!editing) {
+      setDraft(values)
+      navigate('/pedidos/revisao')
+      return
+    }
+    await mutation.run(async () => {
+      const result = await api.updateOrder(detail.pedido.id, {
+        versao: detail.pedido.versao,
+        proposta: {
+          automovelId: values.vehicleId,
+          inicio: values.start,
+          fim: values.end,
+          tipo: values.contractType,
+          valorTotal: Number(values.total),
+        },
+      })
+      notify('Proposta atualizada e enviada para nova análise.')
+      navigate(`/pedidos/${result.pedido.id}`)
     })
-    navigate(editing ? '/pedidos/AL-001' : '/pedidos/revisao')
   }
-  const steps = [
-    ['Revisar pedido', 'Confira o veículo, o tipo de locação e as datas.'],
-    ['Salvar e reenviar', 'O envio invalida qualquer aprovação anterior.'],
-    ['Nova versão', 'Os dados alterados seguem para uma nova análise financeira.'],
-    ['Análise financeira', 'Aguarde o parecer sobre a versão reenviada.'],
-    ['Contrato', 'Disponível apenas após parecer financeiro positivo da versão atual.'],
-  ]
+  if (editing && !permissions(account, detail).edit)
+    return (
+      <Note title="Pedido sem permissão de alteração">
+        <p>
+          Somente o titular ou o agente responsável pode modificar um pedido antes da execução ou do
+          cancelamento.
+        </p>
+        <Button to={`/pedidos/${detail.pedido.id}`} variant="secondary">
+          Consultar pedido
+        </Button>
+      </Note>
+    )
+  const field = (name) => ({
+    value: values[name],
+    onChange: (event) => {
+      event.target.setCustomValidity('')
+      if (name === 'start') event.target.form?.querySelector('[name=end]')?.setCustomValidity('')
+      setValues((current) => ({ ...current, [name]: event.target.value }))
+    },
+  })
+  return (
+    <form onSubmit={submit} className="stack">
+      <Columns>
+        <Card>
+          <div className="panel-heading">
+            <h2>{editing ? 'Revise a proposta' : 'Dados do aluguel'}</h2>
+            <p>Informe o automóvel, o período e o valor total proposto para avaliação.</p>
+          </div>
+          <div className="field-grid">
+            <SelectField label="Automóvel" name="vehicleId" {...field('vehicleId')} required>
+              <option value="">Selecione o automóvel</option>
+              {data.vehicles.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {vehicleName(item)} · {item.ano} · {item.placa}
+                </option>
+              ))}
+            </SelectField>
+            <Field label="Matrícula" value={vehicle?.matricula || ''} readOnly />
+            <SelectField
+              label="Tipo de contrato"
+              name="contractType"
+              {...field('contractType')}
+              required
+            >
+              <option value="PADRAO">Aluguel padrão</option>
+              <option value="COM_CREDITO">Aluguel com crédito</option>
+            </SelectField>
+            <Field
+              label="Valor total proposto (R$)"
+              name="total"
+              type="number"
+              min="0.01"
+              step="0.01"
+              {...field('total')}
+              required
+              helper="Valor total da proposta, sujeito à análise do agente."
+            />
+            <Field label="Início" name="start" type="date" {...field('start')} required />
+            <Field label="Término" name="end" type="date" {...field('end')} required />
+            {editing ? (
+              <Field
+                className="field-grid__full"
+                label="Agente responsável"
+                value={ownerName(detail.pedido.agenteResponsavelId, data.agents)}
+                readOnly
+              />
+            ) : (
+              <div className="field-grid__full">
+                <SelectField
+                  label="Agente responsável"
+                  name="agentId"
+                  {...field('agentId')}
+                  required
+                >
+                  <option value="">Selecione uma instituição</option>
+                  {data.agents.map((agent) => (
+                    <option key={agent.id} value={agent.id}>
+                      {agent.nome} · {agent.tipo === 'BANCO' ? 'Banco' : 'Empresa'}
+                    </option>
+                  ))}
+                </SelectField>
+              </div>
+            )}
+          </div>
+          <Note title={editing ? 'Alteração exige nova análise' : 'Revise antes de enviar'}>
+            {editing
+              ? 'Salvar incrementa a versão do pedido e invalida pareceres anteriores. O contrato depende de nova aprovação.'
+              : 'O pedido será enviado ao agente escolhido. O envio não confirma um contrato nem realiza cobrança.'}
+          </Note>
+          <ErrorMessage
+            error={mutation.error}
+            onReload={mutation.error?.status === 409 ? onReload : undefined}
+          />
+        </Card>
+        <SidePanel
+          title="Próximos passos"
+          description="O valor faz parte da proposta. O agente avalia as condições e os dados financeiros do cadastro."
+          steps={[
+            ['Informe a proposta', 'Escolha automóvel, período, tipo e valor total.'],
+            ['Revise os dados', 'Confira o cadastro e a instituição responsável.'],
+            ['Aguarde a análise', 'A contratação depende de parecer financeiro positivo.'],
+          ]}
+        />
+      </Columns>
+      <ActionRow>
+        <Button type="submit" disabled={mutation.pending}>
+          {mutation.pending ? 'Salvando…' : editing ? 'Salvar e reenviar' : 'Revisar pedido'}
+        </Button>
+        <Button variant="secondary" to={editing ? `/pedidos/${detail.pedido.id}` : '/veiculos'}>
+          {editing ? 'Descartar' : 'Voltar'}
+        </Button>
+      </ActionRow>
+    </form>
+  )
+}
+
+export function OrderFormPage({ editing = false }) {
+  const { id } = useParams()
+  const resource = useResource(
+    useCallback(
+      async (signal) => {
+        const [vehicles, agents, detail] = await Promise.all([
+          all('/automoveis', { signal }),
+          api.agents(signal),
+          editing ? api.order(id, signal) : Promise.resolve(null),
+        ])
+        return { vehicles, agents, detail }
+      },
+      [editing, id],
+    ),
+  )
   return (
     <PageLayout figmaId={editing ? '4:1326' : '4:1234'} progress={{ flow: 'request', current: 1 }}>
-      {!editing && (
-        <PageHeading
-          eyebrow="PERÍODO E CONTRATO · 2 DE 4"
-          title="Novo pedido de aluguel"
-          description="Escolha o automóvel e o período desejado. Os dados cadastrais e a renda serão considerados na análise financeira."
-        />
-      )}
-      <form onSubmit={submit} className="stack">
-        <Columns className={editing ? '' : 'columns--tight'}>
-          <Card>
-            <div className="panel-heading panel-heading--large">
-              {editing ? <h1>Alterar pedido #AL-001</h1> : <h2>Resumo do pedido #AL-001</h2>}
-              <p>
-                {editing
-                  ? 'Ana Silva · Revise o pedido antes de enviar uma nova versão para análise financeira.'
-                  : 'Pedido referência #AL-001 · vinculado ao fluxo de análise financeira.'}
-              </p>
-            </div>
-            {editing ? (
-              <div className="field-grid">
-                <SelectField label="Automóvel" name="vehicleId" defaultValue={vehicle.id}>
-                  {vehicles.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name} · {item.year} · {item.plate}
-                    </option>
-                  ))}
-                </SelectField>
-                <Field label="Matrícula" value={vehicle.registration} readOnly />
-                <SelectField
-                  label="Tipo de contrato"
-                  name="contractType"
-                  defaultValue={state.contractType}
-                >
-                  <option value="PADRAO">Locação padrão</option>
-                  <option value="COM_CREDITO">Locação com crédito</option>
-                </SelectField>
-                <Field
-                  label="Início"
-                  name="start"
-                  type="date"
-                  defaultValue={state.start}
-                  required
-                />
-                <Field
-                  className="field-grid__full"
-                  label="Término"
-                  name="end"
-                  type="date"
-                  defaultValue={state.end}
-                  onChange={(event) => event.target.setCustomValidity('')}
-                  required
-                />
-              </div>
-            ) : (
-              <div className="field-grid field-grid--tight">
-                <SelectField
-                  label="Automóvel"
-                  name="vehicleId"
-                  defaultValue={vehicle.id}
-                  helper="Veículo selecionado para o pedido #AL-001"
-                >
-                  {vehicles.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name} · {item.year} · {item.plate}
-                    </option>
-                  ))}
-                </SelectField>
-                <SelectField
-                  label="Tipo de contrato"
-                  name="contractType"
-                  defaultValue={state.contractType}
-                  helper="Contrato padrão para análise financeira"
-                >
-                  <option value="PADRAO">Aluguel padrão</option>
-                  <option value="COM_CREDITO">Aluguel com crédito</option>
-                </SelectField>
-                <Field
-                  label="Início"
-                  name="start"
-                  type="date"
-                  defaultValue={state.start}
-                  required
-                />
-                <Field
-                  label="Término"
-                  name="end"
-                  type="date"
-                  defaultValue={state.end}
-                  onChange={(event) => event.target.setCustomValidity('')}
-                  required
-                />
-              </div>
-            )}
-            {editing ? (
-              <>
-                <Note title="Crédito opcional">
-                  O banco concedente poderá associar crédito a esta locação. A associação é
-                  opcional.
-                </Note>
-                <Note title="Salvar invalida a aprovação anterior">
-                  Ao salvar, qualquer aprovação anterior perde a validade e a nova versão passa por
-                  NOVA análise financeira. O término deve ser posterior ao início.
-                </Note>
-                <Note title="Resumo do pedido">Total proposto: {price}</Note>
-              </>
-            ) : (
-              <div className="proposed-total">
-                <strong>Total proposto do contrato</strong>
-                <b>{price.replace(',00', '')}</b>
-              </div>
-            )}
-          </Card>
-          {editing ? (
-            <SidePanel
-              description="Ao reenviar, a nova versão fica em análise. O contrato depende de parecer positivo vigente para essa versão."
-              steps={steps}
-            />
-          ) : (
-            <Stack>
-              <Note title="Crédito opcional">
-                O crédito é opcional. Somente o banco concedente pode associar o crédito concedido a
-                este aluguel.
-              </Note>
-              <Note className="note--white" title="Revise antes de enviar">
-                Confira veículo e período: a data final deve ser posterior à inicial. Ao enviar, o
-                pedido segue para análise financeira, sem confirmar o contrato. Alterações invalidam
-                a aprovação anterior e exigem nova análise.
-              </Note>
-            </Stack>
-          )}
-        </Columns>
-        <ActionRow className={editing ? 'action-row--bar' : ''}>
-          <Button type="submit">{editing ? 'Salvar e reenviar' : 'Revisar pedido'}</Button>
-          <Button variant="secondary" to={editing ? '/pedidos/AL-001' : `/veiculos/${vehicle.id}`}>
-            {editing ? 'Descartar' : 'Voltar'}
-          </Button>
-        </ActionRow>
-      </form>
+      <PageHeading
+        eyebrow="PERÍODO E CONTRATO · 2 DE 4"
+        title={
+          editing
+            ? `Alterar pedido${resource.data ? ` ${resource.data.detail.pedido.numero}` : ''}`
+            : 'Novo pedido de aluguel'
+        }
+        description="Os dados cadastrais e a renda serão considerados na avaliação financeira."
+      />
+      <ResourceState resource={resource}>
+        {(data) => (
+          <OrderEditor
+            key={editing ? `${id}-${data.detail.pedido.versao}` : 'new'}
+            editing={editing}
+            data={data}
+            onReload={resource.reload}
+          />
+        )}
+      </ResourceState>
     </PageLayout>
   )
 }
 
 export function OrderReviewPage() {
-  const { state, vehicle, period, days } = useRental()
-  const income = state.customer.incomes.reduce((sum, value) => sum + parseMoney(value), 0)
+  const { draft, setDraft, notify } = useApp()
+  const navigate = useNavigate()
+  const mutation = useMutation()
+  const ready = Boolean(
+    draft.vehicleId && draft.start && draft.end && Number(draft.total) > 0 && draft.agentId,
+  )
+  const resource = useResource(
+    useCallback(
+      async (signal) => {
+        if (!ready) return null
+        const [vehicle, customer, agents] = await Promise.all([
+          api.vehicle(draft.vehicleId, signal),
+          api.profile(signal),
+          api.agents(signal),
+        ])
+        return { vehicle, customer, agent: agents.find((item) => item.id === draft.agentId) }
+      },
+      [ready, draft.vehicleId, draft.agentId],
+    ),
+  )
+  async function send() {
+    await mutation.run(async () => {
+      const detail = await api.createOrder({
+        agenteResponsavelId: draft.agentId,
+        proposta: {
+          automovelId: draft.vehicleId,
+          inicio: draft.start,
+          fim: draft.end,
+          tipo: draft.contractType,
+          valorTotal: Number(draft.total),
+        },
+      })
+      setDraft(emptyDraft())
+      notify('Pedido enviado para avaliação financeira.')
+      navigate(`/pedidos/${detail.pedido.id}/enviado`, { replace: true })
+    })
+  }
   return (
     <PageLayout figmaId="92:2699" progress={{ flow: 'request', current: 2 }}>
       <PageHeading
@@ -343,308 +414,272 @@ export function OrderReviewPage() {
         title="Tudo certo com o seu pedido?"
         description="Confira os dados antes de enviar para a avaliação financeira."
       />
-      <Columns>
-        <Stack>
-          <Card className="review-vehicle">
-            <div className="stack">
-              <h2>Automóvel</h2>
-              <h3 className="large-title">{vehicle.name}</h3>
-              <p className="muted">
-                {vehicle.year} · {vehicle.plate} · {vehicle.registration}
-              </p>
-              <TextLink to="/veiculos">Alterar automóvel</TextLink>
-            </div>
-            <VehicleImage vehicle={vehicle} />
-          </Card>
-          <Card>
-            <Metadata
-              title="Período do aluguel"
-              items={[
-                ['Início', period.split(' a ')[0]],
-                ['Término', period.split(' a ')[1]],
-                ['Duração', `${days} dias`],
-                [
-                  'Contrato',
-                  state.contractType === 'PADRAO' ? 'Aluguel sem crédito' : 'Aluguel com crédito',
-                ],
-              ]}
-            />
-            <TextLink to="/pedidos/novo">Editar período e contrato</TextLink>
-          </Card>
-          <Card>
-            <h2>{state.customer.name}</h2>
-            <p>
-              CPF e RG cadastrados · {state.customer.occupation}
-              <br />
-              Renda informada: {formatMoney(income)} ·{' '}
-              {state.customer.employers.filter(Boolean).length} entidade empregadora
-            </p>
-            <TextLink to="/meu-cadastro">Conferir meu cadastro</TextLink>
-          </Card>
-        </Stack>
-        <RentalSummary />
-      </Columns>
+      {!ready ? (
+        <Card>
+          <h2>Complete a proposta antes de revisar.</h2>
+          <p>Escolha automóvel, agente, período e valor total para continuar.</p>
+          <Button to="/pedidos/novo" className="empty-action">
+            Preencher proposta
+          </Button>
+        </Card>
+      ) : (
+        <ResourceState resource={resource}>
+          {({ vehicle, customer, agent }) => (
+            <Columns>
+              <Stack>
+                <Card className="review-vehicle">
+                  <Stack>
+                    <h2>Automóvel</h2>
+                    <h3 className="large-title">{vehicleName(vehicle)}</h3>
+                    <p className="muted">
+                      {vehicle.ano} · {vehicle.placa} · {vehicle.matricula}
+                    </p>
+                    <TextLink to="/veiculos">Alterar automóvel</TextLink>
+                  </Stack>
+                  <VehicleImage vehicle={vehicle} />
+                </Card>
+                <Card>
+                  <Metadata
+                    title="Período e contrato"
+                    items={[
+                      ['Início', formatDate(draft.start)],
+                      ['Término', formatDate(draft.end)],
+                      ['Duração', `${rentalDays(draft.start, draft.end)} dias`],
+                      ['Contrato', contractType(draft.contractType)],
+                      ['Agente', agent?.nome || draft.agentId],
+                    ]}
+                  />
+                  <TextLink to="/pedidos/novo">Editar proposta</TextLink>
+                </Card>
+                <Card>
+                  <h2>{customer.nome}</h2>
+                  <p>
+                    {customer.profissao}
+                    <br />
+                    Renda informada: {formatMoney(customer.rendaTotal)} · {customer.vinculos.length}{' '}
+                    vínculos empregatícios
+                  </p>
+                  <TextLink to="/meu-cadastro">Conferir meu cadastro</TextLink>
+                </Card>
+                <ErrorMessage error={mutation.error} />
+              </Stack>
+              <RentalSummary
+                vehicle={vehicle}
+                total={Number(draft.total)}
+                days={rentalDays(draft.start, draft.end)}
+                onSubmit={send}
+                pending={mutation.pending}
+              />
+            </Columns>
+          )}
+        </ResourceState>
+      )}
     </PageLayout>
   )
 }
 
 export function OrderSentPage() {
-  const { vehicle, price, period } = useRental()
+  const { id } = useParams()
+  const resource = useOrder(id)
   return (
-    <PageLayout figmaId="92:2700" progress={{ status: 'EM_ANALISE' }}>
-      <PageHeading
-        eyebrow="PEDIDO ENVIADO"
-        title="Pedido enviado. Próximo passo: análise."
-        description="Sua solicitação #AL-001 foi registrada para avaliação pelo agente."
-      />
-      <Columns>
-        <Card>
-          <h2 className="large-title">Em análise financeira</h2>
-          <h3>
-            {vehicle.name} · {period}
-            <br />
-            Proposta de {price}
-          </h3>
-          <p>
-            Você pode consultar, alterar ou cancelar o pedido. Um contrato só pode ser executado
-            após parecer positivo.
-          </p>
-          <ActionRow className="action-row--left">
-            <Button to="/pedidos/AL-001">Acompanhar pedido</Button>
-            <Button to="/pedidos" variant="secondary">
-              Meus pedidos
-            </Button>
-          </ActionRow>
-        </Card>
-        <SidePanel title="O que acontece agora?" className="side-panel--spaced">
-          <p>1. O agente avalia os dados e a renda.</p>
-          <p>2. O parecer fica disponível no pedido.</p>
-          <p>3. Com aprovação, o contrato pode ser executado.</p>
-        </SidePanel>
-      </Columns>
+    <PageLayout
+      figmaId="92:2700"
+      progress={resource.data && { status: resource.data.pedido.status }}
+    >
+      <ResourceState resource={resource}>
+        {({ pedido, automovel }) => (
+          <>
+            <PageHeading
+              eyebrow="PEDIDO REGISTRADO"
+              title="Pedido enviado. Acompanhe os próximos passos."
+              description={`Solicitação ${pedido.numero} · ${statusLabels[pedido.status]}`}
+            />
+            <Columns>
+              <Card>
+                <h2 className="large-title">{statusLabels[pedido.status]}</h2>
+                <h3>
+                  {vehicleName(automovel)} · {period(pedido)}
+                  <br />
+                  Proposta de {formatMoney(pedido.valorTotal)}
+                </h3>
+                <p>
+                  Consulte o pedido para acompanhar as condições e o parecer financeiro. Alterações
+                  e cancelamento dependem do estado atual.
+                </p>
+                <ActionRow className="action-row--left">
+                  <Button to={`/pedidos/${pedido.id}`}>Acompanhar pedido</Button>
+                  <Button variant="secondary" to="/pedidos">
+                    Meus pedidos
+                  </Button>
+                </ActionRow>
+              </Card>
+              <SidePanel title="O que acontece agora?">
+                <p>
+                  O agente avalia a proposta e os rendimentos informados. Após parecer positivo, o
+                  contrato pode ser executado.
+                </p>
+              </SidePanel>
+            </Columns>
+          </>
+        )}
+      </ResourceState>
     </PageLayout>
   )
 }
 
-export function OrderDetailPage() {
-  const { state, vehicle, vehicleLabel, period, price } = useRental()
-  const terminal = ['CANCELADO', 'EM_EXECUCAO'].includes(state.status)
-  const title = statusLabels[state.status]
+export function OrderDetailPage({ cancelled = false }) {
+  const { id } = useParams()
+  const { account, notify } = useApp()
+  const resource = useOrder(id)
+  const mutation = useMutation()
   return (
-    <PageLayout figmaId="4:1288" progress={{ status: state.status }}>
-      <Columns>
-        <Card>
-          <PageHeading
-            title="Pedido #AL-001"
-            description={
-              state.status === 'EM_ANALISE'
-                ? 'Recebemos seu pedido. A análise financeira está em andamento.'
-                : `Acompanhe a situação atual do seu pedido: ${title.toLowerCase()}.`
-            }
-          />
-          <div className="field-grid">
-            <Field label="Cliente" value={state.customer.name} readOnly />
-            <Field label="Pedido" value="#AL-001" readOnly />
-            <Field label="Veículo" value={vehicleLabel} readOnly />
-            <Field label="Matrícula" value={vehicle.registration} readOnly />
-            <Field label="Período" value={period} readOnly />
-            <Field
-              label="Tipo de locação"
-              value={state.contractType === 'PADRAO' ? 'Locação padrão' : 'Locação com crédito'}
-              readOnly
-            />
-            <Field className="field-grid__full" label="Total proposto" value={price} readOnly />
-          </div>
-          <Note className="note--ink" title={title}>
-            {state.status === 'EM_ANALISE'
-              ? `Versão ${state.version} recebida. A análise financeira está em andamento e o contrato só será liberado após parecer positivo vigente.`
-              : `Versão ${state.version} · ${title}. Consulte o histórico e as condições vinculadas a este pedido.`}
-          </Note>
-          <ActionRow>
-            {terminal ? (
-              <Button to={state.executed ? '/contratos/CT-001' : '/pedidos/AL-001/cancelado'}>
-                Consultar registro
-              </Button>
-            ) : (
-              <>
-                <Button variant="secondary" to="/pedidos/AL-001/alterar">
-                  Alterar pedido
+    <PageLayout
+      figmaId={cancelled ? '4:1409' : '4:1288'}
+      progress={resource.data && { status: resource.data.pedido.status }}
+    >
+      <ResourceState resource={resource}>
+        {(detail) => (
+          <Columns>
+            <Card>
+              <PageHeading
+                title={
+                  detail.pedido.status === 'CANCELADO'
+                    ? 'Pedido cancelado'
+                    : `Pedido ${detail.pedido.numero}`
+                }
+                description={`${detail.cliente.nome} · ${ownerName(detail.pedido.agenteResponsavelId, detail.agents)} · versão ${detail.pedido.versao}`}
+              />
+              <OrderStatus status={detail.pedido.status} />
+              <OrderFacts detail={detail} />
+              <Note className="note--ink" title={statusLabels[detail.pedido.status]}>
+                Versão {detail.pedido.versao}. A execução exige aprovação da proposta e do cadastro
+                atuais. Contratos executados preservam suas condições.
+              </Note>
+              <ErrorMessage
+                error={mutation.error}
+                onReload={mutation.error?.status === 409 ? resource.reload : undefined}
+              />
+              <OrderActions detail={detail} />
+              {permissions(account, detail).edit && detail.pedido.status !== 'EM_ANALISE' && (
+                <Button
+                  variant="secondary"
+                  disabled={mutation.pending}
+                  onClick={() =>
+                    mutation.run(async () => {
+                      const updated = await api.resend(id, detail.pedido.versao)
+                      resource.replace({ ...updated, agents: detail.agents })
+                      notify('Pedido reenviado para análise.')
+                    })
+                  }
+                >
+                  {mutation.pending ? 'Reenviando…' : 'Reenviar para análise'}
                 </Button>
-                <Button variant="danger" to="/pedidos/AL-001/cancelar">
-                  Cancelar pedido
+              )}
+            </Card>
+            <SidePanel title="Histórico do pedido">
+              <p>
+                {detail.pareceres.length
+                  ? 'Pareceres registrados para este pedido.'
+                  : 'Nenhum parecer financeiro registrado.'}
+              </p>
+              {detail.pareceres.map((decision) => (
+                <Note
+                  key={decision.id}
+                  title={`${decision.decisao === 'APROVADO' ? 'Aprovado' : 'Reprovado'} · versão ${decision.versaoPedido}`}
+                >
+                  <p>{decision.justificativa}</p>
+                  <DecisionFacts decision={decision} vehicle={detail.automovel} />
+                  <small>
+                    {formatTime(decision.emitidoEm)} · Cadastro {decision.versaoCadastro}
+                  </small>
+                </Note>
+              ))}
+              {detail.contrato && (
+                <Button to={`/contratos/${detail.contrato.id}`} variant="secondary">
+                  Consultar contrato
                 </Button>
-              </>
-            )}
-            <Button variant="secondary" to="/pedidos">
-              Voltar
-            </Button>
-          </ActionRow>
-        </Card>
-        <SidePanel title="Histórico do pedido" className="history-side">
-          <p>Acompanhe o fluxo atual do seu pedido.</p>
-          <h2>Próximos passos</h2>
-          <StepsList
-            active={0}
-            items={[
-              [
-                'Revisão financeira',
-                'Nossa equipe analisa a solicitação e valida as condições do pedido.',
-              ],
-              ['Aprovação', 'O contrato depende de parecer financeiro positivo da versão atual.'],
-              ['Contrato', 'Contrato disponível somente após aprovação da versão atual do pedido.'],
-            ]}
-          />
-        </SidePanel>
-      </Columns>
+              )}
+            </SidePanel>
+          </Columns>
+        )}
+      </ResourceState>
     </PageLayout>
   )
 }
 
 export function CancelOrderPage() {
-  const { state, vehicle, period, days, price, dispatch } = useRental()
+  const { id } = useParams()
+  const { account, notify } = useApp()
+  const resource = useOrder(id)
+  const mutation = useMutation()
   const navigate = useNavigate()
   return (
-    <PageLayout figmaId="4:1380" progress={{ status: state.status }}>
-      <Columns>
-        <Card>
-          <PageHeading
-            title="Cancelar pedido?"
-            description="Revise os dados do pedido antes de confirmar o cancelamento. Esta ação encerra o pedido atual e não pode ser desfeita."
-          />
-          <Alert className="cancel-warning" tone="warning" title="Esta ação encerra o pedido">
-            Após confirmar, o pedido #AL-001 será cancelado e não poderá ser reativado.
-          </Alert>
-          <Note>
-            <div className="request-strip">
-              <p>Pedido #AL-001</p>
-              <p>{state.customer.name}</p>
-              <p>
-                {vehicle.name} {vehicle.year} · {vehicle.plate} · {vehicle.registration}
-              </p>
-              <p>{period}</p>
-              <Badge>Pendente</Badge>
-              <p>{price}</p>
-            </div>
-            <dl className="inline-facts">
-              <div>
-                <dt>Veículo</dt>
-                <dd>
-                  {vehicle.name} {vehicle.year} · {vehicle.plate} · {vehicle.registration}
-                </dd>
-              </div>
-              <div>
-                <dt>Período</dt>
-                <dd>
-                  {period} · {days} dias
-                </dd>
-              </div>
-              <div>
-                <dt>Tipo de locação</dt>
-                <dd>Locação padrão</dd>
-              </div>
-            </dl>
-          </Note>
-          <Note title="O que acontece após confirmar">
-            <StepsList
-              className="steps-list--white"
-              items={[
-                [
-                  'Pedido encerrado',
-                  'O pedido #AL-001 será marcado como cancelado e não poderá ser reativado.',
-                ],
-                [
-                  'Novo pedido necessário',
-                  'Para solicitar outro aluguel após o cancelamento, será necessário criar um novo pedido.',
-                ],
-              ]}
-            />
-          </Note>
-          <ActionRow>
-            <Button to="/pedidos/AL-001" variant="secondary">
-              Manter pedido
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => {
-                dispatch({ type: 'CANCEL' })
-                navigate('/pedidos/AL-001/cancelado')
-              }}
-            >
-              Confirmar cancelamento
-            </Button>
-          </ActionRow>
-        </Card>
-        <SidePanel title={null}>
-          <div className="reservation-count">
-            <h3>
-              Minhas reservas <span className="step-number step-number--active">1</span>
-            </h3>
-            <p>Você tem 1 pedido em análise.</p>
-          </div>
-          <Metadata
-            title="Pedido em análise"
-            items={[
-              ['Pedido', '#AL-001'],
-              ['Cliente', state.customer.name],
-              ['Veículo', vehicle.name],
-              ['Período', '10 a 15 dez 2026'],
-            ]}
-          />
-        </SidePanel>
-      </Columns>
+    <PageLayout
+      figmaId="4:1380"
+      progress={resource.data && { status: resource.data.pedido.status }}
+    >
+      <ResourceState resource={resource}>
+        {(detail) => (
+          <Columns>
+            <Card>
+              <PageHeading
+                title="Cancelar pedido?"
+                description="Revise os dados antes de confirmar. O cancelamento encerra esta solicitação."
+              />
+              <Alert tone="warning" title="Esta ação encerra o pedido">
+                O pedido {detail.pedido.numero} não poderá ser reativado após o cancelamento.
+              </Alert>
+              <OrderFacts detail={detail} />
+              <ErrorMessage
+                error={mutation.error}
+                onReload={mutation.error?.status === 409 ? resource.reload : undefined}
+              />
+              {permissions(account, detail).cancel ? (
+                <ActionRow>
+                  <Button variant="secondary" to={`/pedidos/${id}`}>
+                    Manter pedido
+                  </Button>
+                  <Button
+                    variant="danger"
+                    disabled={mutation.pending}
+                    onClick={() =>
+                      mutation.run(async () => {
+                        await api.cancel(id, detail.pedido.versao)
+                        notify('Cancelamento registrado.')
+                        navigate(`/pedidos/${id}/cancelado`, { replace: true })
+                      })
+                    }
+                  >
+                    {mutation.pending ? 'Cancelando…' : 'Confirmar cancelamento'}
+                  </Button>
+                </ActionRow>
+              ) : (
+                <Note title="Cancelamento indisponível">
+                  O cancelamento exige o cliente titular e um pedido que ainda não esteja encerrado.
+                  <Button to={`/pedidos/${id}`} variant="secondary">
+                    Consultar pedido
+                  </Button>
+                </Note>
+              )}
+            </Card>
+            <SidePanel title="Pedido selecionado">
+              <Metadata
+                title={detail.pedido.numero}
+                items={[
+                  ['Cliente', detail.cliente.nome],
+                  ['Veículo', vehicleName(detail.automovel)],
+                  ['Estado', statusLabels[detail.pedido.status]],
+                  ['Total proposto', formatMoney(detail.pedido.valorTotal)],
+                ]}
+              />
+            </SidePanel>
+          </Columns>
+        )}
+      </ResourceState>
     </PageLayout>
   )
 }
 
 export function CancelledOrderPage() {
-  const { state, vehicle, period, price } = useRental()
-  return (
-    <PageLayout figmaId="4:1409" progress={{ status: 'CANCELADO' }}>
-      <Columns>
-        <Card>
-          <PageHeading
-            title="Pedido cancelado"
-            description="O pedido #AL-001 foi cancelado e não pode ser contratado. O histórico permanece disponível para acompanhamento."
-          />
-          <Alert tone="error" title="CANCELADO · Confirmação registrada">
-            O pedido permanece no seu histórico. Nenhum contrato será executado a partir dele.
-          </Alert>
-          <div className="field-grid">
-            <Field label="Pedido" value="#AL-001" readOnly />
-            <Field label="Cliente" value={state.customer.name} readOnly />
-            <Field
-              label="Veículo"
-              value={`${vehicle.name} ${vehicle.year} ${vehicle.plate}`}
-              readOnly
-            />
-            <Field label="Matrícula" value={vehicle.registration} readOnly />
-            <Field label="Período" value={period.replace(' a ', '–')} icon="calendar" readOnly />
-            <Field label="Locação" value="Locação padrão" readOnly />
-          </div>
-          <Note title="Resumo financeiro">
-            <p>Total proposto: {price}</p>
-            <p>
-              Este pedido permanece apenas como registro histórico e não permite execução de
-              contrato.
-            </p>
-          </Note>
-          <ActionRow>
-            <Button to="/pedidos">Meus pedidos</Button>
-            <Button variant="secondary" to="/veiculos" iconAfter="arrowUpRight">
-              Solicitar novo pedido
-            </Button>
-          </ActionRow>
-        </Card>
-        <SidePanel
-          description="Após o cancelamento, você pode acompanhar o histórico do pedido e solicitar uma nova locação."
-          steps={[
-            ['Conta / Perfil', 'Consulte os dados de Ana Silva.'],
-            ['Meus pedidos', 'Consulte o registro histórico do pedido cancelado.'],
-            ['Novo pedido', 'Inicie outra solicitação escolhendo veículo e período.'],
-            ['Acompanhamento', 'Consulte o histórico do pedido e acompanhe novas solicitações.'],
-          ]}
-        />
-      </Columns>
-    </PageLayout>
-  )
+  return <OrderDetailPage cancelled />
 }

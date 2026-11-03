@@ -209,6 +209,8 @@ Em conflito de versão, recarregue os dados e apresente as mudanças ao usuário
 
 ## Configuração do navegador
 
+O [frontend React](../frontend/README.md) usa `src/api/client.js` como consumidor deste contrato: sessão por cookie, renovação de CSRF após login, paginação, DTOs e versões esperadas. `npm run dev:all`, executado na pasta `frontend`, inicia Vite e Spring Boot; o proxy do Vite encaminha `/api` para `http://localhost:8080`. Em produção, esse encaminhamento deve ser configurado no servidor de hospedagem.
+
 `ALLOCAR_ALLOWED_ORIGINS` aceita uma lista de origens separadas por vírgula. O padrão permite `http://localhost:5173` e `http://127.0.0.1:5173`, com cookies. Evite misturar esses dois hosts entre API e frontend. CORS não concede acesso a dados sem autenticação.
 
 Em HTTPS, configure `ALLOCAR_COOKIE_SECURE=true`. O cookie usa `SameSite=Lax`; hospede frontend e API no mesmo site ou utilize um proxy da aplicação. Sessões ficam no servidor e são encerradas quando a instância é reiniciada; múltiplas instâncias exigem armazenamento compartilhado de sessão ou afinidade.

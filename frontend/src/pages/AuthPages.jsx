@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import PageLayout, {
   ActionRow,
   Columns,
@@ -9,9 +9,14 @@ import PageLayout, {
 import Card, { PageHeading } from '../components/ui/Card.jsx'
 import Button, { TextLink } from '../components/ui/Button.jsx'
 import Field from '../components/ui/Field.jsx'
-import { Alert, Badge, Note } from '../components/ui/Feedback.jsx'
+import AddressFields from '../components/ui/AddressFields.jsx'
+import { Badge, Note } from '../components/ui/Feedback.jsx'
+import { ErrorMessage } from '../components/ui/ResourceState.jsx'
 import Icon from '../components/ui/Icon.jsx'
-import { usePrototype } from '../state/prototype-store.js'
+import { useApp } from '../state/app-context.js'
+import useMutation from '../state/useMutation.js'
+import { api } from '../api/client.js'
+import { emptyAddress } from '../data/rental.js'
 
 function AccessIntro() {
   return (
@@ -32,92 +37,78 @@ function AccessIntro() {
   )
 }
 
-export function LoginPage({ error = false }) {
-  const { dispatch } = usePrototype()
+export function LoginPage() {
+  const { login } = useApp()
+  const mutation = useMutation()
   const navigate = useNavigate()
-  const [usuario, setUsuario] = useState('ana.silva')
-  const [senha, setSenha] = useState('allocar2026')
-  function enter(profile) {
-    if (!usuario.trim() || !senha.trim()) {
-      navigate('/entrar/erro')
-      return
-    }
-    dispatch({ type: 'LOGIN', profile })
-    navigate(profile === 'CLIENTE' ? '/pedidos' : '/agente')
+  const [params] = useSearchParams()
+  const [usuario, setUsuario] = useState('')
+  const [senha, setSenha] = useState('')
+  async function submit(event) {
+    event.preventDefault()
+    await mutation.run(async () => {
+      const account = await login({ usuario, senha })
+      const destination = params.get('destino')
+      navigate(
+        destination?.startsWith('/') &&
+          !destination.startsWith('//') &&
+          !destination.startsWith('/entrar')
+          ? destination
+          : account.tipo === 'CLIENTE'
+            ? '/pedidos'
+            : '/agente',
+        { replace: true },
+      )
+    })
   }
   return (
     <PageLayout
       kind="public"
-      className={`access-page ${error ? 'access-page--error' : ''}`}
-      figmaId={error ? '4:1595' : '4:1017'}
+      className="access-page"
+      figmaId={mutation.error ? '4:1595' : '4:1017'}
     >
       <div className="access-layout">
         <AccessIntro />
-        <Card
-          className="access-form"
-          as="form"
-          onSubmit={(event) => {
-            event.preventDefault()
-            enter('CLIENTE')
-          }}
-        >
+        <Card className="access-form" as="form" onSubmit={submit}>
           <PageHeading
-            title={error ? 'Não foi possível entrar' : 'Acesse sua conta'}
-            description={
-              error
-                ? 'Confira o usuário e a senha e tente novamente.'
-                : 'Use seu usuário e senha para acompanhar pedidos, contratos e documentos da sua reserva.'
-            }
+            title={mutation.error ? 'Não foi possível entrar' : 'Acesse sua conta'}
+            description="Entre com seu usuário e senha. As ações disponíveis dependem do perfil da sua conta."
           />
           <div className="stack stack--tight">
             <Field
               label="Usuário"
-              helper="Informe seu usuário de acesso."
               name="usuario"
-              autoComplete="username"
               value={usuario}
               onChange={(event) => setUsuario(event.target.value)}
+              autoComplete="username"
+              helper="Informe seu usuário de acesso."
               required
+              maxLength={120}
             />
             <Field
               label="Senha"
-              helper={error ? 'Informe sua senha de acesso.' : 'Digite sua senha de acesso.'}
               name="senha"
               type="password"
-              autoComplete="current-password"
               value={senha}
               onChange={(event) => setSenha(event.target.value)}
+              autoComplete="current-password"
+              helper="Digite sua senha de acesso."
               required
+              maxLength={256}
             />
           </div>
-          {error && (
-            <Alert tone="error" icon="loginError" title="Usuário ou senha inválidos.">
-              Verifique se o usuário e a senha estão corretos e tente novamente.
-            </Alert>
-          )}
+          <ErrorMessage error={mutation.error} />
           <ActionRow className="access-actions">
-            <Button type="submit">{error ? 'Tentar novamente' : 'Entrar como cliente'}</Button>
-            <Button variant="secondary" icon="userButton" onClick={() => enter('BANCO')}>
-              Entrar como agente
+            <Button type="submit" disabled={mutation.pending}>
+              {mutation.pending ? 'Entrando…' : 'Entrar'}
             </Button>
-            {!error && (
-              <Button variant="secondary" to="/entrar/erro">
-                Simular credenciais inválidas
-              </Button>
-            )}
+            <Button to="/" variant="secondary">
+              Voltar ao início
+            </Button>
           </ActionRow>
-          {error ? (
-            <Card className="create-account-card">
-              <TextLink className="text-link--accent" to="/cadastro" iconAfter="arrowUpRight">
-                Criar conta
-              </TextLink>
-              <small>Ainda não tem conta? Cadastre-se como cliente.</small>
-            </Card>
-          ) : (
-            <TextLink className="text-link--accent" to="/cadastro" iconAfter="arrowUpRight">
-              Criar conta
-            </TextLink>
-          )}
+          <TextLink className="text-link--accent" to="/cadastro" iconAfter="arrowUpRight">
+            Criar conta
+          </TextLink>
         </Card>
       </div>
     </PageLayout>
@@ -125,91 +116,117 @@ export function LoginPage({ error = false }) {
 }
 
 export function RegisterPage() {
-  const { dispatch } = usePrototype()
+  const { login, notify } = useApp()
   const navigate = useNavigate()
-  const [error, setError] = useState('')
-  function submit(event) {
+  const mutation = useMutation()
+  const [address, setAddress] = useState(emptyAddress)
+  const [confirmationError, setConfirmationError] = useState('')
+  async function submit(event) {
     event.preventDefault()
     const values = Object.fromEntries(new FormData(event.currentTarget))
     if (values.senha !== values.confirmarSenha) {
-      setError('As senhas precisam ser iguais.')
+      setConfirmationError('As senhas precisam ser iguais.')
       return
     }
-    dispatch({ type: 'LOGIN', profile: 'CLIENTE' })
-    navigate('/meu-cadastro')
+    setConfirmationError('')
+    await mutation.run(async () => {
+      await api.registerClient({
+        usuario: values.usuario,
+        senha: values.senha,
+        nome: values.nome,
+        rg: values.rg,
+        cpf: values.cpf,
+        profissao: values.profissao,
+        endereco: address,
+        vinculos: [],
+      })
+      notify('Conta criada. Informe seus vínculos e rendimentos no cadastro.')
+      try {
+        await login({ usuario: values.usuario, senha: values.senha })
+      } catch {
+        navigate('/entrar', { replace: true })
+        notify('Conta criada. Entre com suas credenciais para continuar.')
+        return
+      }
+      navigate('/meu-cadastro', { replace: true })
+    })
   }
   return (
     <PageLayout kind="public" figmaId="4:1071">
       <Columns>
-        <Card className="card--form" as="form" onSubmit={submit}>
+        <Card as="form" className="card--form" onSubmit={submit}>
           <PageHeading
             title="Crie sua conta"
-            description="Preencha seus dados para acessar pedidos, contratos e documentos da sua reserva."
+            description="Preencha sua identificação e endereço para solicitar e acompanhar aluguéis."
           />
           <div className="field-grid">
             <Field
               label="Nome completo"
               name="nome"
-              defaultValue="Ana Silva"
-              helper="Informe seu nome completo."
               autoComplete="name"
               required
+              maxLength={160}
+              error={mutation.error?.campos.nome}
             />
             <Field
               label="CPF"
               name="cpf"
-              defaultValue="000.000.000-00"
-              helper="Informe seu CPF."
               required
+              maxLength={30}
+              error={mutation.error?.campos.cpf}
             />
-            <Field
-              label="RG"
-              name="rg"
-              defaultValue="00.000.000-0"
-              helper="Informe seu RG."
-              required
-            />
+            <Field label="RG" name="rg" required maxLength={30} error={mutation.error?.campos.rg} />
+            <Field label="Profissão" name="profissao" required maxLength={120} />
             <Field
               label="Usuário"
               name="usuario"
-              defaultValue="ana.silva"
-              helper="Nome de usuário para acessar sua conta."
               autoComplete="username"
+              minLength={3}
+              maxLength={120}
+              pattern="[a-zA-Z0-9._-]+"
               required
+              helper="Letras, números, ponto, sublinhado ou hífen."
+              error={mutation.error?.campos.usuario}
             />
             <Field
               label="Senha"
               name="senha"
               type="password"
-              defaultValue="allocar2026"
-              helper="Defina sua senha de acesso."
               autoComplete="new-password"
+              minLength={12}
+              maxLength={256}
               required
+              helper="Use pelo menos 12 caracteres."
             />
             <Field
               label="Confirmar senha"
               name="confirmarSenha"
               type="password"
-              defaultValue="allocar2026"
-              helper="Repita a senha informada acima."
               autoComplete="new-password"
+              minLength={12}
+              maxLength={256}
               required
-              error={error}
+              error={confirmationError}
             />
           </div>
+          <Note title="Endereço">
+            <AddressFields value={address} onChange={setAddress} errors={mutation.error?.campos} />
+          </Note>
+          <ErrorMessage error={mutation.error} />
           <ActionRow>
-            <Button type="submit">Criar conta</Button>
+            <Button type="submit" disabled={mutation.pending}>
+              {mutation.pending ? 'Criando conta…' : 'Criar conta'}
+            </Button>
             <Button variant="secondary" to="/entrar">
               Voltar
             </Button>
           </ActionRow>
-          <Note title="Regra institucional">
-            Empresa ou banco exige nome, CNPJ, endereço e credenciais. Perfil institucional sujeito
-            à validação.
+          <Note title="Emprego e renda">
+            Após entrar, você pode registrar até três vínculos empregatícios e seus rendimentos.
           </Note>
           <TextLink to="/cadastro/instituicao">Cadastrar empresa ou banco</TextLink>
         </Card>
-        <SidePanel description="Após o cadastro, você acessa seu perfil, acompanha pedidos e segue o fluxo até a contratação.">
+        <SidePanel description="Mantenha seus dados atualizados e acompanhe o pedido até a contratação.">
           <StepsList />
         </SidePanel>
       </Columns>
@@ -218,103 +235,109 @@ export function RegisterPage() {
 }
 
 export function InstitutionalRegisterPage() {
-  const [type, setType] = useState('Empresa')
-  const { dispatch } = usePrototype()
-  const navigate = useNavigate()
+  const [type, setType] = useState('EMPRESA')
+  const [address, setAddress] = useState(emptyAddress)
+  const [created, setCreated] = useState(null)
+  const mutation = useMutation()
+  async function submit(event) {
+    event.preventDefault()
+    const values = Object.fromEntries(new FormData(event.currentTarget))
+    await mutation.run(async () =>
+      setCreated(
+        await api.registerAgent({
+          nome: values.nome,
+          cnpj: values.cnpj,
+          usuario: values.usuario,
+          senha: values.senha,
+          tipo: type,
+          endereco: address,
+        }),
+      ),
+    )
+  }
   return (
     <PageLayout kind="public" figmaId="92:2707">
       <PageHeading
-        className="page-heading--spaced"
         title="Sua instituição na AlloCar."
         description="Cadastre a empresa ou o banco para atuar na análise e gestão dos aluguéis."
       />
-      <Columns>
-        <Card
-          as="form"
-          onSubmit={(event) => {
-            event.preventDefault()
-            dispatch({ type: 'TOAST', message: 'Cadastro institucional recebido para validação.' })
-            navigate('/entrar')
-          }}
-        >
-          <div className="field-grid">
-            <Field
-              label="Nome / razão social"
-              name="nome"
-              defaultValue="Hyper Locadora"
-              icon={null}
-              required
-            />
-            <Field
-              label="CNPJ"
-              name="cnpj"
-              defaultValue="12.345.678/0001-90"
-              icon={null}
-              required
-            />
-          </div>
-          <Field
-            label="Endereço"
-            name="endereco"
-            defaultValue="Rua das Flores, 120 · São Paulo / SP"
-            icon={null}
-            required
+      {created ? (
+        <Card>
+          <PageHeading
+            title="Cadastro institucional recebido"
+            description={`${created.usuario} · ${created.tipo === 'BANCO' ? 'Banco' : 'Empresa'}`}
           />
-          <div className="type-selector" role="group" aria-label="Selecionar tipo de agente">
-            <Button
-              variant="secondary"
-              aria-pressed={type === 'Empresa'}
-              onClick={() => setType('Empresa')}
-            >
-              Empresa
-            </Button>
-            <Button
-              variant="secondary"
-              aria-pressed={type === 'Banco'}
-              onClick={() => setType('Banco')}
-            >
-              Banco
-            </Button>
-          </div>
-          <Field
-            label="Tipo de agente"
-            value={type}
-            readOnly
-            icon={null}
-            helper="Empresas e bancos realizam análise; somente o banco concede crédito."
-          />
-          <div className="field-grid">
-            <Field
-              label="Usuário"
-              name="usuario"
-              defaultValue="hyper.agente"
-              icon={null}
-              autoComplete="username"
-              required
-            />
-            <Field
-              label="Senha"
-              name="senha"
-              type="password"
-              defaultValue="allocar2026"
-              autoComplete="new-password"
-              required
-            />
-          </div>
-          <Button type="submit" className="institution-submit">
-            Concluir cadastro
+          <Note title="Validação necessária">
+            Sua instituição foi cadastrada e aguarda validação administrativa. O acesso será
+            liberado após essa validação.
+          </Note>
+          <Button to="/entrar" className="institution-submit">
+            Ir para o acesso
           </Button>
         </Card>
-        <SidePanel title="Empresa ou banco" className="side-panel--spaced">
-          <p>
-            Os agentes podem modificar pedidos e emitir parecer financeiro. Bancos também concedem
-            crédito opcional vinculado ao aluguel.
-          </p>
-          <Button variant="secondary" to="/entrar">
-            Já tenho cadastro
-          </Button>
-        </SidePanel>
-      </Columns>
+      ) : (
+        <Columns>
+          <Card as="form" onSubmit={submit}>
+            <div className="field-grid">
+              <Field label="Nome / razão social" name="nome" required maxLength={160} />
+              <Field label="CNPJ" name="cnpj" required maxLength={30} />
+            </div>
+            <AddressFields value={address} onChange={setAddress} errors={mutation.error?.campos} />
+            <div className="type-selector" role="group" aria-label="Selecionar tipo de agente">
+              {[
+                ['EMPRESA', 'Empresa'],
+                ['BANCO', 'Banco'],
+              ].map(([value, label]) => (
+                <Button
+                  key={value}
+                  variant="secondary"
+                  aria-pressed={type === value}
+                  onClick={() => setType(value)}
+                >
+                  {label}
+                </Button>
+              ))}
+            </div>
+            <div className="field-grid">
+              <Field
+                label="Usuário"
+                name="usuario"
+                autoComplete="username"
+                required
+                minLength={3}
+                maxLength={120}
+                pattern="[a-zA-Z0-9._-]+"
+              />
+              <Field
+                label="Senha"
+                type="password"
+                name="senha"
+                autoComplete="new-password"
+                required
+                minLength={12}
+                maxLength={256}
+                helper="Use pelo menos 12 caracteres."
+              />
+            </div>
+            <ErrorMessage error={mutation.error} />
+            <Button className="institution-submit" type="submit" disabled={mutation.pending}>
+              {mutation.pending ? 'Enviando cadastro…' : 'Concluir cadastro'}
+            </Button>
+          </Card>
+          <SidePanel title="Empresa ou banco">
+            <p>
+              Agentes analisam e modificam pedidos de seu escopo. Somente bancos concedem e associam
+              crédito.
+            </p>
+            <Note title="Ativação institucional">
+              O cadastro não permite ativar a própria conta. Aguarde a validação administrativa.
+            </Note>
+            <Button variant="secondary" to="/entrar">
+              Já tenho cadastro
+            </Button>
+          </SidePanel>
+        </Columns>
+      )}
     </PageLayout>
   )
 }

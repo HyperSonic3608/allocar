@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router'
-import PrototypeProvider from './state/PrototypeProvider.jsx'
-import PrototypeOverlays from './components/PrototypeOverlays.jsx'
+import AppProvider from './state/AppProvider.jsx'
+import AppOverlays from './components/AppOverlays.jsx'
+import RequireSession from './components/RequireSession.jsx'
 import LandingPage from './pages/LandingPage.jsx'
 import { InstitutionalRegisterPage, LoginPage, RegisterPage } from './pages/AuthPages.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
-import { EmptySearchPage, VehicleDetailPage, VehicleSearchPage } from './pages/VehiclePages.jsx'
+import { VehicleDetailPage, VehicleSearchPage } from './pages/VehiclePages.jsx'
 import {
   CancelledOrderPage,
   CancelOrderPage,
@@ -25,6 +26,7 @@ import {
   ApprovalPage,
   ContractDetailPage,
   CreditAssociationPage,
+  CreditRegistrationPage,
   CreditReceiptPage,
   CreditsPage,
   ExecutedContractPage,
@@ -44,7 +46,7 @@ function RouteEffects() {
 export default function App() {
   return (
     <BrowserRouter>
-      <PrototypeProvider>
+      <AppProvider>
         <a className="skip-link" href="#conteudo">
           Ir para o conteúdo
         </a>
@@ -52,36 +54,46 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/entrar" element={<LoginPage />} />
-          <Route path="/entrar/erro" element={<LoginPage error />} />
+          <Route path="/entrar/erro" element={<Navigate to="/entrar" replace />} />
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/cadastro/instituicao" element={<InstitutionalRegisterPage />} />
-          <Route path="/meu-cadastro" element={<ProfilePage />} />
-          <Route path="/veiculos" element={<VehicleSearchPage />} />
-          <Route path="/veiculos/sem-resultados" element={<EmptySearchPage />} />
-          <Route path="/veiculos/:id" element={<VehicleDetailPage />} />
-          <Route path="/pedidos" element={<MyOrdersPage />} />
-          <Route path="/pedidos/novo" element={<OrderFormPage />} />
-          <Route path="/pedidos/revisao" element={<OrderReviewPage />} />
-          <Route path="/pedidos/AL-001" element={<OrderDetailPage />} />
-          <Route path="/pedidos/AL-001/alterar" element={<OrderFormPage editing />} />
-          <Route path="/pedidos/AL-001/cancelar" element={<CancelOrderPage />} />
-          <Route path="/pedidos/AL-001/cancelado" element={<CancelledOrderPage />} />
-          <Route path="/pedidos/AL-001/enviado" element={<OrderSentPage />} />
-          <Route path="/pedidos/AL-001/reprovado" element={<RejectedOrderPage />} />
-          <Route path="/agente" element={<AgentDashboardPage />} />
-          <Route path="/agente/pedidos/AL-001/analise" element={<AnalysisPage />} />
-          <Route path="/agente/pedidos/AL-001/aprovado" element={<ApprovalPage />} />
-          <Route path="/agente/historico" element={<DecisionHistoryPage />} />
-          <Route path="/agente/creditos" element={<CreditsPage />} />
-          <Route path="/agente/creditos/associar" element={<CreditAssociationPage />} />
-          <Route path="/agente/creditos/CR-001/associado" element={<CreditReceiptPage />} />
-          <Route path="/contratos" element={<MyContractsPage />} />
-          <Route path="/contratos/CT-001" element={<ContractDetailPage />} />
-          <Route path="/contratos/CT-001/executado" element={<ExecutedContractPage />} />
+          <Route element={<RequireSession />}>
+            <Route path="/veiculos" element={<VehicleSearchPage />} />
+            <Route path="/veiculos/:id" element={<VehicleDetailPage />} />
+            <Route path="/pedidos" element={<MyOrdersPage />} />
+            <Route path="/pedidos/:id" element={<OrderDetailPage />} />
+            <Route path="/pedidos/:id/alterar" element={<OrderFormPage editing />} />
+            <Route path="/pedidos/:id/cancelado" element={<CancelledOrderPage />} />
+            <Route path="/pedidos/:id/enviado" element={<OrderSentPage />} />
+            <Route path="/pedidos/:id/reprovado" element={<RejectedOrderPage />} />
+            <Route path="/contratos" element={<MyContractsPage />} />
+            <Route path="/contratos/:id" element={<ContractDetailPage />} />
+            <Route path="/contratos/:id/executado" element={<ExecutedContractPage />} />
+            <Route path="/creditos/:id" element={<CreditReceiptPage />} />
+          </Route>
+          <Route element={<RequireSession roles={['CLIENTE']} />}>
+            <Route path="/meu-cadastro" element={<ProfilePage />} />
+            <Route path="/pedidos/novo" element={<OrderFormPage />} />
+            <Route path="/pedidos/revisao" element={<OrderReviewPage />} />
+            <Route path="/pedidos/:id/cancelar" element={<CancelOrderPage />} />
+          </Route>
+          <Route element={<RequireSession roles={['EMPRESA', 'BANCO']} />}>
+            <Route path="/agente" element={<AgentDashboardPage />} />
+            <Route path="/agente/pedidos/:id/analise" element={<AnalysisPage />} />
+            <Route path="/agente/pedidos/:id/aprovado" element={<ApprovalPage />} />
+            <Route path="/agente/historico" element={<DecisionHistoryPage />} />
+          </Route>
+          <Route element={<RequireSession roles={['BANCO']} />}>
+            <Route path="/agente/creditos" element={<CreditsPage />} />
+            <Route path="/agente/creditos/novo" element={<CreditRegistrationPage />} />
+            <Route path="/agente/creditos/associar" element={<CreditAssociationPage />} />
+            <Route path="/agente/creditos/:id" element={<CreditReceiptPage />} />
+            <Route path="/agente/creditos/:id/associado" element={<CreditReceiptPage />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        <PrototypeOverlays />
-      </PrototypeProvider>
+        <AppOverlays />
+      </AppProvider>
     </BrowserRouter>
   )
 }

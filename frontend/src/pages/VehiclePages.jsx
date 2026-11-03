@@ -1,67 +1,86 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
+import { api, all } from '../api/client.js'
+import { useApp } from '../state/app-context.js'
+import useResource from '../state/useResource.js'
 import PageLayout, { Columns, SidePanel, Stack } from '../components/layout/PageLayout.jsx'
 import Card, { Metadata, PageHeading } from '../components/ui/Card.jsx'
 import Button from '../components/ui/Button.jsx'
 import Field from '../components/ui/Field.jsx'
 import VehicleCard, { VehicleImage } from '../components/rental/VehicleCard.jsx'
-import { vehicles, rentalDays } from '../data/demo.js'
-import { usePrototype } from '../state/prototype-store.js'
+import ResourceState, { Pagination } from '../components/ui/ResourceState.jsx'
+import { ownerName, rentalDays, vehicleName } from '../data/rental.js'
 
 export function VehicleSearchPage() {
-  const { state, dispatch } = usePrototype()
+  const { draft, setDraft } = useApp()
   const [params, setParams] = useSearchParams()
-  const brand = params.get('marca') || ''
-  const [start, setStart] = useState(state.start)
-  const [end, setEnd] = useState(state.end)
-  const navigate = useNavigate()
-  const filtered = vehicles.filter((vehicle) => !brand || vehicle.brand === brand)
+  const marca = params.get('marca') || ''
+  const ano = params.get('ano') || ''
+  const page = Number(params.get('pagina')) || 0
+  const [start, setStart] = useState(draft.start)
+  const [end, setEnd] = useState(draft.end)
+  const resource = useResource(
+    useCallback(
+      async (signal) => {
+        const [catalog, choices] = await Promise.all([
+          api.vehicles({ marca, ano, pagina: page, tamanho: 6 }, signal),
+          all('/automoveis', { signal }),
+        ])
+        return {
+          catalog,
+          brands: [...new Set(choices.map((vehicle) => vehicle.marca))].sort(),
+          years: [...new Set(choices.map((vehicle) => vehicle.ano))].sort((a, b) => b - a),
+        }
+      },
+      [marca, ano, page],
+    ),
+  )
   function filter(key, value) {
     const next = new URLSearchParams(params)
-    if (next.get(key) === value) next.delete(key)
+    next.delete('pagina')
+    if (next.get(key) === String(value)) next.delete(key)
     else next.set(key, value)
     setParams(next)
   }
+  function updatePeriod(event) {
+    event.preventDefault()
+    const input = event.currentTarget.querySelector('[name=fim]')
+    if (end <= start) {
+      input.setCustomValidity('O término deve ser posterior ao início.')
+      input.reportValidity()
+      return
+    }
+    setDraft((previous) => ({ ...previous, start, end }))
+    resource.reload()
+  }
   return (
     <PageLayout
-      figmaId="92:2697"
+      figmaId={resource.data?.catalog.total === 0 ? '92:2705' : '92:2697'}
       progress={{ flow: 'request', current: 0 }}
-      className="vehicle-search-page"
     >
       <PageHeading
         eyebrow="ALUGAR UM CARRO · 1 DE 4"
-        title="Encontre o carro para o seu próximo caminho."
+        title="Encontre o carro para o seu próximo caminho"
         description="Escolha um automóvel e confira os detalhes antes de solicitar o aluguel."
       />
-      <Card
-        as="form"
-        className="search-period"
-        onSubmit={(event) => {
-          event.preventDefault()
-          if (end <= start) {
-            event.currentTarget
-              .querySelector('[name=fim]')
-              .setCustomValidity('A data final deve ser posterior à inicial.')
-            event.currentTarget.reportValidity()
-            return
-          }
-          dispatch({ type: 'DRAFT', values: { start, end } })
-        }}
-      >
+      <Card as="form" className="search-period" onSubmit={updatePeriod}>
         <Field
           label="Início do aluguel"
           type="date"
-          icon={null}
           name="inicio"
+          icon={null}
           value={start}
-          onChange={(event) => setStart(event.target.value)}
+          onChange={(event) => {
+            event.target.form?.querySelector('[name=fim]')?.setCustomValidity('')
+            setStart(event.target.value)
+          }}
           required
         />
         <Field
           label="Término do aluguel"
           type="date"
-          icon={null}
           name="fim"
+          icon={null}
           value={end}
           onChange={(event) => {
             event.target.setCustomValidity('')
@@ -70,147 +89,164 @@ export function VehicleSearchPage() {
           required
         />
         <p className="muted">
-          {rentalDays(start, end)} dias de aluguel
+          {rentalDays(start, end) > 0
+            ? `${rentalDays(start, end)} dias de aluguel`
+            : 'Informe as datas'}
           <br />
-          Período demonstrativo
+          Período desejado
         </p>
         <Button type="submit">Atualizar busca</Button>
       </Card>
-      <div className="search-layout">
-        <Card className="search-filters">
-          <h2>Refine sua busca</h2>
-          <fieldset className="filter-group">
-            <legend>Marca</legend>
-            {['Chevrolet', 'Volkswagen'].map((name) => (
-              <Button
-                key={name}
-                variant="secondary"
-                aria-pressed={brand === name}
-                className={brand === name ? 'filter-selected' : ''}
-                onClick={() => filter('marca', name)}
-              >
-                {name}
+      <ResourceState resource={resource}>
+        {({ catalog, brands, years }) => (
+          <div className="search-layout">
+            <Card className="search-filters">
+              <h2>Refine sua busca</h2>
+              <fieldset className="filter-group">
+                <legend>Marca</legend>
+                {brands.map((name) => (
+                  <Button
+                    key={name}
+                    variant="secondary"
+                    aria-pressed={marca === name}
+                    onClick={() => filter('marca', name)}
+                  >
+                    {name}
+                  </Button>
+                ))}
+              </fieldset>
+              <fieldset className="filter-group">
+                <legend>Ano do automóvel</legend>
+                {[...new Set([...years, (years[0] || new Date().getFullYear()) + 1])].map(
+                  (year) => (
+                    <Button
+                      key={year}
+                      variant="secondary"
+                      aria-pressed={ano === String(year)}
+                      onClick={() => filter('ano', year)}
+                    >
+                      {year}
+                    </Button>
+                  ),
+                )}
+              </fieldset>
+              <Button variant="secondary" onClick={() => setParams({})}>
+                Limpar filtros
               </Button>
-            ))}
-          </fieldset>
-          <fieldset className="filter-group">
-            <legend>Ano do automóvel</legend>
-            <Button
-              variant="secondary"
-              onClick={() => filter('ano', '2025')}
-              aria-pressed={params.get('ano') === '2025'}
-            >
-              2025
-            </Button>
-            <Button variant="secondary" onClick={() => navigate('/veiculos/sem-resultados')}>
-              2026 · sem resultados
-            </Button>
-          </fieldset>
-          <Button variant="secondary" onClick={() => setParams({})}>
-            Limpar filtros
-          </Button>
-        </Card>
-        <Stack>
-          <div className="search-results-heading">
-            <h2>
-              {filtered.length} automóve{filtered.length === 1 ? 'l disponível' : 'is disponíveis'}{' '}
-              para solicitar
-            </h2>
-            <p className="muted">Marca, modelo, ano e identificação informados antes do pedido.</p>
+            </Card>
+            <Stack>
+              <div className="search-results-heading">
+                <h2>
+                  {catalog.total} automóve{catalog.total === 1 ? 'l no catálogo' : 'is no catálogo'}
+                </h2>
+              </div>
+              {catalog.total ? (
+                <>
+                  <div className="vehicle-grid">
+                    {catalog.itens.map((vehicle) => (
+                      <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                    ))}
+                  </div>
+                  <Pagination
+                    page={catalog.pagina}
+                    size={catalog.tamanho}
+                    total={catalog.total}
+                    onChange={(pagina) => {
+                      const next = new URLSearchParams(params)
+                      next.set('pagina', pagina)
+                      setParams(next)
+                    }}
+                  />
+                </>
+              ) : (
+                <Card>
+                  <h2 className="large-title">Nenhum automóvel para estes filtros.</h2>
+                  <p>Tente outra marca ou outro ano para consultar o catálogo.</p>
+                  <Button onClick={() => setParams({})}>Limpar filtros</Button>
+                </Card>
+              )}
+            </Stack>
           </div>
-          <div className="vehicle-grid">
-            {filtered.map((vehicle) => (
-              <VehicleCard
-                key={vehicle.id}
-                vehicle={vehicle}
-                days={rentalDays(state.start, state.end)}
-              />
-            ))}
-          </div>
-        </Stack>
-      </div>
+        )}
+      </ResourceState>
     </PageLayout>
   )
 }
 
 export function VehicleDetailPage() {
   const { id } = useParams()
-  const { dispatch } = usePrototype()
+  const { account, setDraft } = useApp()
   const navigate = useNavigate()
-  const vehicle = vehicles.find((item) => item.id === id) || vehicles[0]
+  const resource = useResource(
+    useCallback(
+      async (signal) => {
+        const [vehicle, agents] = await Promise.all([api.vehicle(id, signal), api.agents(signal)])
+        return { vehicle, agents }
+      },
+      [id],
+    ),
+  )
   return (
     <PageLayout figmaId="92:2698" progress={{ flow: 'request', current: 0 }}>
       <PageHeading
         eyebrow="AUTOMÓVEL · 1 DE 4"
-        title="Conheça o automóvel escolhido."
+        title="Conheça o automóvel escolhido"
         description="Consulte a identificação e siga para o período e o tipo de contrato."
       />
-      <Columns>
-        <Card>
-          <VehicleImage vehicle={vehicle} className="vehicle-detail-photo" />
-          <h2 className="large-title">{vehicle.name}</h2>
-          <p className="muted">
-            {vehicle.year} · {vehicle.plate} · {vehicle.registration}
-          </p>
-          <Metadata
-            title="Identificação do automóvel"
-            items={[
-              ['Marca', vehicle.brand],
-              ['Modelo', vehicle.model],
-              ['Ano', vehicle.year],
-              ['Matrícula / placa', `${vehicle.registration} · ${vehicle.plate}`],
-            ]}
-          />
-        </Card>
-        <SidePanel title="Seu próximo passo" className="side-panel--spaced">
-          <p>Informe o período e confira o contrato. O envio inicia a análise financeira.</p>
-          <Metadata
-            title="Propriedade"
-            items={[
-              ['Proprietário', 'Hyper Locadora'],
-              ['Tipo', 'Empresa agente'],
-              ['Diária ilustrativa', 'R$ 250,00'],
-              ['Período de referência', '5 dias'],
-            ]}
-          />
-          <Button
-            onClick={() => {
-              dispatch({ type: 'VEHICLE', id: vehicle.id })
-              navigate('/pedidos/novo')
-            }}
-          >
-            Selecionar automóvel
-          </Button>
-          <Button to="/veiculos" variant="secondary">
-            Voltar à busca
-          </Button>
-        </SidePanel>
-      </Columns>
-    </PageLayout>
-  )
-}
-
-export function EmptySearchPage() {
-  return (
-    <PageLayout figmaId="92:2705" progress={{ flow: 'request', current: 0 }}>
-      <PageHeading
-        className="page-heading--spaced"
-        title="Nenhum automóvel para estes filtros."
-        description="Ano selecionado: 2026. Tente outro ano ou remova os filtros."
-      />
-      <Card>
-        <h2 className="large-title">Vamos encontrar outra opção?</h2>
-        <p>
-          Os automóveis deste exemplo são do ano de 2025. Limpe os filtros para voltar a consultar
-          as opções.
-        </p>
-        <Button to="/veiculos" className="empty-action">
-          Limpar filtros
-        </Button>
-        <Button to="/pedidos" variant="secondary" className="empty-action">
-          Meus pedidos
-        </Button>
-      </Card>
+      <ResourceState resource={resource}>
+        {({ vehicle, agents }) => (
+          <Columns>
+            <Card>
+              <VehicleImage vehicle={vehicle} className="vehicle-detail-photo" />
+              <h2 className="large-title">{vehicleName(vehicle)}</h2>
+              <p className="muted">
+                {vehicle.ano} · {vehicle.placa} · {vehicle.matricula}
+              </p>
+              <Metadata
+                title="Identificação do automóvel"
+                items={[
+                  ['Marca', vehicle.marca],
+                  ['Modelo', vehicle.modelo],
+                  ['Ano', vehicle.ano],
+                  ['Matrícula / placa', `${vehicle.matricula} · ${vehicle.placa}`],
+                ]}
+              />
+            </Card>
+            <SidePanel title="Seu próximo passo">
+              <p>
+                Informe o período e o valor da proposta. O envio inicia a análise financeira pelo
+                agente escolhido.
+              </p>
+              <Metadata
+                title="Propriedade atual"
+                items={[
+                  [
+                    'Proprietário',
+                    ownerName(vehicle.proprietarioId, agents, {
+                      id: account.parteId,
+                      nome: account.nome,
+                    }),
+                  ],
+                  ['Matrícula', vehicle.matricula],
+                ]}
+              />
+              {account.tipo === 'CLIENTE' && (
+                <Button
+                  onClick={() => {
+                    setDraft((draft) => ({ ...draft, vehicleId: vehicle.id }))
+                    navigate('/pedidos/novo')
+                  }}
+                >
+                  Selecionar automóvel
+                </Button>
+              )}
+              <Button variant="secondary" to="/veiculos">
+                Voltar à busca
+              </Button>
+            </SidePanel>
+          </Columns>
+        )}
+      </ResourceState>
     </PageLayout>
   )
 }

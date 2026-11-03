@@ -22,12 +22,10 @@ export function Metadata({ title, items, className = '' }) {
   )
 }
 
-export function PageHeading({ title, description, eyebrow, className = '', as: Heading = 'h1' }) {
+export function PageHeading({ title, eyebrow, className = '', as: Heading = 'h1' }) {
   return (
     <div className={`page-heading ${eyebrow ? 'page-heading--journey' : ''} ${className}`}>
-      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
       <Heading>{title}</Heading>
-      {description && <p className="page-heading__description">{description}</p>}
     </div>
   )
 }

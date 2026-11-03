@@ -1,6 +1,8 @@
 import { useId, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
-import { usePrototype } from '../../state/prototype-store.js'
+import { useApp } from '../../state/app-context.js'
+import useMutation from '../../state/useMutation.js'
+import { ErrorMessage } from '../ui/ResourceState.jsx'
 import logoLight from '../../assets/brand/logo-light.svg'
 import logoDark from '../../assets/brand/logo-dark.svg'
 import Button from '../ui/Button.jsx'
@@ -20,23 +22,31 @@ export function Logo({ dark = false, width = 118, className = '' }) {
 }
 
 export default function Header({ kind = 'client' }) {
-  const { state, dispatch } = usePrototype()
+  const { account, logout: endSession } = useApp()
+  const exit = useMutation()
   const navigate = useNavigate()
   const { pathname, hash } = useLocation()
   const [open, setOpen] = useState(false)
   const menuId = useId()
   const menuButton = useRef(null)
-  const area = accountArea(kind, state.profile)
+  const area = accountArea(kind, account?.tipo)
   const publicPage = area === 'public' || area === 'landing'
-  const links = area === 'landing' ? landingLinks : area === 'agent' ? agentLinks : clientLinks
-  const name = area === 'agent' ? 'Hyper' : state.customer.name.split(' ')[0]
+  const links =
+    area === 'landing'
+      ? landingLinks
+      : area === 'agent'
+        ? agentLinks.filter(([, path]) => path !== '/agente/creditos' || account?.tipo === 'BANCO')
+        : clientLinks
+  const name = account?.nome?.split(' ')[0] || ''
   function closeMenu() {
     setOpen(false)
   }
-  function logout() {
-    closeMenu()
-    dispatch({ type: 'LOGOUT' })
-    navigate('/entrar')
+  async function logout() {
+    await exit.run(async () => {
+      await endSession()
+      closeMenu()
+      navigate('/entrar', { replace: true })
+    })
   }
   return (
     <header
@@ -63,7 +73,7 @@ export default function Header({ kind = 'client' }) {
             <Link
               key={path}
               className="site-nav__link"
-              to={area === 'public' ? '/entrar' : path}
+              to={path}
               aria-current={
                 area !== 'public' && activeLink(path, pathname, hash) ? 'page' : undefined
               }
@@ -75,16 +85,21 @@ export default function Header({ kind = 'client' }) {
         </nav>
         {publicPage ? (
           <Button
-            to="/entrar"
+            to={account ? (account.tipo === 'CLIENTE' ? '/pedidos' : '/agente') : '/entrar'}
             variant="secondary"
             icon="userButton"
             className="header-account"
             onClick={closeMenu}
           >
-            Entrar na conta
+            {account ? 'Minha conta' : 'Entrar na conta'}
           </Button>
         ) : (
-          <Button variant="secondary" className="header-account" onClick={logout}>
+          <Button
+            variant="secondary"
+            className="header-account"
+            disabled={exit.pending}
+            onClick={logout}
+          >
             Sair · {name}
           </Button>
         )}
@@ -100,6 +115,11 @@ export default function Header({ kind = 'client' }) {
           <Icon name="menu" />
         </button>
       </div>
+      {exit.error && (
+        <div className="header-error">
+          <ErrorMessage error={exit.error} />
+        </div>
+      )}
     </header>
   )
 }

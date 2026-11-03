@@ -182,10 +182,10 @@ allocar/
 ```bash
 cd frontend
 npm ci
-npm run dev
+npm run dev:all
 ```
 
-A interface React usa os componentes, tokens e ativos do Figma. A landing se adapta aos layouts desktop e móvel; as rotas permitem percorrer cadastro, pedidos, análise, contratos e crédito com dados locais em memória. Os controles de acesso selecionam o perfil demonstrativo. O [guia do frontend](frontend/README.md) reúne os comandos, a relação entre telas e rotas, a geração de tokens e os testes de navegador.
+A interface React usa os componentes, tokens e ativos do Figma e consome a API REST para autenticação, cadastro, catálogo, pedidos, análise, contratos e crédito. O comando inicia o frontend em **http://localhost:5173** e o backend em **http://localhost:8080**, usando `concurrently`. Requer JDK 25, Maven e as variáveis de conexão do banco no ambiente do backend. `Ctrl+C` encerra os dois processos. O [guia do frontend](frontend/README.md) detalha a configuração, as rotas e o consumo da API; o [guia do backend](backend/README.md) descreve a conexão JDBC e os testes.
 
 ### Landing page
 
