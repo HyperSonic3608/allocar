@@ -41,6 +41,7 @@ public class SegurancaConfiguration {
             .securityContext(config->config.securityContextRepository(repository))
             .authorizeHttpRequests(auth->auth
                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/health").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/auth/csrf").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/auth/login","/api/clientes","/api/agentes").permitAll()
                 .requestMatchers("/api/clientes/me","/api/clientes/me/**").hasRole("CLIENTE")

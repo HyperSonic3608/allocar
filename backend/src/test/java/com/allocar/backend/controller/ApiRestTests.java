@@ -22,12 +22,18 @@ import org.springframework.test.context.*;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(controllers={AutenticacaoController.class,ClienteController.class,CatalogoController.class,PedidoController.class,FinanceiroController.class})
+@WebMvcTest(controllers={HealthController.class,AutenticacaoController.class,ClienteController.class,CatalogoController.class,PedidoController.class,FinanceiroController.class})
 @ContextConfiguration(classes=BackendApplication.class)
 @Import(SegurancaConfiguration.class)
 @ActiveProfiles("supabase")
 class ApiRestTests {
     @Autowired MockMvc mvc;
+    @Test void healthPublicoNaoCriaSessaoNemExpoeDados() throws Exception {
+        var result=mvc.perform(get("/api/health")).andExpect(status().isOk())
+            .andExpect(jsonPath("$.status").value("UP")).andReturn();
+        org.junit.jupiter.api.Assertions.assertNull(result.getRequest().getSession(false));
+        verifyNoInteractions(auth,clientes,alugueis);
+    }
     @MockitoBean AutenticacaoService auth;
     @MockitoBean ClienteService clientes;
     @MockitoBean AluguelService alugueis;

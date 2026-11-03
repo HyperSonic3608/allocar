@@ -48,6 +48,10 @@ O preview usa a porta **5173**; encerre o Vite de desenvolvimento antes de inici
 
 Na hospedagem, sirva `dist/index.html` como fallback das rotas da aplicação e encaminhe `/api` ao Spring Boot por um proxy reverso. O proxy de desenvolvimento do Vite não faz parte do build. Prefira frontend e API na mesma origem HTTPS, habilitando `ALLOCAR_COOKIE_SECURE=true` no backend. Para origens distintas, configure `VITE_API_URL` antes do build e as origens exatas em `ALLOCAR_ALLOWED_ORIGINS`; cookies também precisam respeitar a política SameSite do backend.
 
+## Hospedagem
+
+A [configuração de hospedagem Vercel + Render](../docs/deploy.md) descreve o proxy de produção, as variáveis e a publicação dos dois serviços. No Vercel, selecione a pasta `frontend` e configure `BACKEND_URL` com a origem HTTPS da API Render; `vercel.mjs` mantém o consumo em `/api`.
+
 ## Organização
 
 ```text

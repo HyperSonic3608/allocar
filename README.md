@@ -187,6 +187,8 @@ npm run dev:all
 
 A interface React usa os componentes, tokens e ativos do Figma e consome a API REST para autenticação, cadastro, catálogo, pedidos, análise, contratos e crédito. O comando inicia o frontend em **http://localhost:5173** e o backend em **http://localhost:8080**, usando `concurrently`. Requer JDK 25, Maven e as variáveis de conexão do banco no ambiente do backend. `Ctrl+C` encerra os dois processos. O [guia do frontend](frontend/README.md) detalha a configuração, as rotas e o consumo da API; o [guia do backend](backend/README.md) descreve a conexão JDBC e os testes.
 
+O [guia de hospedagem](docs/deploy.md) descreve frontend no Vercel, backend Java no Render e acesso ao Supabase, com variáveis privadas, proxy e cookies de sessão.
+
 ### Landing page
 
 A página inicial apresenta a AlloCar, explica as etapas do aluguel, mostra categorias de veículos e responde dúvidas frequentes. Os botões levam ao cadastro e ao acesso; os menus desktop rolam até as seções correspondentes. Há layouts desktop de **1440 px** e mobile de **390 px**, com logo, botões, cartões, metadados e acordeões nativos da biblioteca. As fotos foram reutilizadas dos assets existentes; os valores dos cartões são ilustrativos.

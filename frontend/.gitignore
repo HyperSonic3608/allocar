@@ -30,3 +30,4 @@ test*/
 playwright-report/
 manifest.json
 !.env.example
+.vercel/

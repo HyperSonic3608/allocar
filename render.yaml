@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: allocar-backend
+    runtime: docker
+    plan: free
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    numInstances: 1
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: supabase
+      - key: ALLOCAR_COOKIE_SECURE
+        value: "true"
+      - key: SUPABASE_DB_POOL_SIZE
+        value: "3"
+      - key: SUPABASE_DB_URL
+        sync: false
+      - key: SUPABASE_DB_USERNAME
+        sync: false
+      - key: SUPABASE_DB_PASSWORD
+        sync: false
+      - key: ALLOCAR_ALLOWED_ORIGINS
+        value: https://allocar.vercel.app

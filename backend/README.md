@@ -24,6 +24,10 @@ mvn package
 
 O Maven gera o JAR executável em `target/`. As [rotas, os formatos JSON e os exemplos de consumo](../docs/api.md) descrevem o contrato HTTP da aplicação.
 
+## Hospedagem
+
+O [guia de hospedagem](../docs/deploy.md) descreve o serviço Docker no Render, o Blueprint `render.yaml`, as variáveis privadas e a integração com o frontend no Vercel. `GET /api/health` fornece a verificação pública de saúde, e `PORT` define a porta do servidor.
+
 ## Organização
 
 ```text
