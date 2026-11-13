@@ -1,6 +1,12 @@
+------
+
 <p align="center">
     <img src="docs/allocar-logo.svg" alt="Logo AlloCar" width="320"/>
 </p>
+
+-----
+
+# AlloCar
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=20232A" alt="React 19"/>
@@ -10,9 +16,9 @@
   <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3FCF8E?style=for-the-badge&amp;logo=supabase&amp;logoColor=white" alt="Supabase PostgreSQL"/>
 </p>
 
----
-
 Sistema web de aluguel de carros que conecta clientes, empresas e bancos na solicitação, análise financeira e contratação de aluguéis.
+
+-----
 
 ## 📚 Índice
 
