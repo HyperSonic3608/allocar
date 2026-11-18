@@ -1,10 +1,10 @@
-------
+----
 
 <p align="center">
     <img src="docs/allocar-logo.svg" alt="Logo AlloCar" width="320"/>
 </p>
 
------
+---
 
 # AlloCar
 
@@ -14,11 +14,12 @@
   <img src="https://img.shields.io/badge/Java-25-F29111?style=for-the-badge&amp;logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIwLjc1ZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzg0IDUxMiI+Cgk8cGF0aCBkPSJNMCAwaDM4NHY1MTJIMHoiIGZpbGw9Im5vbmUiIC8+Cgk8cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjc3Ljc0IDMxMi45YzkuOC02LjcgMjMuNC0xMi41IDIzLjQtMTIuNXMtMzguNyA3LTc3LjIgMTAuMmMtNDcuMSAzLjktOTcuNyA0LjctMTIzLjEgMS4zYy02MC4xLTggMzMtMzAuMSAzMy0zMC4xcy0zNi4xLTIuNC04MC42IDE5Yy01Mi41IDI1LjQgMTMwIDM3IDIyNC41IDEyLjFtLTg1LjQtMzIuMWMtMTktNDIuNy04My4xLTgwLjIgMC0xNDUuOEMyOTYgNTMuMiAyNDIuODQgMCAyNDIuODQgMGMyMS41IDg0LjUtNzUuNiAxMTAuMS0xMTAuNyAxNjIuNmMtMjMuOSAzNS45IDExLjcgNzQuNCA2MC4yIDExOC4ybTExNC42LTE3Ni4yYy4xIDAtMTc1LjIgNDMuOC05MS41IDE0MC4yYzI0LjcgMjguNC02LjUgNTQtNi41IDU0czYyLjctMzIuNCAzMy45LTcyLjljLTI2LjktMzcuOC00Ny41LTU2LjYgNjQuMS0xMjEuM20tNi4xIDI3MC41YTEyLjIgMTIuMiAwIDAgMS0yIDIuNmMxMjguMy0zMy43IDgxLjEtMTE4LjkgMTkuOC05Ny4zYTE3LjMzIDE3LjMzIDAgMCAwLTguMiA2LjNhNzAuNSA3MC41IDAgMCAxIDExLTNjMzEtNi41IDc1LjUgNDEuNS0yMC42IDkxLjRNMzQ4IDQzNy40czE0LjUgMTEuOS0xNS45IDIxLjJjLTU3LjkgMTcuNS0yNDAuOCAyMi44LTI5MS42LjdjLTE4LjMtNy45IDE2LTE5IDI2LjgtMjEuM2MxMS4yLTIuNCAxNy43LTIgMTcuNy0yYy0yMC4zLTE0LjMtMTMxLjMgMjguMS01Ni40IDQwLjJDMjMyLjg0IDUwOS40IDQwMSA0NjEuMyAzNDggNDM3LjRNMTI0LjQ0IDM5NmMtNzguNyAyMiA0Ny45IDY3LjQgMTQ4LjEgMjQuNWExODYgMTg2IDAgMCAxLTI4LjItMTMuOGMtNDQuNyA4LjUtNjUuNCA5LjEtMTA2IDQuNWMtMzMuNS0zLjgtMTMuOS0xNS4yLTEzLjktMTUuMm0xNzkuOCA5Ny4yYy03OC43IDE0LjgtMTc1LjggMTMuMS0yMzMuMyAzLjZjMC0uMSAxMS44IDkuNyA3Mi40IDEzLjZjOTIuMiA1LjkgMjMzLjgtMy4zIDIzNy4xLTQ2LjljMCAwLTYuNCAxNi41LTc2LjIgMjkuN00yNjAuNjQgMzUzYy01OS4yIDExLjQtOTMuNSAxMS4xLTEzNi44IDYuNmMtMzMuNS0zLjUtMTEuNi0xOS43LTExLjYtMTkuN2MtODYuOCAyOC44IDQ4LjIgNjEuNCAxNjkuNSAyNS45YTYwLjQgNjAuNCAwIDAgMS0yMS4xLTEyLjgiIC8+Cjwvc3ZnPgo=" alt="Java 25"/>
   <img src="https://img.shields.io/badge/Spring_Boot-4.1-6DB33F?style=for-the-badge&amp;logo=springboot&amp;logoColor=white" alt="Spring Boot 4.1"/>
   <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3FCF8E?style=for-the-badge&amp;logo=supabase&amp;logoColor=white" alt="Supabase PostgreSQL"/>
+  <a href="https://allocar.vercel.app/"><img alt="Vercel status" src="https://img.shields.io/website?url=https%3A%2F%2Fallocar.vercel.app&up_message=online&down_message=offline&style=for-the-badge&logo=vercel&logoColor=white&label=vercel"></a>
 </p>
 
 Sistema web de aluguel de carros que conecta clientes, empresas e bancos na solicitação, análise financeira e contratação de aluguéis.
 
------
+---
 
 ## 📚 Índice
 
