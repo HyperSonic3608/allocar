@@ -1,5 +1,7 @@
 # AlloCar · Backend
 
+<a href="https://allocar-backend.onrender.com"><img alt="Render status" src="https://img.shields.io/website?url=https%3A%2F%2Fallocar-backend.onrender.com&up_message=online&down_message=offline&style=for-the-badge&logo=render&logoColor=white&label=render&labelColor=black"></a>
+
 API REST em Java com Spring Boot, Spring Security e JDBC, responsável por cadastros, pedidos de aluguel, avaliação financeira, contratos e crédito. A persistência usa PostgreSQL no Supabase, com acesso restrito ao contexto da conta autenticada.
 
 ## Execução
