@@ -1,5 +1,7 @@
 # AlloCar · Frontend
 
+<a href="https://allocar.vercel.app/"><img alt="Vercel status" src="https://img.shields.io/website?url=https%3A%2F%2Fallocar.vercel.app&up_message=online&down_message=offline&style=for-the-badge&logo=vercel&logoColor=white&label=vercel&labelColor=black"></a>
+
 Interface React com Vite, React Router e CSS, baseada no [protótipo de alta fidelidade](https://www.figma.com/design/BhQ1Hh0Rofd4t0k7EVWZgK?node-id=4-826). Consome a [API REST do backend](../docs/api.md) para autenticação, cadastro, catálogo, pedidos, análise financeira, contratos e crédito.
 
 ## Execução
