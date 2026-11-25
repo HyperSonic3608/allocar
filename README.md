@@ -2,13 +2,7 @@
     <img src="docs/allocar-logo.svg" alt="Logo AlloCar" width="320"/>
 </p>
 
-<div id="user-content-toc">
-  <ul align="center" style="list-style: none;">
-    <summary>
-      <h1>AlloCar</h1>
-    </summary>
-  </ul>
-</div>
+<h3 align=center> Allocar </h3>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=white" alt="React 19"/>
