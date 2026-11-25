@@ -1,12 +1,8 @@
-----
-
 <p align="center">
     <img src="docs/allocar-logo.svg" alt="Logo AlloCar" width="320"/>
 </p>
 
----
-
-# AlloCar
+<h3 align=center> Allocar </h3>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&amp;logo=react&amp;logoColor=white" alt="React 19"/>
@@ -17,9 +13,9 @@
   <a href="https://allocar.vercel.app/"><img alt="Vercel status" src="https://img.shields.io/website?url=https%3A%2F%2Fallocar.vercel.app&up_message=online&down_message=offline&style=for-the-badge&logo=vercel&logoColor=white&label=vercel"></a>
 </p>
 
-Sistema web de aluguel de carros que conecta clientes, empresas e bancos na solicitação, análise financeira e contratação de aluguéis.
-
 ---
+
+Sistema web de aluguel de carros que conecta clientes, empresas e bancos na solicitação, análise financeira e contratação de aluguéis.
 
 ## 📚 Índice
 
